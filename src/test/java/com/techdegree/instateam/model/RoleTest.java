@@ -13,7 +13,7 @@ public class RoleTest {
     // won't check NoSuchFieldException, because it's testing
     private void nameRegex(String name, boolean validates)
             throws NoSuchFieldException {
-        Field field = Role.class.getDeclaredField("mName");
+        Field field = Role.class.getDeclaredField("name");
         javax.validation.constraints.Pattern[] annotations =
                 field.getAnnotationsByType(
                         javax.validation.constraints.Pattern.class
