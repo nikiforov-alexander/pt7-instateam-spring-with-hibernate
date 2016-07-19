@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @Configuration
 public class DataConfig {
     @Autowired
-    private Environment mEnvironment;
+    private Environment environment;
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
@@ -24,7 +24,7 @@ public class DataConfig {
                 new LocalSessionFactoryBean();
         localSessionFactoryBean.setConfigLocation(config);
         localSessionFactoryBean.setPackagesToScan(
-                mEnvironment.getProperty("instateam.entity.package")
+                environment.getProperty("instateam.entity.package")
         );
         localSessionFactoryBean.setDataSource(dataSource());
         return localSessionFactoryBean;
@@ -35,16 +35,16 @@ public class DataConfig {
         BasicDataSource ds = new BasicDataSource();
         // Driver class name
         ds.setDriverClassName(
-                mEnvironment.getProperty("instateam.db.driver")
+                environment.getProperty("instateam.db.driver")
         );
         ds.setUrl(
-                mEnvironment.getProperty("instateam.db.url")
+                environment.getProperty("instateam.db.url")
         );
         ds.setUsername(
-                mEnvironment.getProperty("instateam.db.username")
+                environment.getProperty("instateam.db.username")
         );
         ds.setPassword(
-                mEnvironment.getProperty("instateam.db.password")
+                environment.getProperty("instateam.db.password")
         );
         return ds;
     }
