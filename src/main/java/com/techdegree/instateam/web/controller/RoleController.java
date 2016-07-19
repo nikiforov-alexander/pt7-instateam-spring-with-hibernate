@@ -23,7 +23,13 @@ public class RoleController {
     public String listRoles(Model model) {
         // Get all roles
         List<Role> roles = roleService.findAll();
+        // add roles to model
         model.addAttribute("roles", roles);
+        // add empty newRole so that we can fill it with
+        // data, when making POST request on this page
+        if (!model.containsAttribute("newRole")) {
+            model.addAttribute("newRole", new Role());
+        }
         return "role/roles";
     }
 
@@ -33,7 +39,6 @@ public class RoleController {
     public String addNewRole(@Valid Role role,
                              BindingResult result,
                              Model model) {
-        model.addAttribute("role", new Role());
         if (result.hasErrors()) {
             return "redirect:/roles";
         }
