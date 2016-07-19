@@ -11,7 +11,13 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <dependency>spring_boot_com.techdegree.instateam.Application</dependency>
+          <file>file://$MODULE_DIR$/../../src/main/java/com/techdegree/instateam/config/AppConfig.java</file>
+          <file>file://$MODULE_DIR$/../../src/main/java/com/techdegree/instateam/config/DataConfig.java</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
