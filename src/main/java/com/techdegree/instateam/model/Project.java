@@ -20,7 +20,7 @@ public class Project {
         this.id = id;
     }
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", columnDefinition = "VARCHAR")
     @NotNull
     @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*")
     String name;
@@ -31,7 +31,7 @@ public class Project {
         this.name = name;
     }
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
     @NotNull
     @Size(min = 30)
     String description;
