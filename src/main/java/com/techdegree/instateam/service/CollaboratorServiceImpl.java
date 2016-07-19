@@ -10,10 +10,10 @@ import java.util.List;
 @Service
 public class CollaboratorServiceImpl implements CollaboratorService {
     @Autowired
-    private CollaboratorDao mCollaboratorDao;
+    private CollaboratorDao collaboratorDao;
 
     @Override
     public List<Collaborator> findAll() {
-       return mCollaboratorDao.findAll();
+       return collaboratorDao.findAll();
     }
 }

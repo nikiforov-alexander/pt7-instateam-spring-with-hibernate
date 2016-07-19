@@ -10,10 +10,10 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
     @Autowired
-    private RoleDao mRoleDao;
+    private RoleDao roleDao;
 
     @Override
     public List<Role> findAll() {
-       return mRoleDao.findAll();
+       return roleDao.findAll();
     }
 }

@@ -10,10 +10,10 @@ import java.util.List;
 @Service
 public class ProjectServiceImpl implements ProjectService {
     @Autowired
-    private ProjectDao mProjectDao;
+    private ProjectDao projectDao;
 
     @Override
     public List<Project> findAll() {
-       return mProjectDao.findAll();
+       return projectDao.findAll();
     }
 }
