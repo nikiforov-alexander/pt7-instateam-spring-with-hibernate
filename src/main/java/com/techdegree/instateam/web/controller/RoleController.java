@@ -16,11 +16,11 @@ public class RoleController {
 
     // index of all categories
     @SuppressWarnings("unchecked")
-    @RequestMapping("/categories")
+    @RequestMapping("/roles")
     public String listRoles(Model model) {
         // Get all roles
         List<Role> roles = mRoleService.findAll();
         model.addAttribute("roles", roles);
-        return "role/index";
+        return "role/roles";
     }
 }
