@@ -6,20 +6,25 @@
         <nav th:replace="layout :: nav"></nav>
         <section>
             <div class="container wrapper">
-                <form>
+                <form method="post" th:object="${newRole}">
                     <h2>Manage Roles</h2>
                     <div>
-                        <ul class="checkbox-list">
-                            <li><span class="primary">Developer</span></li>
-                            <li><span class="primary">Designer</span></li>
-                            <li><span class="primary">QA</span></li>
-                            <li><span class="primary">DevOps</span></li>
-                            <li><span class="primary">Copywriter</span></li>
+                        <ul th:each="listedRole : ${roles}" class="checkbox-list">
+                            <li><span th:text="${listedRole.name}"
+                                      class="primary">Role Name</span></li>
+                            <!--<li><span class="primary">Designer</span></li>-->
+                            <!--<li><span class="primary">QA</span></li>-->
+                            <!--<li><span class="primary">DevOps</span></li>-->
+                            <!--<li><span class="primary">Copywriter</span></li>-->
                         </ul>
                     </div>
                     <div class="actions add-new-role">
-                        <input type="text" placeholder="New Role...">
-                        <a class="button" href="#">Add</a>
+                        <input type="hidden" th:field="*{id}">
+                        <input type="text"
+                               placeholder="New Role..."
+                               th:field="*{name}"
+                        >
+                        <a class="button" type="submit">Add</a>
                     </div>
                 </form>
             </div>
