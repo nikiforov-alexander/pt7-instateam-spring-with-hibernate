@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head(page_title)">
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title th:text="'InstaTeam | ' + ${page_title}">InstaTeam | Page Title</title>
+        <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/normalize.css}">
+        <link rel="stylesheet" th:href="@{/css/site.css}">
+        <!--icons-->
+        <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+        <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+    </head>
+    <body>
+        <header th:fragment="header">
+            <div class="container">
+                <div class="site-header">
+                    <a class="logo" th:href="@{/}">InstaTeam</a>
+                    <a class="new-project button icon-left" href="#">
+                        <i class="material-icons">add</i> New Project
+                    </a>
+                </div>
+            </div>
+        </header>
+        <nav th:fragment="nav">
+            <ul>
+                <li class="selected"><a th:href="@{/}">Projects</a></li>
+                <li><a th:href="@{collaborator/collaborators.html}">Collaborators</a></li>
+                <li><a th:href="@{role/roles.html}">Roles</a></li>
+            </ul>
+        </nav>
+    </body>
+</html>
