@@ -2,19 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="layout :: head('Role Details')"></head>
     <body>
-        <header th:replace="layout :: header"></header>
+        <header th:replace="layout :: header('Role Details')"></header>
         <nav th:replace="layout :: nav"></nav>
         <section>
             <div class="container wrapper">
                 <form method="post" th:object="${role}">
                     <div class="actions add-new-role">
+                        <!--/* hidden id input */-->
                         <input type="hidden" th:field="*{id}">
+                        <!--/* Role name input */-->
                         <input type="text"
                                placeholder="Role Name..."
                                th:field="*{name}">
+                        <!--/* Save button */-->
                         <button class="button" type="submit">Save</button>
+                        <!--/* Delete button */-->
                         <a th:href="@{'/roles/' + ${role.id} + '/delete'}"
                            class="button delete-button">Delete</a>
+                        <!--/* Cancel button */-->
+                        <a th:href="@{/roles}"
+                           class="button cancel-button">Cancel</a>
                     </div>
                 </form>
             </div>
