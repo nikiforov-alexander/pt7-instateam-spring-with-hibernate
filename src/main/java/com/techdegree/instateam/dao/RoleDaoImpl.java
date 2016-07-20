@@ -30,4 +30,12 @@ public class RoleDaoImpl implements RoleDao {
         session.getTransaction().commit();
         session.close();
     }
+
+    @Override
+    public Role findById(int roleId) {
+        Session session = sessionFactory.openSession();
+        Role role = session.get(Role.class, roleId);
+        session.close();
+        return role;
+    }
 }
