@@ -8,30 +8,44 @@
             <div class="container wrapper">
                 <form method="post" th:object="${newCollaborator}">
                     <h2>Manage Collaborators</h2>
+                    <!--/* List all collaborators with roles */-->
                     <ul th:each="collaborator : ${collaborators}"
                         class="checkbox-list">
                         <li>
+                            <!--/* Collaborator's name */-->
                             <span th:text="${collaborator.name}"
-                                  class="primary">Name</span>
+                                  class="primary">Name
+                            </span>
+                            <!--/* Container with collaborator's role, here
+                                   I used select with disabled fields to save
+                                   styling
+                            */-->
                             <div class="custom-select">
-                                <span class="dropdown-arrow"></span>
-                                <select>
-                                    <option value="#" selected>Designer</option>
-                                    <option value="#">Developer</option>
-                                    <option value="#">QA</option>
-                                    <option value="#">DevOps</option>
+                                <select disabled class="no-arrow-select">
+                                    <option value="0"
+                                            th:text="${collaborator.role.name}"
+                                            selected>
+                                    </option>
                                 </select>
                             </div>
                         </li>
                     </ul>
+                    <!--/* Container with new collaborator fields */-->
                     <div class="actions add-new-collaborator">
+                        <!--/* Hidden id field to post */-->
                         <input type="hidden" th:field="*{id}">
+                        <!--/* collaborator name to post */-->
                         <input type="text"
                                placeholder="Name..."
                                th:field="*{name}">
+                        <!--/* Select role using option */-->
                         <div class="custom-select">
+                            <!--/* arrow on option */-->
                             <span class="dropdown-arrow add-new-collaborator"></span>
                                 <select th:field="*{role.id}">
+                                    <!--/* disabled default option */-->
+                                    <option value="0" disabled selected>Select Role</option>
+                                    <!--/* option with id as value, and name as text */-->
                                     <option th:each="availableRole : ${roles}"
                                             th:value="${availableRole.id}"
                                             th:text="${availableRole.name}">
