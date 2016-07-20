@@ -3,6 +3,7 @@ package com.techdegree.instateam.web.controller;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,5 +53,17 @@ public class RoleController {
         Role role = roleService.findById(roleId);
         model.addAttribute("role", role);
         return "role/detail";
+    }
+
+    // Edit role
+    @RequestMapping(value = "/roles/{roleId}", method = RequestMethod.POST)
+    public String editRole(@PathVariable int roleId,
+                           @Valid Role role,
+                           BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/roles/" + roleId;
+        }
+        roleService.save(role);
+        return "redirect:/roles";
     }
 }
