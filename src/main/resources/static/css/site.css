@@ -407,6 +407,16 @@ form .add-new-collaborator .button.add-button {
   width: 26px;
   pointer-events: none;
 }
+
+.custom-select .dropdown-arrow.add-new-collaborator {
+    background: #FFF;
+    bottom: 55px;
+    position: absolute;
+    right: 4px;
+    top: 7px;
+    width: 26px;
+    pointer-events: none;
+}
 .custom-select .dropdown-arrow:before {
   content: '';
   position: absolute;
