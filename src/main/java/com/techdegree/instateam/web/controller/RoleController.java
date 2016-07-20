@@ -66,4 +66,12 @@ public class RoleController {
         roleService.save(role);
         return "redirect:/roles";
     }
+
+    //Delete role
+    @RequestMapping(value = "/roles/{roleId}/delete")
+    public String deleteRole(@PathVariable int roleId) {
+        Role role = roleService.findById(roleId);
+        roleService.delete(role);
+        return "redirect:/roles";
+    }
 }
