@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -34,15 +36,21 @@ public class RoleController {
     }
 
     // Form for adding new role
-    @RequestMapping(value = "/roles",
-        method = RequestMethod.POST)
-    public String addNewRole(@Valid Role role,
-                             BindingResult result,
-                             Model model) {
+    @RequestMapping(value = "/roles", method = RequestMethod.POST)
+    public String addNewRole(@Valid Role role, BindingResult result) {
         if (result.hasErrors()) {
             return "redirect:/roles";
         }
         roleService.save(role);
         return "redirect:/roles";
+    }
+
+    // Single role page
+    @RequestMapping(value = "/roles/{roleId}")
+    public String roleDetails(@PathVariable int roleId,
+                              Model model) {
+        Role role = roleService.findById(roleId);
+        model.addAttribute("role", role);
+        return "role/detail";
     }
 }
