@@ -27,9 +27,15 @@
         </header>
         <nav th:fragment="nav">
             <ul>
-                <li class="selected"><a th:href="@{/}">Projects</a></li>
-                <li><a th:href="@{collaborator/collaborators.html}">Collaborators</a></li>
-                <li><a th:href="@{role/roles.html}">Roles</a></li>
+                <li class="selected">
+                    <a th:href="@{/}">Projects</a>
+                </li>
+                <li>
+                    <a th:href="@{collaborator/collaborators}">Collaborators</a>
+                </li>
+                <li>
+                    <a th:href="@{role/roles}">Roles</a>
+                </li>
             </ul>
         </nav>
     </body>
