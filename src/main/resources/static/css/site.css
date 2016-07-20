@@ -248,6 +248,11 @@ strong {
 .primary {
 	font-weight: 700;
 }
+.primary.role {
+    font-weight: 700;
+    text-decoration: none;
+    color: initial;
+}
 .secondary {
 	float: right;
 	color: #747372;
