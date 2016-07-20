@@ -38,4 +38,13 @@ public class RoleDaoImpl implements RoleDao {
         session.close();
         return role;
     }
+
+    @Override
+    public void delete(Role role) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(role);
+        session.getTransaction().commit();
+        session.close();
+    }
 }
