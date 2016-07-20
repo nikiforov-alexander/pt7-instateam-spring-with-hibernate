@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout :: head('Role Details')"></head>
+    <body>
+        <header th:replace="layout :: header"></header>
+        <nav th:replace="layout :: nav"></nav>
+        <section>
+            <div class="container wrapper">
+                <form method="post" th:object="${role}">
+                    <div class="actions add-new-role">
+                        <input type="hidden" th:field="*{id}">
+                        <input type="text"
+                               placeholder="Role Name..."
+                               th:field="*{name}"
+                        >
+                        <button class="button" type="submit">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>
