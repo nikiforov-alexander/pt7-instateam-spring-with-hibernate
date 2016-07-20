@@ -30,11 +30,19 @@ public class CollaboratorDaoImpl implements CollaboratorDao {
 
     @Override
     public void save(Collaborator collaborator) {
-
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(collaborator);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public void delete(Collaborator collaborator) {
-
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(collaborator);
+        session.getTransaction().commit();
+        session.close();
     }
 }
