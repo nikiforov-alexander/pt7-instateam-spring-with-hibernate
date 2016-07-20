@@ -398,6 +398,22 @@ form .add-new-collaborator .button.add-button {
   line-height: inherit;
   width: 100%;
 }
+.custom-select .no-arrow-select {
+	outline: none;
+	-webkit-appearance: none;
+	display: block;
+	padding: 11px 13px 11px 13px;
+	margin: 0;
+	border: 2px solid #c1c1c1;
+	border-radius: 5px;
+	background: #FFF;
+	color: #888;
+	line-height: normal;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	width: 100%;
+}
 .custom-select .dropdown-arrow {
   background: #FFF;
   bottom: 3px;
