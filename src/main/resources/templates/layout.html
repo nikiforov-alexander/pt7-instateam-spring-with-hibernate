@@ -13,10 +13,12 @@
         <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
     </head>
     <body>
-        <header th:fragment="header">
+        <header th:fragment="header(page_title)">
             <div class="container">
                 <div class="site-header">
-                    <a class="logo" th:href="@{/}">InstaTeam</a>
+                    <a class="logo"
+                       th:text="'InstaTeam : ' + ${page_title}"
+                       th:href="@{/}">InstaTeam : Page Name</a>
                     <a class="new-project button icon-left" href="#">
                         <i class="material-icons">add</i> New Project
                     </a>
