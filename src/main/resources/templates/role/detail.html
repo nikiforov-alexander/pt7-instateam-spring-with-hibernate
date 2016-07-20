@@ -11,9 +11,10 @@
                         <input type="hidden" th:field="*{id}">
                         <input type="text"
                                placeholder="Role Name..."
-                               th:field="*{name}"
-                        >
+                               th:field="*{name}">
                         <button class="button" type="submit">Save</button>
+                        <a th:href="@{'/roles/' + ${role.id} + '/delete'}"
+                           class="button delete-button">Delete</a>
                     </div>
                 </form>
             </div>
