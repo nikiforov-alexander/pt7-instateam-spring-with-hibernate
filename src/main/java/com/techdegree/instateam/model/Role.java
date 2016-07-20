@@ -34,11 +34,11 @@ public class Role {
     @Column(name = "NAME", columnDefinition = "VARCHAR")
     @NotNull
     @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*")
-    int name;
-    public int getName() {
+    String name;
+    public String getName() {
         return name;
     }
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
