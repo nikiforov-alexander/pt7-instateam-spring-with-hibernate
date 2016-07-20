@@ -338,6 +338,13 @@ form .add-new-role .button {
 	float: left;
 	margin: 0;
 }
+form .add-new-role .button.delete-button {
+    background-color: darkslategray;
+    width: 100px;
+    text-align: center;
+    float: left;
+    margin-left: 10px;
+}
 form .add-new-collaborator .button {
 	width: 30px;
 	text-align: center;
