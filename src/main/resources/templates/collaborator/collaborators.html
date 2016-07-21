@@ -7,11 +7,18 @@
         <section>
             <div class="container wrapper">
                 <form th:action="@{/collaborators/save-roles}"
-                      th:object="${newCollaborator}"
+                      th:object="${projectWithAllCollaborators}"
                       method="post">
                     <h2>Manage Collaborators</h2>
+                    <input type="hidden"
+                           th:field="*{id}">
+                    <!--th:value="${'Project with all possible collaborators'}"-->
+                    <input type="hidden"
+                           th:field="*{description}">
+                    <input type="hidden"
+                           th:field="*{name}">
                     <!--/* List all collaborators with roles */-->
-                    <ul th:each="collaborator : ${collaborators}"
+                    <ul th:each="collaborator : *{collaborators}"
                         class="checkbox-list">
                         <li>
                             <!--/* Collaborator's name */-->
@@ -23,11 +30,25 @@
                                    styling
                             */-->
                             <div class="custom-select">
-                                <select disabled class="no-arrow-select">
-                                    <option value="0"
-                                            th:text="${collaborator.role.name}"
-                                            selected>
-                                    </option>
+                                <!--<select disabled class="no-arrow-select">-->
+                                    <!--<option value="0"-->
+                                            <!--th:text="${collaborator.role.name}"-->
+                                            <!--selected>-->
+                                    <!--</option>-->
+                                <!--th:value="${collaborator.id}"-->
+                                <!--</select>-->
+                                <input type="hidden"
+                                       th:value="${collaborator.name}"
+                                       th:field="*{collaborators[__${collaboratorStat.index}__].name}">
+                                <!--<input type="hidden" th:field="*{id}">-->
+                                <select th:field="*{collaborators[__${collaboratorStat.index}__].role.id}"
+                                        class="no-arrow-select">
+                                <option th:each="role : ${roles}"
+                                        th:value="${role.id}"
+                                        th:text="${role.name}"
+                                        th:selected="${role.id == collaborator.role.id}"
+                                        >
+                                </option>
                                 </select>
                             </div>
                         </li>
