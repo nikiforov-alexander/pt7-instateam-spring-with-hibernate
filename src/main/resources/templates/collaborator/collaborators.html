@@ -6,7 +6,9 @@
         <nav th:replace="layout :: nav"></nav>
         <section>
             <div class="container wrapper">
-                <form method="post" th:object="${newCollaborator}">
+                <form th:action="@{/collaborators/save-roles}"
+                      th:object="${newCollaborator}"
+                      method="post">
                     <h2>Manage Collaborators</h2>
                     <!--/* List all collaborators with roles */-->
                     <ul th:each="collaborator : ${collaborators}"
@@ -30,6 +32,15 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="actions add-new-collaborator">
+                        <button class="button add-button" type="submit">Save</button>
+                    </div>
+                </form>
+                <!--/* Form of adding new collaborator */-->
+                <form th:action="@{/collaborators}"
+                      th:object="${newCollaborator}"
+                      method="post">
+                    <h2>Add New Collaborator</h2>
                     <!--/* Container with new collaborator fields */-->
                     <div class="actions add-new-collaborator">
                         <!--/* Hidden id field to post */-->
