@@ -142,6 +142,9 @@ h1 {
 h2 {
 	font-size: 23px;
 }
+/*h2.in-container-wrapper {*/
+	/*font-size: 33px;*/
+/*}*/
 h3 {
 	font-size: 18px;
 	font-weight: 700;
@@ -195,6 +198,12 @@ strong {
 	padding: 18px 35px;
 }
 .actions {
+	padding: 25px 35px 15px 35px;
+	background: #FFF;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.actions.add-new-role {
 	padding: 25px 35px 15px 35px;
 	background: #FFF;
 	border-bottom-left-radius: 5px;
@@ -258,6 +267,9 @@ strong {
 	color: #747372;
 }
 
+.container.wrapper h2.outside-form {
+	padding: 35px 35px 0 35px;
+}
 
 
 /* ==========================================================================
@@ -368,6 +380,12 @@ form .add-new-collaborator .button.add-button {
     text-align: center;
     float: left;
     margin: 5px 0 0;
+}
+form .add-new-collaborator .button.save-button {
+	width: 100px;
+	text-align: center;
+	float: left;
+	margin: 5px 0 0;
 }
 
 
