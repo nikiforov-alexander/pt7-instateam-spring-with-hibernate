@@ -6,7 +6,6 @@ import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.CollaboratorService;
 import com.techdegree.instateam.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
