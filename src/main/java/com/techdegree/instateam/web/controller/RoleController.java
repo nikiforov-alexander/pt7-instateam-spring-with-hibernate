@@ -50,7 +50,7 @@ public class RoleController {
                               Model model) {
         Role role = roleService.findById(roleId);
         model.addAttribute("role", role);
-        return "role/detail";
+        return "role/role-details";
     }
 
     // Edit role
