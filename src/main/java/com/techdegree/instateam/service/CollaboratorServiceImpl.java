@@ -27,4 +27,9 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         collaboratorDao.delete(collaborator);
     }
 
+    @Override
+    public Collaborator findById(int collaboratorId) {
+        return collaboratorDao.findById(collaboratorId);
+    }
+
 }

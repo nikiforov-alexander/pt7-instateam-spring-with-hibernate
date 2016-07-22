@@ -24,7 +24,7 @@ public class CollaboratorDaoImpl implements CollaboratorDao {
     }
 
     @Override
-    public Collaborator findById(Long id) {
+    public Collaborator findById(int id) {
         return null;
     }
 
