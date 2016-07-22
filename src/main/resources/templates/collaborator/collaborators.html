@@ -28,13 +28,10 @@
                       method="post">
                     <h2>Manage Collaborators</h2>
                     <!--/* Hidden input for project id */-->
-                    <input type="hidden"
-                           th:field="*{id}">
+                    <input type="hidden" th:field="*{id}">
                     <!--/* Hidden input for project description */-->
-                    <input type="hidden"
-                           th:field="*{description}">
-                    <input type="hidden"
-                           th:field="*{name}">
+                    <input type="hidden" th:field="*{description}">
+                    <input type="hidden" th:field="*{name}">
                     <!--/* List all collaborators with roles */-->
                     <ul th:each="collaborator : *{collaborators}"
                         class="checkbox-list">
