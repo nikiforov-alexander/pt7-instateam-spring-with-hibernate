@@ -54,8 +54,7 @@ public class CollaboratorController {
     @RequestMapping(value = "/collaborators", method = RequestMethod.POST)
     public String addNewCollaborator(@Valid Collaborator collaborator,
                                      BindingResult result) {
-        if (result.hasErrors()) {
-            System.out.println(result.hasErrors());
+        if (result.hasErrors() || collaborator.getRole().getId() == 0) {
             return "redirect:/collaborators";
         }
         collaboratorService.save(collaborator);
@@ -88,20 +87,8 @@ public class CollaboratorController {
                 newCollaborator.setRole(newRole);
                 // update database
                 collaboratorService.save(newCollaborator);
-            } else {
-                System.out.println("Nothing is changed");
             }
         }
         return "redirect:/collaborators";
     }
-//    @RequestMapping(value = "/collaborators/save-roles", method = RequestMethod.POST)
-//    public String saveCollaboratorsRoles(@Valid Project project,
-//                                         BindingResult result) {
-//        System.out.println(project);
-//        if (result.hasErrors()) {
-//            System.out.println("errors, redirecting");
-//            return "redirect:/collaborators";
-//        }
-//        return "redirect:/collaborators";
-//    }
 }
