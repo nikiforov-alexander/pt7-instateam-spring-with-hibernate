@@ -64,7 +64,6 @@ public class CollaboratorController {
     // Form for saving all collaborators' roles
     @RequestMapping(value = "/collaborators/save-roles", method = RequestMethod.POST)
     public String saveCollaboratorsRoles(Project project) {
-        System.out.println(project);
         List<Collaborator> collaboratorsInDatabase =
                 collaboratorService.findAll();
 
