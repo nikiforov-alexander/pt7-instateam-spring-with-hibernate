@@ -6,13 +6,31 @@
         <nav th:replace="layout :: nav"></nav>
         <section>
             <div class="container wrapper">
-                <form th:action="@{/collaborators/save-roles}"
+                <!--/*
+                    If there are no roles we put here link to roles page
+                */-->
+                <h2 th:if="${roles.size() == 0}" class="outside-form">
+                    No Roles Available
+                </h2>
+                <div th:if="${roles.size() == 0}" class="actions">
+                    <a th:href="@{/roles}" class="button add-roles-button">
+                        Add Roles
+                    </a>
+                </div>
+                <!--/*
+                    if there are roles available
+                    and if there are collaborators,
+                    we print this save-all form
+                */-->
+                <form th:if="${roles.size() > 0 && collaborators.size() > 0}"
+                      th:action="@{/collaborators/save-roles}"
                       th:object="${projectWithAllCollaborators}"
                       method="post">
                     <h2>Manage Collaborators</h2>
+                    <!--/* Hidden input for project id */-->
                     <input type="hidden"
                            th:field="*{id}">
-                    <!--th:value="${'Project with all possible collaborators'}"-->
+                    <!--/* Hidden input for project description */-->
                     <input type="hidden"
                            th:field="*{description}">
                     <input type="hidden"
@@ -30,17 +48,9 @@
                                    styling
                             */-->
                             <div class="custom-select">
-                                <!--<select disabled class="no-arrow-select">-->
-                                    <!--<option value="0"-->
-                                            <!--th:text="${collaborator.role.name}"-->
-                                            <!--selected>-->
-                                    <!--</option>-->
-                                <!--th:value="${collaborator.id}"-->
-                                <!--</select>-->
                                 <input type="hidden"
                                        th:value="${collaborator.name}"
                                        th:field="*{collaborators[__${collaboratorStat.index}__].name}">
-                                <!--<input type="hidden" th:field="*{id}">-->
                                 <select th:field="*{collaborators[__${collaboratorStat.index}__].role.id}"
                                         class="no-arrow-select">
                                 <option th:each="role : ${roles}"
@@ -54,11 +64,12 @@
                         </li>
                     </ul>
                     <div class="actions add-new-collaborator">
-                        <button class="button add-button" type="submit">Save</button>
+                        <button class="button save-button" type="submit">Save</button>
                     </div>
                 </form>
                 <!--/* Form of adding new collaborator */-->
-                <form th:action="@{/collaborators}"
+                <form th:if="${roles.size() > 0}"
+                      th:action="@{/collaborators}"
                       th:object="${newCollaborator}"
                       method="post">
                     <h2>Add New Collaborator</h2>
