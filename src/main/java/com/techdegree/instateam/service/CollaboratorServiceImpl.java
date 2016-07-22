@@ -16,4 +16,15 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     public List<Collaborator> findAll() {
        return collaboratorDao.findAll();
     }
+
+    @Override
+    public void save(Collaborator collaborator) {
+        collaboratorDao.save(collaborator);
+    }
+
+    @Override
+    public void delete(Collaborator collaborator) {
+        collaboratorDao.delete(collaborator);
+    }
+
 }

@@ -59,4 +59,15 @@ public class Project {
     public void setCollaborators(List<Collaborator> collaborators) {
         this.collaborators = collaborators;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", rolesNeeded=" + rolesNeeded +
+                ", collaborators=" + collaborators +
+                '}';
+    }
 }
