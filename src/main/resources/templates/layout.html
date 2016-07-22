@@ -25,15 +25,18 @@
                 </div>
             </div>
         </header>
-        <nav th:fragment="nav">
+        <!--/* Nav fragments takes string as arguments, and makes selected
+               class that corresponds: projects, roles or collaborators
+        */-->
+        <nav th:fragment="nav(selected_tab)">
             <ul>
-                <li class="selected">
+                <li th:class="(${selected_tab == 'projects'}? 'selected' : '')">
                     <a th:href="@{/}">Projects</a>
                 </li>
-                <li>
+                <li th:class="(${selected_tab == 'collaborators'}? 'selected' : '')">
                     <a th:href="@{collaborators}">Collaborators</a>
                 </li>
-                <li>
+                <li th:class="(${selected_tab == 'roles'}? 'selected' : '')">
                     <a th:href="@{roles}">Roles</a>
                 </li>
             </ul>
