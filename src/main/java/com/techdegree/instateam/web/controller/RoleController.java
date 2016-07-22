@@ -44,7 +44,7 @@ public class RoleController {
         return "redirect:/roles";
     }
 
-    // Single role page
+    // Detail role page
     @RequestMapping(value = "/roles/{roleId}")
     public String roleDetails(@PathVariable int roleId,
                               Model model) {
