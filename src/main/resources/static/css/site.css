@@ -454,6 +454,16 @@ form .add-new-collaborator .button.save-button {
     width: 26px;
     pointer-events: none;
 }
+
+.custom-select .dropdown-arrow.change-role {
+	background: #FFF;
+	bottom: 55px;
+	position: absolute;
+	right: 4px;
+	top: 25px;
+	width: 26px;
+	pointer-events: none;
+}
 .custom-select .dropdown-arrow:before {
   content: '';
   position: absolute;
