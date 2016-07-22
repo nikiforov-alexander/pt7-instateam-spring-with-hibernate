@@ -75,12 +75,8 @@ public class CollaboratorController {
             if (oldRoleId != newRoleId) {
                 // get collaborator from database
                 Collaborator newCollaborator = collaboratorsInDatabase.get(i);
-                // get new Role from old one
-                Role newRole = oldRole;
-                // set new id for this role
-                newRole.setId(newRoleId);
-                // set this role to collaborator
-                newCollaborator.setRole(newRole);
+                // set new id for old collaborator's role
+                oldRole.setId(newRoleId);
                 // update database
                 collaboratorService.save(newCollaborator);
             }
