@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -59,7 +60,8 @@ public class CollaboratorController {
     }
 
     // Form for saving all collaborators' roles
-    @RequestMapping(value = "/collaborators/save-roles", method = RequestMethod.POST)
+    @RequestMapping(value = "/collaborators/save-roles",
+            method = RequestMethod.POST)
     public String saveCollaboratorsRoles(Project project) {
         List<Collaborator> collaboratorsInDatabase =
                 collaboratorService.findAll();
@@ -82,5 +84,15 @@ public class CollaboratorController {
             }
         }
         return "redirect:/collaborators";
+    }
+
+    // Detail collaborator page
+    @RequestMapping(value = "/collaborators/{collaboratorId}")
+    public String collaboratorDetails(@PathVariable int collaboratorId,
+                                      Model model) {
+        Collaborator collaborator =
+                collaboratorService.findById(collaboratorId);
+        model.addAttribute("collaborator", collaborator);
+        return "collaborator/details";
     }
 }
