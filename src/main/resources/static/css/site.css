@@ -270,6 +270,9 @@ strong {
 .container.wrapper h2.outside-form {
 	padding: 35px 35px 0 35px;
 }
+.container.wrapper h2.error {
+	padding: 35px 35px 35px 35px;
+}
 
 
 /* ==========================================================================
