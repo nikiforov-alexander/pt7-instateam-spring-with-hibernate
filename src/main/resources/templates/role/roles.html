@@ -3,7 +3,7 @@
     <head th:replace="layout :: head('Roles')"></head>
     <body>
         <header th:replace="layout :: header('Roles')"></header>
-        <nav th:replace="layout :: nav"></nav>
+        <nav th:replace="layout :: nav('roles')"></nav>
         <section>
             <div class="container wrapper">
                 <form method="post" th:object="${newRole}">
