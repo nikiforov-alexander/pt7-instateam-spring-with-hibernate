@@ -74,17 +74,27 @@
                     <div class="actions add-new-collaborator">
                         <!--/* Hidden id field to post */-->
                         <input type="hidden" th:field="*{id}">
-                        <!--/* collaborator name to post */-->
+                        <!--/* collaborator name to post, field is required:
+                               client side validation */-->
                         <input type="text"
                                placeholder="Name..."
+                               required
                                th:field="*{name}">
                         <!--/* Select role using option */-->
                         <div class="custom-select">
                             <!--/* arrow on option */-->
                             <span class="dropdown-arrow add-new-collaborator"></span>
                                 <select th:field="*{role.id}">
-                                    <!--/* disabled default option */-->
-                                    <option value="0" disabled selected>Select Role</option>
+                                    <!--/* selected default option with id=0
+                                           I process it in controller. If I
+                                           disable this option, Then when user
+                                           types right name, but not selecting
+                                           any option, the program will set him
+                                           first role by default. This is
+                                           arguable, but I decided for it to be
+                                           so.
+                                    */-->
+                                    <option value="0" selected>Select Role</option>
                                     <!--/* option with id as value, and name as text */-->
                                     <option th:each="availableRole : ${roles}"
                                             th:value="${availableRole.id}"
