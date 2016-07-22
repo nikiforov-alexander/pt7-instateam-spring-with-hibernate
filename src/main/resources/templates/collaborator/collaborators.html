@@ -45,17 +45,20 @@
                                    styling
                             */-->
                             <div class="custom-select">
+                                <!--/* Hidden collaborator name input */-->
                                 <input type="hidden"
                                        th:value="${collaborator.name}"
                                        th:field="*{collaborators[__${collaboratorStat.index}__].name}">
-                                <select th:field="*{collaborators[__${collaboratorStat.index}__].role.id}"
-                                        class="no-arrow-select">
-                                <option th:each="role : ${roles}"
-                                        th:value="${role.id}"
-                                        th:text="${role.name}"
-                                        th:selected="${role.id == collaborator.role.id}"
-                                        >
-                                </option>
+                                <!--/* drop down arrow on role changer */-->
+                                <span class="dropdown-arrow change-role"></span>
+                                <!--/* role changer selector-->
+                                <select th:field="*{collaborators[__${collaboratorStat.index}__].role.id}">
+                                    <option th:each="role : ${roles}"
+                                            th:value="${role.id}"
+                                            th:text="${role.name}"
+                                            th:selected="${role.id == collaborator.role.id}"
+                                            >
+                                    </option>
                                 </select>
                             </div>
                         </li>
