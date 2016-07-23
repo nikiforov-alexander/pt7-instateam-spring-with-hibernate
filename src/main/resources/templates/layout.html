@@ -41,5 +41,11 @@
                 </li>
             </ul>
         </nav>
+        <!--/* Flash fragment with successfull action of user: all CRUDS */-->
+        <div th:fragment="flash" th:if="${flash != null}" class="container">
+            <div th:classappend="${#strings.toLowerCase(flash.status)}"
+                 th:text="${flash.message}" class="flash">
+            </div>
+        </div>
     </body>
 </html>
