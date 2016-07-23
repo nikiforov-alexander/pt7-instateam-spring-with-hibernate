@@ -113,9 +113,10 @@ public class CollaboratorController {
     // save or update collaborator on detail page
     @RequestMapping(value = "/collaborators/{collaboratorId}/edit",
             method = RequestMethod.POST)
-    public String saveOrUpdateCollaborator(@PathVariable int collaboratorId,
-                                           @Valid Collaborator collaborator,
-                                           BindingResult bindingResult) {
+    public String saveOrUpdateCollaborator(
+            @PathVariable int collaboratorId,
+            @Valid Collaborator collaborator,
+            BindingResult bindingResult) {
        // if user input is not correct or role is not selected
        if (bindingResult.hasErrors() || collaborator.getRole().getId() == 0) {
            return "redirect:/collaborators/" + collaboratorId;
