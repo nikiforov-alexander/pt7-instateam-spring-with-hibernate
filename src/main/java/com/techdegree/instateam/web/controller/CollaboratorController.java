@@ -1,18 +1,21 @@
 package com.techdegree.instateam.web.controller;
 
+import com.techdegree.instateam.exception.NotFoundException;
 import com.techdegree.instateam.model.Collaborator;
 import com.techdegree.instateam.model.Project;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.CollaboratorService;
 import com.techdegree.instateam.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -88,13 +91,22 @@ public class CollaboratorController {
 
     // Detail collaborator page
     @RequestMapping(value = "/collaborators/{collaboratorId}")
-    public String collaboratorDetails(@PathVariable int collaboratorId,
-                                      Model model) {
+    public String collaboratorDetails(
+            @PathVariable int collaboratorId,
+            Model model) {
         Collaborator collaborator =
                 collaboratorService.findById(collaboratorId);
+        if (collaborator == null) {
+            throw new NotFoundException("Collaborator is not found");
+        }
         List<Role> roles = roleService.findAll();
         model.addAttribute("collaborator", collaborator);
         model.addAttribute("roles", roles);
         return "collaborator/collaborator-details";
+    }
+    @ExceptionHandler(NotFoundException.class)
+    public String collaboratorNotFound(Model model) {
+        model.addAttribute("custom_status", 404);
+        return "error";
     }
 }
