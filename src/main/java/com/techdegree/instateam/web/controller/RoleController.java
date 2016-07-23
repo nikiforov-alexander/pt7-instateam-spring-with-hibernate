@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,9 +27,10 @@ public class RoleController {
         List<Role> roles = roleService.findAll();
         // add roles to model
         model.addAttribute("roles", roles);
-        // add empty newRole so that we can fill it with
-        // data, when making POST request on this page
+        // if user typed wrong data it will be shown
         if (!model.containsAttribute("newRole")) {
+            // add empty newRole so that we can fill it with
+            // data, when making POST request on this page
             model.addAttribute("newRole", new Role());
         }
         return "role/roles";
@@ -36,32 +38,56 @@ public class RoleController {
 
     // Form for adding new role
     @RequestMapping(value = "/roles", method = RequestMethod.POST)
-    public String addNewRole(@Valid Role role, BindingResult result) {
+    public String addNewRole(@Valid Role role,
+                             BindingResult result,
+                             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
+            System.out.println(result.hasErrors());
+            // we add flash to remember user's input
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.newRole",
+                    result);
+            // and we remember in flash wrong user inout
+            redirectAttributes.addFlashAttribute("newRole", role);
             return "redirect:/roles";
         }
+        // save role to database
         roleService.save(role);
+        // redirect back to same page
         return "redirect:/roles";
     }
 
-    // Single role page
+    // Detail role page
     @RequestMapping(value = "/roles/{roleId}")
     public String roleDetails(@PathVariable int roleId,
                               Model model) {
-        Role role = roleService.findById(roleId);
-        model.addAttribute("role", role);
-        return "role/detail";
+        // here we check if user made wrong input, and show his wrong data
+        if (!model.containsAttribute("role")) {
+            Role role = roleService.findById(roleId);
+            model.addAttribute("role", role);
+        }
+        return "role/role-details";
     }
 
     // Edit role
     @RequestMapping(value = "/roles/{roleId}", method = RequestMethod.POST)
     public String editRole(@PathVariable int roleId,
                            @Valid Role role,
-                           BindingResult result) {
+                           BindingResult result,
+                           RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
+            // we add flash to show user why input is wrong
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.role",
+                    result);
+            // we add flash to remember user's input
+            redirectAttributes.addFlashAttribute("role", role);
+            // redirect to detail role page
             return "redirect:/roles/" + roleId;
         }
+        // save role to database
         roleService.save(role);
+        // redirect to page with all roles
         return "redirect:/roles";
     }
 

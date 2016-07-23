@@ -24,8 +24,11 @@ public class CollaboratorDaoImpl implements CollaboratorDao {
     }
 
     @Override
-    public Collaborator findById(Long id) {
-        return null;
+    public Collaborator findById(int id) {
+        Session session = sessionFactory.openSession();
+        Collaborator collaborator = session.get(Collaborator.class, id);
+        session.close();
+        return collaborator;
     }
 
     @Override

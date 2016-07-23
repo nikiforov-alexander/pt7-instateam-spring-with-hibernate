@@ -6,24 +6,40 @@
         <nav th:replace="layout :: nav('roles')"></nav>
         <section>
             <div class="container wrapper">
+                <!--/* New Role adding form */-->
                 <form method="post" th:object="${newRole}">
                     <h2>Manage Roles</h2>
-                    <div>
-                        <ul th:each="listedRole : ${roles}" class="checkbox-list">
-                            <li>
-                                <!--<span th:text="${listedRole.name}" class="primary">Role Name</span>-->
-                                <a th:text="${listedRole.name}"
-                                   th:href="@{'/roles/' + ${listedRole.id}}"
-                                   class="primary role">Role Name</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <!--/* List available roles as links to detail role page
+                        and delete buttons as well
+                     */-->
+                    <ul th:each="listedRole : ${roles}" class="checkbox-list">
+                        <li>
+                            <!--/* Link to detail role page to edit */-->
+                            <a th:text="${listedRole.name}"
+                               th:href="@{'/roles/' + ${listedRole.id}}"
+                               class="primary role">Role Name</a>
+                            <!--/* Button to delete role */-->
+                            <a th:href="@{'/roles/' + ${listedRole.id} + '/delete'}"
+                               th:text="${'Delete'}"
+                               class="button delete">Delete</a>
+                        </li>
+                    </ul>
                     <div class="actions add-new-role">
+                        <!--/* Hidden role id input */-->
                         <input type="hidden" th:field="*{id}">
-                        <input type="text"
-                               placeholder="New Role..."
-                               th:field="*{name}"
-                               required>
+                        <!--/* Error class will be set to this div, if name is
+                               invalid
+                         */-->
+                        <div th:classappend="${#fields.hasErrors('name')}? 'error name' : ''">
+                            <!--/* Error reason why it is wrong */-->
+                            <span
+                                    th:if="${#fields.hasErrors('name')}"
+                                    th:errors="*{name}"></span>
+                            <input type="text"
+                                   placeholder="New Role..."
+                                   th:field="*{name}"
+                                   required>
+                        </div>
                         <button class="button" type="submit">Add</button>
                     </div>
                 </form>
