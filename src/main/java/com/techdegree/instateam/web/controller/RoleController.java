@@ -42,10 +42,18 @@ public class RoleController {
                              BindingResult result,
                              RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
+            System.out.println(result.hasErrors());
+            // we add flash to remember user's input
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.newRole",
+                    result);
+            // and we remember in flash wrong user inout
             redirectAttributes.addFlashAttribute("newRole", role);
             return "redirect:/roles";
         }
+        // save role to database
         roleService.save(role);
+        // redirect back to same page
         return "redirect:/roles";
     }
 
@@ -68,14 +76,18 @@ public class RoleController {
                            BindingResult result,
                            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            // we add flash to remember user's input
+            // we add flash to show user why input is wrong
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.role",
                     result);
+            // we add flash to remember user's input
             redirectAttributes.addFlashAttribute("role", role);
+            // redirect to detail role page
             return "redirect:/roles/" + roleId;
         }
+        // save role to database
         roleService.save(role);
+        // redirect to page with all roles
         return "redirect:/roles";
     }
 
