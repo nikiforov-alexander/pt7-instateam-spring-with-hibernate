@@ -94,13 +94,15 @@ public class CollaboratorController {
     public String collaboratorDetails(
             @PathVariable int collaboratorId,
             Model model) {
-        Collaborator collaborator =
-                collaboratorService.findById(collaboratorId);
-        if (collaborator == null) {
-            throw new NotFoundException("Collaborator is not found");
+        if (!model.containsAttribute("collaborator")) {
+            Collaborator collaborator =
+                    collaboratorService.findById(collaboratorId);
+            if (collaborator == null) {
+                throw new NotFoundException("Collaborator is not found");
+            }
+            model.addAttribute("collaborator", collaborator);
         }
         List<Role> roles = roleService.findAll();
-        model.addAttribute("collaborator", collaborator);
         model.addAttribute("roles", roles);
         return "collaborator/collaborator-details";
     }
@@ -116,9 +118,12 @@ public class CollaboratorController {
     public String saveOrUpdateCollaborator(
             @PathVariable int collaboratorId,
             @Valid Collaborator collaborator,
-            BindingResult bindingResult) {
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
        // if user input is not correct or role is not selected
        if (bindingResult.hasErrors() || collaborator.getRole().getId() == 0) {
+           System.out.println(collaborator);
+           redirectAttributes.addFlashAttribute("collaborator", collaborator);
            return "redirect:/collaborators/" + collaboratorId;
        }
        collaboratorService.save(collaborator);
