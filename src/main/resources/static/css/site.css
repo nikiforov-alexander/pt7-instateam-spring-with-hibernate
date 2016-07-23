@@ -308,6 +308,12 @@ strong {
 .container.wrapper code {
 	padding: 35px 35px 35px 35px;
 }
+.flash.success {
+    padding: 15px;
+    background-color: darkseagreen;
+    color: aliceblue;
+    text-align: center;
+}
 
 
 /* ==========================================================================
