@@ -53,6 +53,11 @@ public class RoleController {
         }
         // save role to database
         roleService.save(role);
+        // success flash message
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("New Role: '" + role.getName() +
+                        "' was successfully added!",
+                        FlashMessage.Status.SUCCESS));
         // redirect back to same page
         return "redirect:/roles";
     }
