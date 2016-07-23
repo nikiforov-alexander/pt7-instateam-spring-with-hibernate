@@ -203,6 +203,25 @@ strong {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
+.error {
+	padding: 25px 35px 15px 0px;
+	background: #FFF;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.error.name {
+    padding: 25px 35px 15px 0px;
+    background: #FFF;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.error.name span {
+	color: brown;
+}
+.error.name input {
+    border-color: brown;
+	margin-top: 10px;
+}
 .actions.add-new-role {
 	padding: 25px 35px 15px 35px;
 	background: #FFF;
@@ -271,6 +290,9 @@ strong {
 	padding: 35px 35px 0 35px;
 }
 .container.wrapper h2.error {
+	padding: 35px 35px 0px 35px;
+}
+.container.wrapper code {
 	padding: 35px 35px 35px 35px;
 }
 
