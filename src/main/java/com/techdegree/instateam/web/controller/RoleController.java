@@ -69,6 +69,9 @@ public class RoleController {
                            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             // we add flash to remember user's input
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.role",
+                    result);
             redirectAttributes.addFlashAttribute("role", role);
             return "redirect:/roles/" + roleId;
         }
