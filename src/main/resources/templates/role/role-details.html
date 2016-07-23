@@ -10,10 +10,19 @@
                     <div class="actions add-new-role">
                         <!--/* hidden id input */-->
                         <input type="hidden" th:field="*{id}">
-                        <!--/* Role name input */-->
-                        <input type="text"
-                               placeholder="Role Name..."
-                               th:field="*{name}" required>
+                        <!--/* Role name input: If user input is invalid,
+                            flash is shown
+                        */-->
+                        <div th:classappend="${#fields.hasErrors('name')}? 'error name' : ''">
+                            <!--/* Error reason why it is wrong */-->
+                            <span
+                                 th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{name}"></span>
+                            <input
+                                   type="text"
+                                   placeholder="Role Name..."
+                                   th:field="*{name}" required>
+                        </div>
                         <!--/* Save button */-->
                         <button class="button" type="submit">Save</button>
                         <!--/* Delete button */-->
