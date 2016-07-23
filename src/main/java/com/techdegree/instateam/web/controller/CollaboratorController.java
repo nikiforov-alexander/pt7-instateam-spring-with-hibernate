@@ -92,7 +92,9 @@ public class CollaboratorController {
                                       Model model) {
         Collaborator collaborator =
                 collaboratorService.findById(collaboratorId);
+        List<Role> roles = roleService.findAll();
         model.addAttribute("collaborator", collaborator);
-        return "collaborator/details";
+        model.addAttribute("roles", roles);
+        return "collaborator/collaborator-details";
     }
 }
