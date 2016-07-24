@@ -235,6 +235,10 @@ strong {
     border-color: brown;
 	margin-top: 10px;
 }
+.error.name.collaborator input {
+	border-color: brown;
+	margin-top: 15px;
+}
 .actions.add-new-role {
 	padding: 25px 35px 15px 35px;
 	background: #FFF;
