@@ -64,6 +64,15 @@
                                 <button class="button add-button" type="submit">
                                     Save
                                 </button>
+                                <!--/* Delete button with javascript simple confirm
+                                       dialog
+                                */-->
+                                <a onclick="return confirm('Do you really want to delete this collaborator?')"
+                                   th:href="@{'/collaborators/' + ${collaborator.id} + '/delete'}"
+                                   class="button delete-button">Delete</a>
+                                <!--/* Cancel button */-->
+                                <a th:href="@{/collaborators}"
+                                   class="button cancel-button">Cancel</a>
                             </div>
                         </div>
                     </div>
