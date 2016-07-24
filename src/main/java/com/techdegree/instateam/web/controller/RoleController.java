@@ -69,6 +69,7 @@ public class RoleController {
         // here we check if user made wrong input, and show his wrong data
         if (!model.containsAttribute("role")) {
             Role role = roleService.findById(roleId);
+            // if role is not found we throw exception showing error page
             if (role == null) {
                 throw new NotFoundException("Role not found");
             }
