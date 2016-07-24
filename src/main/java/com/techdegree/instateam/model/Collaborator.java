@@ -13,7 +13,6 @@ public class Collaborator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    @Min(value = 1,message = "Please select a role")
     int id;
     public int getId() {
         return id;
