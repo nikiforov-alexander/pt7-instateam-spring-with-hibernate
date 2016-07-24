@@ -41,7 +41,9 @@
                 </li>
             </ul>
         </nav>
-        <!--/* Flash fragment with successfull action of user: all CRUDS */-->
+        <!--/* Flash fragment with successfull action of user: all CRUDS
+               and on failure as well on pages with really wrong data
+               */-->
         <div th:fragment="flash" th:if="${flash != null}" class="container">
             <div th:classappend="${#strings.toLowerCase(flash.status)}"
                  th:text="${flash.message}" class="flash">
