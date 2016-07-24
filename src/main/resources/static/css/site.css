@@ -332,6 +332,12 @@ strong {
     color: aliceblue;
     text-align: center;
 }
+.flash.failure {
+    padding: 15px;
+    background-color: brown;
+    color: aliceblue;
+    text-align: center;
+}
 
 
 /* ==========================================================================
