@@ -69,10 +69,22 @@ public class CollaboratorController {
             // this way we remember user's wrong input, leaving him to it
             redirectAttributes.addFlashAttribute("newCollaborator",
                     collaborator);
-            // add error flash message
+            // add error flash attribute for invalid role
+            if ( collaborator.getRole().getId() == 0) {
+                redirectAttributes.addFlashAttribute(
+                        "invalidRoleMessage",
+                        "Please select a Role");
+            }
+            // add error flash attribute for invalid name
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.newCollaborator",
                     result);
+            // add error flash message because this page is going to be really
+            // big and it is hard to see error
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "Oops! Something went wrong, please see below",
+                    FlashMessage.Status.FAILURE
+            ));
             // return back to collaborators page
             return "redirect:/collaborators";
         }
