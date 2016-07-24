@@ -1,5 +1,6 @@
 package com.techdegree.instateam.web.controller;
 
+import com.techdegree.instateam.exception.NotFoundException;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,6 @@ public class RoleController {
                              BindingResult result,
                              RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            System.out.println(result.hasErrors());
             // we add flash to remember user's input
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.newRole",
@@ -69,6 +69,9 @@ public class RoleController {
         // here we check if user made wrong input, and show his wrong data
         if (!model.containsAttribute("role")) {
             Role role = roleService.findById(roleId);
+            if (role == null) {
+                throw new NotFoundException("Role not found");
+            }
             model.addAttribute("role", role);
         }
         return "role/role-details";
@@ -107,9 +110,23 @@ public class RoleController {
 
     //Delete role
     @RequestMapping(value = "/roles/{roleId}/delete")
-    public String deleteRole(@PathVariable int roleId) {
+    public String deleteRole(
+            @PathVariable int roleId,
+            RedirectAttributes redirectAttributes) {
+        // try to find role by id
         Role role = roleService.findById(roleId);
+        // if not found throw not found exception
+        if (role == null) {
+            throw new NotFoundException("Role not Found");
+        }
+        // delete from database
         roleService.delete(role);
+        // success flash message
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("New Role: '" + role.getName() +
+                        "' was successfully deleted!",
+                        FlashMessage.Status.SUCCESS));
+        // redirect back to page with roles
         return "redirect:/roles";
     }
 }
