@@ -1,4 +1,4 @@
-package com.techdegree.instateam.web.controller;
+package com.techdegree.instateam.web;
 
 public class FlashMessage {
     private String message;

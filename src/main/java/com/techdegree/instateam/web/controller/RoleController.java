@@ -3,6 +3,7 @@ package com.techdegree.instateam.web.controller;
 import com.techdegree.instateam.exception.NotFoundException;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.RoleService;
+import com.techdegree.instateam.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
