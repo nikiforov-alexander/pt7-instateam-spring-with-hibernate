@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -12,6 +13,7 @@ public class Collaborator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
+    @Min(value = 1,message = "Please select a role")
     int id;
     public int getId() {
         return id;
