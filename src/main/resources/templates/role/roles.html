@@ -5,6 +5,9 @@
         <header th:replace="layout :: header('Roles')"></header>
         <nav th:replace="layout :: nav('roles')"></nav>
         <section>
+            <!--/* Successful Flash message */-->
+            <div th:replace="layout :: flash"></div>
+            <!--/* Main container with data */-->
             <div class="container wrapper">
                 <!--/* New Role adding form */-->
                 <form method="post" th:object="${newRole}">
