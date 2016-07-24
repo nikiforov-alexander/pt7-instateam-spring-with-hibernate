@@ -168,14 +168,33 @@ public class CollaboratorController {
     public String saveOrUpdateCollaborator(
             @PathVariable int collaboratorId,
             @Valid Collaborator collaborator,
-            BindingResult bindingResult,
+            BindingResult result,
             RedirectAttributes redirectAttributes) {
        // if user input is not correct or role is not selected
-       if (bindingResult.hasErrors() || collaborator.getRole().getId() == 0) {
-           redirectAttributes.addFlashAttribute("collaborator", collaborator);
+       if (result.hasErrors() || collaborator.getRole().getId() == 0) {
+           // this way we remember user's wrong input, leaving him to it
+           redirectAttributes.addFlashAttribute("collaborator",
+                   collaborator);
+           // add error flash attribute for invalid role
+           if (collaborator.getRole().getId() == 0) {
+               redirectAttributes.addFlashAttribute(
+                       "invalidRoleMessage",
+                       "Please select a Role");
+           }
+           // add error flash attribute for invalid name
+           redirectAttributes.addFlashAttribute(
+                   "org.springframework.validation.BindingResult.collaborator",
+                   result);
+           // return back to edit page
            return "redirect:/collaborators/" + collaboratorId;
        }
+       // save collaborator to database
        collaboratorService.save(collaborator);
+       // set success flash message
+       redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Collaborator '" + collaborator.getName() +
+                        "' is saved!", FlashMessage.Status.SUCCESS
+       ));
        return "redirect:/collaborators";
     }
 
