@@ -68,12 +68,19 @@
                     <div class="actions add-new-collaborator">
                         <!--/* Hidden id field to post */-->
                         <input type="hidden" th:field="*{id}">
-                        <!--/* collaborator name to post, field is required:
-                               client side validation */-->
-                        <input type="text"
-                               placeholder="Name..."
-                               required
-                               th:field="*{name}">
+                        <!--/* this div gets error class to show user his
+                               errors in input */-->
+                        <div th:classappend="${#fields.hasErrors('name')}? 'error name collaborator' : ''">
+                            <!--/* Error message from validation of name */-->
+                            <span th:if="${#fields.hasErrors('name')}"
+                                  th:errors="*{name}"></span>
+                            <!--/* collaborator name to post, field is required:
+                                   client side validation */-->
+                            <input type="text"
+                                   placeholder="Name..."
+                                   required
+                                   th:field="*{name}">
+                        </div>
                         <!--/* Select role using option */-->
                         <div class="custom-select">
                             <!--/* arrow on option */-->
