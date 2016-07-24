@@ -5,6 +5,7 @@
         <header th:replace="layout :: header('Edit Collaborator')"></header>
         <nav th:replace="layout :: nav('collaborators')"></nav>
         <section>
+            <div th:replace="layout :: flash"></div>
             <div class="container wrapper">
                 <!--/* Form of editing collaborator */-->
                 <form th:action="@{'/collaborators/' + ${collaborator.id} + '/edit'}"
