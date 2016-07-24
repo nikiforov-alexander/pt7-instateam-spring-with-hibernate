@@ -6,16 +6,17 @@ import com.techdegree.instateam.model.Project;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.CollaboratorService;
 import com.techdegree.instateam.service.RoleService;
+import com.techdegree.instateam.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -32,11 +33,15 @@ public class CollaboratorController {
     public String listCollaborators(Model model) {
         // Get all collaborators
         List<Collaborator> collaborators = collaboratorService.findAll();
+        // add collaborators to view
         model.addAttribute("collaborators", collaborators);
-        // Make project with all collaborators
+        // Make project with all collaborators, is needed to update many
+        // collaborators at once
         if (!model.containsAttribute("projectWithAllCollaborators")) {
             Project projectWithAllCollaborators = new Project();
+            // fill project with existing collaborators from database
             projectWithAllCollaborators.setCollaborators(collaborators);
+            // add to view
             model.addAttribute("projectWithAllCollaborators",
                     projectWithAllCollaborators);
         }
@@ -53,12 +58,47 @@ public class CollaboratorController {
 
     // Form for adding new collaborator
     @RequestMapping(value = "/collaborators", method = RequestMethod.POST)
-    public String addNewCollaborator(@Valid Collaborator collaborator,
-                                     BindingResult result) {
+    public String addNewCollaborator(
+            @Valid Collaborator collaborator,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+        // we check for role.id == 0 because, we leave the option where
+        // user didn't select any role selected, see template file
+        // it can be quite strange, but I thought Ok for now
         if (result.hasErrors() || collaborator.getRole().getId() == 0) {
+            // this way we remember user's wrong input, leaving him to it
+            redirectAttributes.addFlashAttribute("newCollaborator",
+                    collaborator);
+            // add error flash attribute for invalid role
+            if ( collaborator.getRole().getId() == 0) {
+                redirectAttributes.addFlashAttribute(
+                        "invalidRoleMessage",
+                        "Please select a Role");
+            }
+            // add error flash attribute for invalid name
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.newCollaborator",
+                    result);
+            // add error flash message because this page is going to be really
+            // big and it is hard to see error
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "Oops! Something went wrong, please see below",
+                    FlashMessage.Status.FAILURE
+            ));
+            // return back to collaborators page
             return "redirect:/collaborators";
         }
+        // save collaborator in database
         collaboratorService.save(collaborator);
+        Role selectedRole =
+                roleService.findById(collaborator.getRole().getId());
+        // set successful flash message
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Collaborator '" + collaborator.getName() +
+                 "' with Role: '" + selectedRole.getName() +
+                 "' is succesfully added!", FlashMessage.Status.SUCCESS
+        ));
+        // redirect back to collaborators page
         return "redirect:/collaborators";
     }
 
