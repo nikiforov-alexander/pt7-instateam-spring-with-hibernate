@@ -85,11 +85,13 @@
                         </div>
                         <!--/* This div is activated when user does not pick
                                right id from options */-->
-                        <div th:classappend="${#fields.hasErrors('id')}? 'error id collaborator' : ''">
-                            <!--/* Print validation message, see Role class */-->
+                        <div th:classappend="${invalidRoleMessage != null}? 'error id collaborator' : ''">
+                            <!--/* Print validation message, set in controller
+                                   see invalidRoleMessage. Don't see better
+                                   ideas */-->
                             <span class="error id collaborator"
-                                  th:if="${#fields.hasErrors('id')}"
-                                  th:errors="*{id}">
+                                  th:if="${invalidRoleMessage != null}"
+                                  th:text="${invalidRoleMessage}">
                             </span>
                             <!--/* Select role using option */-->
                             <div class="custom-select">
