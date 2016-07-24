@@ -25,8 +25,11 @@
                         </div>
                         <!--/* Save button */-->
                         <button class="button" type="submit">Save</button>
-                        <!--/* Delete button */-->
-                        <a th:href="@{'/roles/' + ${role.id} + '/delete'}"
+                        <!--/* Delete button with javascript simple confirm
+                               dialog
+                        */-->
+                        <a onclick="return confirm('Deleting Role will delete all collaborators associated. Do you want to proceed?')"
+                           th:href="@{'/roles/' + ${role.id} + '/delete'}"
                            class="button delete-button">Delete</a>
                         <!--/* Cancel button */-->
                         <a th:href="@{/roles}"
