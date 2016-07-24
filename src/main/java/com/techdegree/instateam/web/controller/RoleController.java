@@ -90,8 +90,17 @@ public class RoleController {
             // redirect to detail role page
             return "redirect:/roles/" + roleId;
         }
+        // get old role from database
+        String oldRoleName = roleService.findById(roleId).getName();
         // save role to database
         roleService.save(role);
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage(
+                        "Role: '" + oldRoleName +
+                        "' was successfully updated to '"
+                        + role.getName() +
+                        "'",
+                        FlashMessage.Status.SUCCESS));
         // redirect to page with all roles
         return "redirect:/roles";
     }
