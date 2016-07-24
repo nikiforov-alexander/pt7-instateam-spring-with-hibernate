@@ -33,10 +33,11 @@
                     <ul th:each="collaborator : *{collaborators}"
                         class="checkbox-list">
                         <li>
-                            <!--/* Collaborator's name */-->
-                            <span th:text="${collaborator.name}"
-                                  class="primary">Name
-                            </span>
+                            <!--/* Collaborator's name leading to collaborator
+                                   detail page*/-->
+                            <a th:text="${collaborator.name}"
+                               th:href="@{'/collaborators/' + ${collaborator.id}}"
+                               class="primary role">Collaborator Name</a>
                             <!--/* Container with collaborator's role, here
                                    I used select with disabled fields to save
                                    styling
