@@ -38,6 +38,10 @@
                             <a th:text="${collaborator.name}"
                                th:href="@{'/collaborators/' + ${collaborator.id}}"
                                class="primary role">Collaborator Name</a>
+                            <a onclick="return confirm('Are you sure you want to delete this collaborator?')"
+                               th:href="@{'/collaborators/' + ${collaborator.id} + '/delete'}"
+                               th:text="${'Delete'}"
+                               class="button delete collaborator">Delete</a>
                             <!--/* Container with collaborator's role, here
                                    I used select with disabled fields to save
                                    styling
