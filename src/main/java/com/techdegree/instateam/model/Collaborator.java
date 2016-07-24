@@ -1,5 +1,8 @@
 package com.techdegree.instateam.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
@@ -32,6 +35,8 @@ public class Collaborator {
 
 
     @ManyToOne
+    @JoinColumn
+    @OnDelete(action = OnDeleteAction.CASCADE)
     Role role;
     public Role getRole() {
         return role;
