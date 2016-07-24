@@ -178,4 +178,27 @@ public class CollaboratorController {
        collaboratorService.save(collaborator);
        return "redirect:/collaborators";
     }
+
+    // delete collaborator
+    @RequestMapping(value = "/collaborators/{collaboratorId}/delete")
+    public String deleteCollaborator(
+            @PathVariable int collaboratorId,
+            RedirectAttributes redirectAttributes) {
+        // find collaborator by id
+        Collaborator collaborator =
+                collaboratorService.findById(collaboratorId);
+        // if not found error page is generated with 404
+        if (collaborator == null) {
+            throw new NotFoundException("Collaborator not found");
+        }
+        // delete collaborator from database
+        collaboratorService.delete(collaborator);
+        // set success flash message
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Collaborator '" + collaborator.getName() +
+                "' is successfully deleted!", FlashMessage.Status.SUCCESS
+        ));
+        // redirect back to collaborators page
+        return "redirect:/collaborators";
+    }
 }
