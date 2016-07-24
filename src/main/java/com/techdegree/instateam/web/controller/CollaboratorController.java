@@ -6,6 +6,7 @@ import com.techdegree.instateam.model.Project;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.CollaboratorService;
 import com.techdegree.instateam.service.RoleService;
+import com.techdegree.instateam.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,9 +73,20 @@ public class CollaboratorController {
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.newCollaborator",
                     result);
+            // return back to collaborators page
             return "redirect:/collaborators";
         }
+        // save collaborator in database
         collaboratorService.save(collaborator);
+        Role selectedRole =
+                roleService.findById(collaborator.getRole().getId());
+        // set successful flash message
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Collaborator '" + collaborator.getName() +
+                 "' with Role: '" + selectedRole.getName() +
+                 "' is succesfully added!", FlashMessage.Status.SUCCESS
+        ));
+        // redirect back to collaborators page
         return "redirect:/collaborators";
     }
 
