@@ -23,7 +23,8 @@ public class Collaborator {
 
     // same as name in Role class
     @Column(name = "NAME", columnDefinition = "VARCHAR")
-    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*")
+    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
+        message = "Name must consist of alphanumeric characters: a-Z, 0-9")
     String name;
     public String getName() {
         return name;
