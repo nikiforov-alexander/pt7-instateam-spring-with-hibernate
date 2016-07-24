@@ -124,7 +124,7 @@ public class RoleController {
         roleService.delete(role);
         // success flash message
         redirectAttributes.addFlashAttribute("flash",
-                new FlashMessage("New Role: '" + role.getName() +
+                new FlashMessage("Role: '" + role.getName() +
                         "' was successfully deleted!",
                         FlashMessage.Status.SUCCESS));
         // redirect back to page with roles
