@@ -134,18 +134,28 @@ public class CollaboratorController {
     public String collaboratorDetails(
             @PathVariable int collaboratorId,
             Model model) {
+        // if there was wrong input it should be saved
+        // if not we fill collaborator
         if (!model.containsAttribute("collaborator")) {
+            // find collaborator in database
             Collaborator collaborator =
                     collaboratorService.findById(collaboratorId);
+            // if not found we return error page with 404
             if (collaborator == null) {
                 throw new NotFoundException("Collaborator is not found");
             }
+            // add found collaborator to model
             model.addAttribute("collaborator", collaborator);
         }
+        // find all roles in database
         List<Role> roles = roleService.findAll();
+        // add them to model
         model.addAttribute("roles", roles);
         return "collaborator/collaborator-details";
     }
+    // If anywhere NotFoundException is thrown we return error page,
+    // i set custom status here, because for some reason otherwise
+    // status is 200 :(
     @ExceptionHandler(NotFoundException.class)
     public String collaboratorNotFound(Model model) {
         model.addAttribute("custom_status", 404);
@@ -162,7 +172,6 @@ public class CollaboratorController {
             RedirectAttributes redirectAttributes) {
        // if user input is not correct or role is not selected
        if (bindingResult.hasErrors() || collaborator.getRole().getId() == 0) {
-           System.out.println(collaborator);
            redirectAttributes.addFlashAttribute("collaborator", collaborator);
            return "redirect:/collaborators/" + collaboratorId;
        }
