@@ -1,8 +1,12 @@
 package com.techdegree.instateam.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -74,4 +78,6 @@ public class Role {
         return result;
     }
 
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
+    private List<Collaborator> collaborators;
 }
