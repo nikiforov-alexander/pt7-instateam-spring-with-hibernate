@@ -57,9 +57,21 @@ public class CollaboratorController {
 
     // Form for adding new collaborator
     @RequestMapping(value = "/collaborators", method = RequestMethod.POST)
-    public String addNewCollaborator(@Valid Collaborator collaborator,
-                                     BindingResult result) {
+    public String addNewCollaborator(
+            @Valid Collaborator collaborator,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+        // we check for role.id == 0 because, we leave the option where
+        // user didn't select any role selected, see template file
+        // it can be quite strange, but I thought Ok for now
         if (result.hasErrors() || collaborator.getRole().getId() == 0) {
+            // this way we remember user's wrong input, leaving him to it
+            redirectAttributes.addFlashAttribute("newCollaborator",
+                    collaborator);
+            // add error flash message
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.newCollaborator",
+                    result);
             return "redirect:/collaborators";
         }
         collaboratorService.save(collaborator);
