@@ -239,6 +239,20 @@ strong {
 	border-color: brown;
 	margin-top: 15px;
 }
+.error.id.collaborator {
+    padding: 0px 35px 15px 0px;
+    background: transparent;
+    float: left;
+}
+.error.id.collaborator span {
+    float: right;
+    padding: 15px;
+    color: brown;
+}
+.error.id.collaborator span.dropdown-arrow.add-new-collaborator {
+    float: right;
+    padding: 0px;
+}
 .actions.add-new-role {
 	padding: 25px 35px 15px 35px;
 	background: #FFF;
