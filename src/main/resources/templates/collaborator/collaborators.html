@@ -81,29 +81,38 @@
                                    required
                                    th:field="*{name}">
                         </div>
-                        <!--/* Select role using option */-->
-                        <div class="custom-select">
-                            <!--/* arrow on option */-->
-                            <span class="dropdown-arrow add-new-collaborator"></span>
-                                <select th:field="*{role.id}">
-                                    <!--/* selected default option with id=0
-                                           I process it in controller. If I
-                                           disable this option, Then when user
-                                           types right name, but not selecting
-                                           any option, the program will set him
-                                           first role by default. This is
-                                           arguable, but I decided for it to be
-                                           so.
-                                    */-->
-                                    <option value="0" selected>Select Role</option>
-                                    <!--/* option with id as value, and name as text */-->
-                                    <option th:each="availableRole : ${roles}"
-                                            th:value="${availableRole.id}"
-                                            th:text="${availableRole.name}">
-                                        Role Name
-                                    </option>
-                                </select>
-                            <button class="button add-button" type="submit">Add</button>
+                        <!--/* This div is activated when user does not pick
+                               right id from options */-->
+                        <div th:classappend="${#fields.hasErrors('id')}? 'error id collaborator' : ''">
+                            <!--/* Print validation message, see Role class */-->
+                            <span class="error id collaborator"
+                                  th:if="${#fields.hasErrors('id')}"
+                                  th:errors="*{id}">
+                            </span>
+                            <!--/* Select role using option */-->
+                            <div class="custom-select">
+                                <!--/* arrow on option */-->
+                                <span class="dropdown-arrow add-new-collaborator"></span>
+                                    <select th:field="*{role.id}">
+                                        <!--/* selected default option with id=0
+                                               I process it in controller. If I
+                                               disable this option, Then when user
+                                               types right name, but not selecting
+                                               any option, the program will set him
+                                               first role by default. This is
+                                               arguable, but I decided for it to be
+                                               so.
+                                        */-->
+                                            <option value="0" selected>Select Role</option>
+                                            <!--/* option with id as value, and name as text */-->
+                                            <option th:each="availableRole : ${roles}"
+                                                    th:value="${availableRole.id}"
+                                                    th:text="${availableRole.name}">
+                                                Role Name
+                                            </option>
+                                    </select>
+                                <button class="button add-button" type="submit">Add</button>
+                            </div>
                         </div>
                     </div>
                 </form>
