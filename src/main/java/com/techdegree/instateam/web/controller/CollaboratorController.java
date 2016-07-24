@@ -32,11 +32,15 @@ public class CollaboratorController {
     public String listCollaborators(Model model) {
         // Get all collaborators
         List<Collaborator> collaborators = collaboratorService.findAll();
+        // add collaborators to view
         model.addAttribute("collaborators", collaborators);
-        // Make project with all collaborators
+        // Make project with all collaborators, is needed to update many
+        // collaborators at once
         if (!model.containsAttribute("projectWithAllCollaborators")) {
             Project projectWithAllCollaborators = new Project();
+            // fill project with existing collaborators from database
             projectWithAllCollaborators.setCollaborators(collaborators);
+            // add to view
             model.addAttribute("projectWithAllCollaborators",
                     projectWithAllCollaborators);
         }
