@@ -5,6 +5,8 @@
         <header th:replace="layout :: header('Collaborators')"></header>
         <nav th:replace="layout :: nav('collaborators')"></nav>
         <section>
+            <!--/* sucessful flash message: on update or add */-->
+            <div th:replace="layout :: flash"></div>
             <div class="container wrapper">
                 <!--/*
                     If there are no roles we put here link to roles page
