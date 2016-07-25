@@ -34,6 +34,7 @@ public class Project {
     @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
     @NotNull
     @Size(min = 30)
+    static
     String description;
     public String getDescription() {
         return description;
@@ -60,6 +61,45 @@ public class Project {
         this.collaborators = collaborators;
     }
 
+
+    @Enumerated
+    public Status status;
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public static enum Status {
+        ACTIVE("Active","#123456"),
+        ARCHIVED("Archived", "#123456"),
+        NOT_STARTED("Not Started", "#123456");
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        private final String description;
+        private final String color;
+        Status(String description, String color) {
+            this.description = description;
+            this.color = color;
+        }
+
+        @Override
+        public String toString() {
+            return "Status{" +
+                    "description='" + description + '\'' +
+                    ", color='" + color + '\'' +
+                    '}';
+        }
+    }
     @Override
     public String toString() {
         return "Project{" +
