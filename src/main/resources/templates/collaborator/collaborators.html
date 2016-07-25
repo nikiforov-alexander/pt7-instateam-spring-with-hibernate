@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+    <!--/* Shows browser's tab name "InstaTeam | Collaborators */-->
     <head th:replace="layout :: head('Collaborators')"></head>
     <body>
+        <!--/* Shows header "InstaTeam : Collaborators" */-->
         <header th:replace="layout :: header('Collaborators')"></header>
+        <!--/* Navigation: should highlight "Collaborators" tab */-->
         <nav th:replace="layout :: nav('collaborators')"></nav>
         <section>
-            <!--/* sucessful flash message: on update or add */-->
+            <!--/* sucessful flash message: on update or add or delete */-->
             <div th:replace="layout :: flash"></div>
             <div class="container wrapper">
                 <!--/*
@@ -38,6 +41,7 @@
                             <a th:text="${collaborator.name}"
                                th:href="@{'/collaborators/' + ${collaborator.id}}"
                                class="primary role">Collaborator Name</a>
+                            <!--/* Delete collaborator button */-->
                             <a onclick="return confirm('Are you sure you want to delete this collaborator?')"
                                th:href="@{'/collaborators/' + ${collaborator.id} + '/delete'}"
                                th:text="${'Delete'}"
@@ -61,8 +65,11 @@
                             </div>
                         </li>
                     </ul>
+                    <!--/* Button for save all collaborators POST*/-->
                     <div class="actions">
-                        <button class="button" type="submit">Save</button>
+                        <button th:action="@{/collaborators/save-roles}"
+                                class="button"
+                                type="submit">Save</button>
                     </div>
                 </form>
                 <!--/* Form of adding new collaborator */-->
@@ -110,7 +117,8 @@
                                                any option, the program will set him
                                                first role by default. This is
                                                arguable, but I decided for it to be
-                                               so.
+                                               so. Right now if user doesn't select
+                                               role, error appears.
                                         */-->
                                             <option value="0" selected>Select Role</option>
                                             <!--/* option with id as value, and name as text */-->
@@ -120,7 +128,12 @@
                                                 Role Name
                                             </option>
                                     </select>
-                                <button class="button add-button" type="submit">Add</button>
+                                <!--/*
+                                Button for add new collaborator POST request
+                                */-->
+                                <button th:action="@{/collaborators/add-new}"
+                                        class="button add-button"
+                                        type="submit">Add</button>
                             </div>
                         </div>
                     </div>
