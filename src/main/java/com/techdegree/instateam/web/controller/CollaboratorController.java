@@ -114,31 +114,34 @@ public class CollaboratorController {
     public String saveCollaboratorsRoles(
             Project project,
             RedirectAttributes redirectAttributes) {
+        // find all collaborators in database
         List<Collaborator> collaboratorsInDatabase =
                 collaboratorService.findAll();
-
+        // cycle through list of collaborators to check which roles were
+        // changed and update them
         for (int i = 0; i < collaboratorsInDatabase.size(); i++) {
             // get old role from database
             Role oldRole = collaboratorsInDatabase.get(i).getRole();
             // get id from old role
             int oldRoleId = oldRole.getId();
-            // get new role id
+            // get new role id, from user's input
             int newRoleId = project.getCollaborators().get(i).getRole().getId();
             // if id is changed, we proceed
             if (oldRoleId != newRoleId) {
-                // get collaborator from database
+                // get collaborator with changed role from database
                 Collaborator newCollaborator = collaboratorsInDatabase.get(i);
-                // set new id for old collaborator's role
+                // set new id for collaborator's role
                 oldRole.setId(newRoleId);
                 // update database
                 collaboratorService.save(newCollaborator);
-                // show flash message with success
+                // show flash message with success on top
                 redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                         "Collaborators were successfully updated!",
                         FlashMessage.Status.SUCCESS
                 ));
             }
         }
+        // redirect back to collaborators page
         return "redirect:/collaborators";
     }
 
