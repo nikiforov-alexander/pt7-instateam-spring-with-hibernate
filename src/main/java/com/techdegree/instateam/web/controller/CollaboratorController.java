@@ -60,25 +60,27 @@ public class CollaboratorController {
     }
 
     // Form for adding new collaborator
-    @RequestMapping(value = "/collaborators/add-new", method = RequestMethod.POST)
+    @RequestMapping(value = "/collaborators/add-new",
+            method = RequestMethod.POST)
     public String addNewCollaborator(
             @Valid Collaborator collaborator,
             BindingResult result,
             RedirectAttributes redirectAttributes) {
         // we check for role.id == 0 because, we leave the option where
-        // user didn't select any role selected, see template file
+        // user didn't select any role , see template file
         // it can be quite strange, but I thought Ok for now
         if (result.hasErrors() || collaborator.getRole().getId() == 0) {
             // this way we remember user's wrong input, leaving him to it
             redirectAttributes.addFlashAttribute("newCollaborator",
                     collaborator);
-            // add error flash attribute for invalid role
-            if ( collaborator.getRole().getId() == 0) {
+            // add error flash attribute if user didn't select a role
+            if (collaborator.getRole().getId() == 0) {
                 redirectAttributes.addFlashAttribute(
                         "invalidRoleMessage",
                         "Please select a Role");
             }
-            // add error flash attribute for invalid name
+            // add error flash attribute for invalid name, to remember user's
+            // input
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.newCollaborator",
                     result);
@@ -93,9 +95,10 @@ public class CollaboratorController {
         }
         // save collaborator in database
         collaboratorService.save(collaborator);
+        // find selected Role to print in flash message
         Role selectedRole =
                 roleService.findById(collaborator.getRole().getId());
-        // set successful flash message
+        // set successful flash message on top
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                 "Collaborator '" + collaborator.getName() +
                  "' with Role: '" + selectedRole.getName() +
