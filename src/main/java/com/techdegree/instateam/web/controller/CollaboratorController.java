@@ -60,7 +60,7 @@ public class CollaboratorController {
     }
 
     // Form for adding new collaborator
-    @RequestMapping(value = "/collaborators", method = RequestMethod.POST)
+    @RequestMapping(value = "/collaborators/add-new", method = RequestMethod.POST)
     public String addNewCollaborator(
             @Valid Collaborator collaborator,
             BindingResult result,
