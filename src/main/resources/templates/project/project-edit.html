@@ -12,7 +12,7 @@
             <div th:replace="layout :: flash"></div>
             <div class="container wrapper">
                 <!--/* action can be add-new or edit existing */-->
-                <form th:action="@{/projects/${action}}"
+                <form th:action="@{|/projects/${action}|}"
                       th:object="${project}"
                       method="post">
                     <div>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="actions">
                         <!--/* button for adding new project */-->
-                        <button th:action="@{/projects/add-new}"
+                        <button th:action="@{|/projects/${action}|}"
                                 type="submit"
                                 value="Save"
                                 class="button">
