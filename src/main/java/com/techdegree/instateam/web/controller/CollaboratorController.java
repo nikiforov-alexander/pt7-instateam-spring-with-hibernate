@@ -207,11 +207,12 @@ public class CollaboratorController {
        }
        // save collaborator to database
        collaboratorService.save(collaborator);
-       // set success flash message
+       // set success flash message on top
        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                 "Collaborator '" + collaborator.getName() +
                         "' is saved!", FlashMessage.Status.SUCCESS
        ));
+       // redirect back to main collaborators page
        return "redirect:/collaborators";
     }
 
