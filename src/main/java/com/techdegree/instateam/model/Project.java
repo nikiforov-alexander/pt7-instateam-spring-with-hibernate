@@ -98,6 +98,7 @@ public class Project {
                     '}';
         }
     }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -106,6 +107,7 @@ public class Project {
                 ", description='" + description + '\'' +
                 ", rolesNeeded=" + rolesNeeded +
                 ", collaborators=" + collaborators +
+                ", status=" + status +
                 '}';
     }
 }
