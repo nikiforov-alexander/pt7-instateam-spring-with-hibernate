@@ -44,27 +44,20 @@
                             </select>
                         </div>
                     </div>
-                    <!--<div>-->
-                        <!--<label for="project_roles">Project Roles:</label>-->
-                        <!--<ul class="checkbox-list">-->
-                            <!--<li>-->
-                                <!--<input type="checkbox" name="project_roles" value="Developer">-->
-                                <!--<span class="primary"> Developer</span>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<input type="checkbox" name="project_roles" value="Designer">-->
-                                <!--<span class="primary"> Designer</span>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<input type="checkbox" name="project_roles" value="QA">-->
-                                <!--<span class="primary"> QA</span>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<input type="checkbox" name="project_roles" value="DevOps">-->
-                                <!--<span class="primary"> DevOps</span>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
+                    <div>
+                        <label for="project_roles">Project Roles:</label>
+                        <ul th:each="role : ${roles}" class="checkbox-list">
+                            <li>
+                                <input th:value="${role.name}"
+                                       type="checkbox"
+                                       name="project_roles">
+                                <span th:text="${role.name}"
+                                      class="primary">
+                                    Role Name
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="actions">
                         <input type="submit" value="Save" class="button">
                         <a href="#" class="button button-secondary">Cancel</a>
