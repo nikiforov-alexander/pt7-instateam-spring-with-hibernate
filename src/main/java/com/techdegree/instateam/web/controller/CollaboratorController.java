@@ -105,7 +105,9 @@ public class CollaboratorController {
     // Form for saving all collaborators' roles
     @RequestMapping(value = "/collaborators/save-roles",
             method = RequestMethod.POST)
-    public String saveCollaboratorsRoles(Project project) {
+    public String saveCollaboratorsRoles(
+            Project project,
+            RedirectAttributes redirectAttributes) {
         List<Collaborator> collaboratorsInDatabase =
                 collaboratorService.findAll();
 
@@ -124,6 +126,11 @@ public class CollaboratorController {
                 oldRole.setId(newRoleId);
                 // update database
                 collaboratorService.save(newCollaborator);
+                // show flash message with success
+                redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                        "Collaborators were successfully updated!",
+                        FlashMessage.Status.SUCCESS
+                ));
             }
         }
         return "redirect:/collaborators";
