@@ -230,7 +230,7 @@ public class CollaboratorController {
         }
         // delete collaborator from database
         collaboratorService.delete(collaborator);
-        // set success flash message
+        // set success flash message on top
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                 "Collaborator '" + collaborator.getName() +
                 "' is successfully deleted!", FlashMessage.Status.SUCCESS
