@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+    <!--/* Shows browser's tab name "InstaTeam | argument */-->
     <head th:replace="layout :: head('Projects')"></head>
     <body>
+        <!--/* Shows header "InstaTeam : argument" */-->
         <header th:replace="layout :: header('Projects')"> </header>
+        <!--/* Navigation: should highlight "Projects" tab */-->
         <nav th:replace="layout :: nav('projects')"></nav>
+        <!--/* sucessful flash message: on update or add or delete */-->
+        <div th:replace="layout :: flash"></div>
         <section>
             <div class="container wrapper">
                 <div class="project-list">
