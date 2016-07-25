@@ -12,7 +12,7 @@ public class Project {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     public int getId() {
         return id;
     }
@@ -33,9 +33,7 @@ public class Project {
 
     @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
     @NotNull
-    @Size(min = 30)
-    static
-    String description;
+    private String description;
     public String getDescription() {
         return description;
     }
@@ -44,7 +42,7 @@ public class Project {
     }
 
     @ManyToMany
-    List<Role> rolesNeeded;
+    private List<Role> rolesNeeded;
     public void setRolesNeeded(List<Role> rolesNeeded) {
         this.rolesNeeded = rolesNeeded;
     }
@@ -53,7 +51,7 @@ public class Project {
     }
 
     @ManyToMany
-    List<Collaborator> collaborators;
+    private List<Collaborator> collaborators;
     public List<Collaborator> getCollaborators() {
         return collaborators;
     }
