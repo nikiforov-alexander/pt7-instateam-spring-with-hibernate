@@ -7,8 +7,12 @@ import com.techdegree.instateam.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -48,5 +52,22 @@ public class ProjectController {
            model.addAttribute("project", new Project());
         }
         return "/project/project-edit";
+    }
+
+    // add new project
+    @RequestMapping(value = "/projects/add-new", method = RequestMethod.POST)
+    public String saveProject(
+            @Valid Project project,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        // if user's input is not valid
+        if (result.hasErrors()) {
+            System.out.println(project);
+            // redirect back to form
+            return "redirect:/projects/add-new";
+        }
+        // redirect back to main page
+        return "redirect:/";
     }
 }
