@@ -150,8 +150,9 @@ public class CollaboratorController {
     public String collaboratorDetails(
             @PathVariable int collaboratorId,
             Model model) {
-        // if there was wrong input it should be saved
-        // if not we fill collaborator
+        // if there was wrong input from saveOrUpdateCollaborator method with
+        // POST request, it should be saved
+        // if not we fill collaborator from database
         if (!model.containsAttribute("collaborator")) {
             // find collaborator in database
             Collaborator collaborator =
