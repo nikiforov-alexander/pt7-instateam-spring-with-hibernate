@@ -28,6 +28,7 @@ public class CollaboratorController {
     private RoleService roleService;
 
     // index of all categories
+    // suppress warnings because of findAll()
     @SuppressWarnings("unchecked")
     @RequestMapping("/collaborators")
     public String listCollaborators(Model model) {
@@ -47,9 +48,11 @@ public class CollaboratorController {
         }
         // Get all roles
         List<Role> roles = roleService.findAll();
+        // add roles to view
         model.addAttribute("roles", roles);
         // add empty newCollaborator, so that we can fill it with
-        // data when making POST request
+        // data when making POST request. If user howoever already typed
+        // wrong name his input is saved in input field
         if (!model.containsAttribute("newCollaborator")) {
             model.addAttribute("newCollaborator", new Collaborator());
         }
