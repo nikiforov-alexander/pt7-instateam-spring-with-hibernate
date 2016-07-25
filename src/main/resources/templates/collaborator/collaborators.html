@@ -67,7 +67,7 @@
                 </form>
                 <!--/* Form of adding new collaborator */-->
                 <form th:if="${roles.size() > 0}"
-                      th:action="@{/collaborators}"
+                      th:action="@{/collaborators/add-new}"
                       th:object="${newCollaborator}"
                       method="post">
                     <h2>Add New Collaborator</h2>
