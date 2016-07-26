@@ -5,6 +5,7 @@ import com.techdegree.instateam.model.ProjectStatus;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.ProjectService;
 import com.techdegree.instateam.service.RoleService;
+import com.techdegree.instateam.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -112,6 +113,14 @@ public class ProjectController {
         }
         // add neededRoles to project
         project.setRolesNeeded(rolesNeeded);
+        // save project to database
+        projectService.save(project);
+        // add flash of successful save on top of the redirected page
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Project '" + project.getName() +
+                "' was successfully saved!",
+                FlashMessage.Status.SUCCESS
+        ));
         // redirect back to main page
         return "redirect:/";
     }
