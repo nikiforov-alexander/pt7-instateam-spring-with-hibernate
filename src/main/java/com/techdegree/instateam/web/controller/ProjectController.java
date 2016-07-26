@@ -1,6 +1,7 @@
 package com.techdegree.instateam.web.controller;
 
 import com.techdegree.instateam.model.Project;
+import com.techdegree.instateam.model.ProjectStatus;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.ProjectService;
 import com.techdegree.instateam.service.RoleService;
@@ -37,7 +38,7 @@ public class ProjectController {
     @RequestMapping("/projects/add-new")
     public String addNewProject(Model model) {
         // add statuses values
-        model.addAttribute("statuses", Project.Status.values());
+        model.addAttribute("statuses", ProjectStatus.values());
         // we add action attribute because this template
         // will be re-used for both edit and add new project
         model.addAttribute("action", "add-new");
@@ -48,8 +49,10 @@ public class ProjectController {
         // user made a mistake, model will be filled with
         // with previously entered data
         if (!model.containsAttribute("project")) {
-           // if not we add fresh new Project
-           model.addAttribute("project", new Project());
+            // if not we add fresh new Project
+            Project project = new Project();
+            project.setRolesNeeded(roles);
+            model.addAttribute("project", project);
         }
         return "/project/project-edit";
     }
@@ -62,8 +65,8 @@ public class ProjectController {
             Model model,
             RedirectAttributes redirectAttributes) {
         // if user's input is not valid
+        System.out.println(project);
         if (result.hasErrors()) {
-            System.out.println(project);
             // redirect back to form
             return "redirect:/projects/add-new";
         }
