@@ -95,6 +95,11 @@ public class ProjectController {
                             .mapToInt(Role::getId)
                             .toArray();
             if (arrayOfRolesIndicesThatWereChanged.length == 0) {
+                // add other project fields typed by user
+                redirectAttributes.addFlashAttribute("project", project);
+                // add flash with error please select at least one role
+                redirectAttributes.addFlashAttribute("rolesError",
+                        "Please select at least one role");
                 // redirect back to form with errors that some roles
                 // have to be in project for now
                 return "redirect:/projects/add-new";
