@@ -15,7 +15,14 @@
                 <form th:action="@{|/projects/${action}|}"
                       th:object="${project}"
                       method="post">
-                    <div>
+                    <div th:classappend="${#fields.hasErrors('name')}? 'error name' : ''">
+                        <!--/* Validation error message */-->
+                        <span th:if="${#fields.hasErrors('name')}"
+                              th:errors="*{name}">
+                            Validation Error Message
+                        </span>
+                        <!--/* project name input, required: server side
+                               validation */-->
                         <label for="project_name"> Project Name:</label>
                         <input th:field="*{name}"
                                type="text"
@@ -49,9 +56,9 @@
                     <div>
                         <label for="project_roles">Project Roles:</label>
                         <ul class="checkbox-list">
-                            <li th:each="role : *{rolesNeeded}">
-                                <input th:value="${role.checked}"
-                                       th:field="*{rolesNeeded[__${roleStat.index}__].checked}"
+                            <li th:each="role : ${allRoles}">
+                                <input th:value="${role.id}"
+                                       th:field="*{rolesNeeded[__${roleStat.index}__].id}"
                                        type="checkbox"
                                        >
                                 <span th:text="${role.name}"
