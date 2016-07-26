@@ -21,7 +21,8 @@ public class Project {
 
     @Column(name = "NAME", columnDefinition = "VARCHAR")
     @NotNull
-    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*")
+    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
+        message = "Name must consist of alphanumeric characters: a-Z, 0-9")
     private String name;
     public String getName() {
         return name;
@@ -31,7 +32,7 @@ public class Project {
     }
 
     @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
-    @NotNull
+    @NotNull(message = "Description cannot be empty")
     private String description;
     public String getDescription() {
         return description;
