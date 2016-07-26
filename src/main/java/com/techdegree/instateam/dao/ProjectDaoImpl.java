@@ -23,4 +23,13 @@ public class ProjectDaoImpl implements ProjectDao {
         session.close();
         return projects;
     }
+
+    @Override
+    public void save(Project project) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(project);
+        session.getTransaction().commit();
+        session.close();
+    }
 }
