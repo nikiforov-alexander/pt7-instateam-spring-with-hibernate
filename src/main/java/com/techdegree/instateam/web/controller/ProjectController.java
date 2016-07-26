@@ -41,15 +41,26 @@ public class ProjectController {
 
     // add new project page
     @RequestMapping("/projects/add-new")
-    public String addNewProject(Model model) {
-        // add statuses values
+    public String addNewProject(Model model,
+                                RedirectAttributes redirectAttributes) {
+        // add roles available to model
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("allRoles", roles);
+        // if there are no roles we redirect to role page
+        if (roles.size() == 0) {
+            // set flash message to roles
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "No roles available for project to be created, " +
+                            "please add some.",
+                    FlashMessage.Status.SUCCESS
+            ));
+            return "redirect:/roles";
+        }
+        // add statuses values to model
         model.addAttribute("statuses", ProjectStatus.values());
         // we add action attribute because this template
         // will be re-used for both edit and add new project
         model.addAttribute("action", "add-new");
-        // add roles available
-        List<Role> roles = roleService.findAll();
-        model.addAttribute("allRoles", roles);
         // if model contains project, e.g. when we
         // user made a mistake, model will be filled with
         // with previously entered data
