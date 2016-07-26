@@ -1,9 +1,5 @@
 package com.techdegree.instateam.model;
 
-import javafx.beans.DefaultProperty;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -15,7 +11,7 @@ public class Role {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     public int getId() {
         return id;
     }
@@ -40,7 +36,7 @@ public class Role {
     @NotNull
     @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
             message = "Name must consist of alphanumeric characters: a-Z, 0-9")
-    String name;
+    private String name;
     public String getName() {
         return name;
     }
@@ -50,16 +46,6 @@ public class Role {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
     private List<Collaborator> collaborators;
-
-    // boolean value used in processing checkbox of roles in project
-    // hopefully will be removed
-    private boolean checked;
-    public boolean isChecked() {
-        return checked;
-    }
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
 
     public Role() {
         // default constructor for JPA
@@ -80,7 +66,6 @@ public class Role {
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", checked=" + checked +
                 ", name='" + name + '\'' +
                 '}';
     }
