@@ -1,8 +1,8 @@
 package com.techdegree.instateam.model;
 
 public enum ProjectStatus {
-    ACTIVE("Active","lightgreen"),
-    ARCHIVED("Archived", "black"),
+    ACTIVE("Active","#72c38d"),
+    ARCHIVED("Archived", "#bbbab9"),
     NOT_STARTED("Not Started", "white");
 
     public String getDescription() {
