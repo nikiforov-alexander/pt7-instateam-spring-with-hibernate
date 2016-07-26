@@ -13,7 +13,8 @@
             <div class="container wrapper">
                 <!--/*
                     If there are no projects availabe we put here link to
-                    add project page
+                    add project page. Also if there are no roles, we will
+                    be redirected to roles page
                 */-->
                 <h2 th:if="${projects.size() == 0}" class="outside-form">
                     No Projects Available
@@ -23,19 +24,26 @@
                         Add Project
                     </a>
                 </div>
+                <!--/* List with projects */-->
                 <div class="project-list">
                     <div th:each="project : ${projects}" class="project">
+                        <!--/* Project name : link to project detail page */-->
                         <h2><a th:text="${project.name}"
-                               href="project/project-detail.html">
-                                Website Project
+                               th:href="@{project/project-details}">
+                                Project Name
                             </a>
                         </h2>
+                        <!--/* Project description */-->
                         <p th:text="${project.description}">
-                            Design and build a custom website
+                            Project Description
                         </p>
+                        <!--/* Project status, is colored according to
+                               status
+                        */-->
                         <span th:text="${project.status}"
                               class="tag active">
-                            Active</span>
+                            Project Status
+                        </span>
                     </div>
             </div>
         </section>
