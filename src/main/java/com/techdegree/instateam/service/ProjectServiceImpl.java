@@ -16,4 +16,9 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> findAll() {
        return projectDao.findAll();
     }
+
+    @Override
+    public void save(Project project) {
+        projectDao.save(project);
+    }
 }

@@ -3,7 +3,6 @@ package com.techdegree.instateam.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -12,7 +11,7 @@ public class Project {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     public int getId() {
         return id;
     }
@@ -22,8 +21,9 @@ public class Project {
 
     @Column(name = "NAME", columnDefinition = "VARCHAR")
     @NotNull
-    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*")
-    String name;
+    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
+        message = "Name must consist of alphanumeric characters: a-Z, 0-9")
+    private String name;
     public String getName() {
         return name;
     }
@@ -32,9 +32,8 @@ public class Project {
     }
 
     @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
-    @NotNull
-    @Size(min = 30)
-    String description;
+    @NotNull(message = "Description cannot be empty")
+    private String description;
     public String getDescription() {
         return description;
     }
@@ -43,7 +42,7 @@ public class Project {
     }
 
     @ManyToMany
-    List<Role> rolesNeeded;
+    private List<Role> rolesNeeded;
     public void setRolesNeeded(List<Role> rolesNeeded) {
         this.rolesNeeded = rolesNeeded;
     }
@@ -52,12 +51,24 @@ public class Project {
     }
 
     @ManyToMany
-    List<Collaborator> collaborators;
+    private List<Collaborator> collaborators;
     public List<Collaborator> getCollaborators() {
         return collaborators;
     }
     public void setCollaborators(List<Collaborator> collaborators) {
         this.collaborators = collaborators;
+    }
+
+
+    // status column, uses values from enum ProjectStatus. Enum I was not
+    // able to incorporate
+    @Column(name = "STATUS", columnDefinition = "VARCHAR")
+    private String status;
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -68,6 +79,7 @@ public class Project {
                 ", description='" + description + '\'' +
                 ", rolesNeeded=" + rolesNeeded +
                 ", collaborators=" + collaborators +
+                ", status=" + status +
                 '}';
     }
 }

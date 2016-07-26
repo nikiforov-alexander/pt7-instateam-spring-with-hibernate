@@ -242,8 +242,29 @@ strong {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+.error.name.project {
+	padding: 25px 35px 15px 0px;
+	background: #FFF;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-width: 0px;
+}
 .error.name span {
 	color: brown;
+}
+.error.role.project {
+	padding: 25px 35px 15px 0px;
+	background: #FFF;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-width: 0px;
+}
+.error.role.project span{
+	color: brown;
+}
+.error.role.project span.validation{
+    position: relative;
+	bottom: 10px;
 }
 .error.name input {
     border-color: brown;

@@ -1,8 +1,5 @@
 package com.techdegree.instateam.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,7 +11,7 @@ public class Role {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     public int getId() {
         return id;
     }
@@ -39,13 +36,16 @@ public class Role {
     @NotNull
     @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
             message = "Name must consist of alphanumeric characters: a-Z, 0-9")
-    String name;
+    private String name;
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
     }
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
+    private List<Collaborator> collaborators;
 
     public Role() {
         // default constructor for JPA
@@ -62,7 +62,6 @@ public class Role {
         return name != null ? name.equals(role.name) : role.name == null;
 
     }
-
     @Override
     public String toString() {
         return "Role{" +
@@ -77,7 +76,4 @@ public class Role {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
-
-    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
-    private List<Collaborator> collaborators;
 }
