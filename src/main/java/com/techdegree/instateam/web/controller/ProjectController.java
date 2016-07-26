@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController {
@@ -44,15 +48,13 @@ public class ProjectController {
         model.addAttribute("action", "add-new");
         // add roles available
         List<Role> roles = roleService.findAll();
-        model.addAttribute("roles", roles);
+        model.addAttribute("allRoles", roles);
         // if model contains project, e.g. when we
         // user made a mistake, model will be filled with
         // with previously entered data
         if (!model.containsAttribute("project")) {
             // if not we add fresh new Project
-            Project project = new Project();
-            project.setRolesNeeded(roles);
-            model.addAttribute("project", project);
+            model.addAttribute("project", new Project());
         }
         return "/project/project-edit";
     }
@@ -64,12 +66,47 @@ public class ProjectController {
             BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes) {
+        // create new array rolesNeeded
+        List<Role> rolesNeeded = new ArrayList<>();
         // if user's input is not valid
-        System.out.println(project);
         if (result.hasErrors()) {
-            // redirect back to form
-            return "redirect:/projects/add-new";
+            // here we take care of simple errors like description and
+            // name field errors
+            if(result.hasFieldErrors("name")
+                    || result.hasFieldErrors("description")) {
+                // add flash attribute of project, NOTE: checked roles
+                // probably won't be saved. May be later
+                redirectAttributes.addFlashAttribute("project", project);
+                // add flash attribute with errors for name or description
+                // fields
+                redirectAttributes.addFlashAttribute(
+                        "org.springframework.validation.BindingResult.project",
+                        result);
+                // redirect back to form
+                return "redirect:/projects/add-new";
+            }
+            // here we take care of rolesNeeded errors
+            // create array of ids of roles that were checked : that will be
+            // the roles with id != 0. Don't know any other way. Tried lots of
+            // stuff
+            int[] arrayOfRolesIndicesThatWereChanged =
+                    project.getRolesNeeded().stream()
+                            .filter(role -> role.getId() != 0)
+                            .mapToInt(Role::getId)
+                            .toArray();
+            if (arrayOfRolesIndicesThatWereChanged.length == 0) {
+                // redirect back to form with errors that some roles
+                // have to be in project for now
+                return "redirect:/projects/add-new";
+            } else {
+                // if length is not zero, we obtain valid rolesNeeded list
+                for (int selectedRoleId : arrayOfRolesIndicesThatWereChanged) {
+                    rolesNeeded.add(roleService.findById(selectedRoleId));
+                }
+            }
         }
+        // add neededRoles to project
+        project.setRolesNeeded(rolesNeeded);
         // redirect back to main page
         return "redirect:/";
     }
