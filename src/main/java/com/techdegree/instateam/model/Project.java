@@ -3,7 +3,6 @@ package com.techdegree.instateam.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -23,7 +22,7 @@ public class Project {
     @Column(name = "NAME", columnDefinition = "VARCHAR")
     @NotNull
     @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*")
-    String name;
+    private String name;
     public String getName() {
         return name;
     }
@@ -60,43 +59,15 @@ public class Project {
     }
 
 
-    @Enumerated
-    public Status status;
-    public Status getStatus() {
+    // status column, uses values from enum ProjectStatus. Enum I was not
+    // able to incorporate
+    @Column(name = "STATUS", columnDefinition = "VARCHAR")
+    private String status;
+    public String getStatus() {
         return status;
     }
-
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
-    }
-
-    public static enum Status {
-        ACTIVE("Active","#123456"),
-        ARCHIVED("Archived", "#123456"),
-        NOT_STARTED("Not Started", "#123456");
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        private final String description;
-        private final String color;
-        Status(String description, String color) {
-            this.description = description;
-            this.color = color;
-        }
-
-        @Override
-        public String toString() {
-            return "Status{" +
-                    "description='" + description + '\'' +
-                    ", color='" + color + '\'' +
-                    '}';
-        }
     }
 
     @Override
