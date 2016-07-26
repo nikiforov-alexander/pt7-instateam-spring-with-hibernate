@@ -3,7 +3,7 @@ package com.techdegree.instateam.model;
 public enum ProjectStatus {
     ACTIVE("Active","lightgreen"),
     ARCHIVED("Archived", "black"),
-    NOT_STARTED("Not Started", "#ffffff");
+    NOT_STARTED("Not Started", "white");
 
     public String getDescription() {
         return description;
