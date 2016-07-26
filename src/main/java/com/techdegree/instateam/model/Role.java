@@ -1,5 +1,6 @@
 package com.techdegree.instateam.model;
 
+import javafx.beans.DefaultProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -47,6 +48,19 @@ public class Role {
         this.name = name;
     }
 
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
+    private List<Collaborator> collaborators;
+
+    // boolean value used in processing checkbox of roles in project
+    // hopefully will be removed
+    private boolean checked;
+    public boolean isChecked() {
+        return checked;
+    }
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     public Role() {
         // default constructor for JPA
     }
@@ -62,11 +76,11 @@ public class Role {
         return name != null ? name.equals(role.name) : role.name == null;
 
     }
-
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
+                ", checked=" + checked +
                 ", name='" + name + '\'' +
                 '}';
     }
@@ -77,7 +91,4 @@ public class Role {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
-
-    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
-    private List<Collaborator> collaborators;
 }
