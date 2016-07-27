@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController {
@@ -75,52 +75,45 @@ public class ProjectController {
             BindingResult result,
             Model model,
             RedirectAttributes redirectAttributes) {
-        // create new array rolesNeeded
-        List<Role> rolesNeeded = new ArrayList<>();
-        // if user's input is not valid
-        if (result.hasErrors()) {
-            // here we take care of simple errors like description and
-            // name field errors
-            if(result.hasFieldErrors("name")
-                    || result.hasFieldErrors("description")
-                    || result.hasFieldErrors("status")) {
-                // add flash attribute of project, NOTE: checked roles
-                // probably won't be saved. May be later
-                redirectAttributes.addFlashAttribute("project", project);
-                // add flash attribute with errors for name or description
-                // fields
-                redirectAttributes.addFlashAttribute(
-                        "org.springframework.validation.BindingResult.project",
-                        result);
-                // redirect back to form
-                return "redirect:/projects/add-new";
-            }
-            // here we take care of rolesNeeded errors
-            // create array of ids of roles that were checked : that will be
-            // the roles with id != 0. Don't know any other way. Tried lots of
-            // stuff
-            int[] arrayOfRolesIndicesThatWereChanged =
-                    project.getRolesNeeded().stream()
-                            .filter(role -> role.getId() != 0)
-                            .mapToInt(Role::getId)
-                            .toArray();
-            if (arrayOfRolesIndicesThatWereChanged.length == 0) {
-                // add other project fields typed by user
-                redirectAttributes.addFlashAttribute("project", project);
-                // add flash with error please select at least one role
-                redirectAttributes.addFlashAttribute("rolesError",
-                        "Please select at least one role");
-                // redirect back to form with errors that some roles
-                // have to be in project for now
-                return "redirect:/projects/add-new";
-            } else {
-                // if length is not zero, we obtain valid rolesNeeded list
-                for (int selectedRoleId : arrayOfRolesIndicesThatWereChanged) {
-                    rolesNeeded.add(roleService.findById(selectedRoleId));
-                }
-            }
+        // first we obtain roles needed array from project object filled in
+        // form. This roles list will have null values for roles, that were
+        // not selected, hence we simply filter these roles, to get valid
+        // array of roles selected by user
+        List<Role> rolesNeeded = project.getRolesNeeded().stream()
+                .filter(role -> role != null)
+                .collect(Collectors.toList());
+        // here unfortunately, I cannot directly use validation, because I
+        // have this error:
+        // Field error in object 'project' on field 'rolesNeeded[0]': rejected value
+        // which is different from error on field 'rolesNeeded'
+        // In order to avoid this error, because I know that my roles are
+        // selected properly, all I care about is that user selected some roles.
+        // So if size of this filtered array will be zero
+        if (rolesNeeded.size() == 0) {
+            // I manually reject whole 'rolesNeeded' field, so that later it
+            // can be processed just like any other error fields
+            // found solution here:
+            // http://stackoverflow.com/questions/12107503/adding-error-message-to-spring-3-databinder-for-custom-object-fields
+            result.rejectValue("rolesNeeded",
+                    "error.project",
+                    "Please select at least one role");
         }
-        // add neededRoles to project
+        // here I check for error for every field manually including them in
+        // unfortunately, because of reject error see above.
+        if (result.hasFieldErrors("name")
+                || result.hasFieldErrors("description")
+                || result.hasFieldErrors("status")
+                || result.hasFieldErrors("rolesNeeded")) {
+            // add flash attribute of project
+            redirectAttributes.addFlashAttribute("project", project);
+            // add flash attribute with errors for every field
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.project",
+                    result);
+            // redirect back to form
+            return "redirect:/projects/add-new";
+        }
+        // add right neededRoles to project
         project.setRolesNeeded(rolesNeeded);
         // save project to database
         projectService.save(project);

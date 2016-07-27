@@ -15,38 +15,56 @@
                 <form th:action="@{|/projects/${action}|}"
                       th:object="${project}"
                       method="post">
+                    <!--/* In case of error class of this div will change to
+                        error class
+                    */-->
                     <div th:classappend="${#fields.hasErrors('name')}? 'error name project' : ''">
                         <!--/* Validation error message */-->
                         <span th:if="${#fields.hasErrors('name')}"
                               th:errors="*{name}">
                             Validation Error Message
                         </span>
-                        <!--/* project name input, required: server side
-                               validation */-->
-                        <label for="project_name"> Project Name:</label>
+                        <!--/* project name input, attr 'required' is for server
+                               side validation.
+                         */-->
+                        <label th:for="${#fields.idFromName('name')}"> Project Name:</label>
                         <input th:field="*{name}"
                                type="text"
                                required
                                name="project_name">
                     </div>
-                    <!--/* No validation messages for project description, because
-                           its only validation is being not null, and browser
-                           takes care of this with "required" attribute. So
-                           nothing for now
+                    <!--/* No validation messages for project description,
+                           because its only validation is being not null, and
+                           browser takes care of this with "required" attribute.
+                           But just in case we add something I'll leave this
+                           error class here
                      */-->
-                    <div>
-                        <label for="project_description">Project Description:</label>
+                    <div th:classappend="${#fields.hasErrors('name')}? 'error name project' : ''">
+                        <!--/* Validation error message */-->
+                        <span th:if="${#fields.hasErrors('name')}"
+                              th:errors="*{name}">
+                        Validation Error Message
+                    </span>
+                        <!--/* project description input, attr 'required'
+                               is for server side validation
+                         */-->
+                        <label th:for="${#fields.idFromName('description')}">
+                            Project Description:
+                        </label>
                         <textarea th:field="*{description}"
                                 rows="4"
                                 name="project_description"
                                 required>
                         </textarea>
                     </div>
-                    <!--/* No validation for project, because I want to make
-                           "Not started" by default here
+                    <!--/* No validation div for 'status', because I want to
+                           make "Not started" by default here. Can be
+                           easily changed later
                     */-->
                     <div>
-                        <label for="project_status">Project Status:</label>
+                        <label th:for="${#fields.idFromName('status')}">
+                            Project Status:
+                        </label>
                         <div class="custom-select">
                          <!--/* arrow on selector */-->
                         <span class="dropdown-arrow"></span>
@@ -67,38 +85,52 @@
                             </select>
                         </div>
                     </div>
-                    <!--/* This is validated manually, when field is invalid,
-                           rolesError is passed to model,
-                           see controller. Unfortunately roles checked by user
-                           not saved. Could be implemented with Validation
-                           Service?
+                    <!--/* This is validated manually, see controller method,
+                           but '#fields.hasErrors' can be used because we set
+                           it accordingly
                     */-->
-                    <div th:classappend="${rolesError != null}? 'error role project' : ''">
+                    <div th:classappend="${#fields.hasErrors('rolesNeeded')}? 'error role project' : ''">
                         <!--/* Custom validation error message */-->
-                        <span th:if="${rolesError != null}"
-                              th:text="${rolesError}"
+                        <span th:if="${#fields.hasErrors('rolesNeeded')}"
+                              th:errors="*{rolesNeeded}"
                               class="validation">
-                        Please select at least one Role
+                            Please select at least one Role
                         </span>
-                        <label for="project_roles">Project Roles:</label>
+                        <!--/* This label does not point to anywhere, so I
+                               because we have many roles with many ids.
+                               It is better be changed to simple span. May be
+                               It is wrong, but it feels better
+                        */-->
+                        <!--/*
+                            <label for="project_roles">Project Roles:</label>
+                        */-->
+                        <span th:if="${#fields.hasErrors('rolesNeeded') == false}">
+                            Project Roles:
+                        </span>
+                        <!--/* list with all roles */-->
                         <ul class="checkbox-list">
-                            <!--/* Tricky part: here I print all roles,
-                                   but for input.value I use role.id member.
-                                   Why? Otherwise I have to write custom
-                                   validator and|or converted of Role. It gives
-                                   me validation error message. So I collect
-                                   empty roles, with names equal to null, and
-                                   if selected id will non-zero, this way I know
-                                   what user has selected. The other question is
-                                   why not to attach Role name somehow, well
-                                   I tried, it didn't work. This is the only
-                                   way
-                            */-->
                             <li th:each="role : ${allRoles}">
-                                <input th:value="${role.id}"
-                                       th:field="*{rolesNeeded[__${roleStat.index}__].id}"
-                                       type="checkbox"
-                                       >
+                                <!--/*
+                                     here we set selected role id of
+                                     rolesNeeded. Without this id will be 0
+                                */-->
+                                <select hidden th:field="*{rolesNeeded[__${roleStat.index}__].id}">
+                                    <option th:value="${role.id}"></option>
+                                </select>
+                                <!--/*
+                                     here we set selected role name of
+                                     rolesNeeded. Without this name will be null
+                                */-->
+                                <select hidden th:field="*{rolesNeeded[__${roleStat.index}__].name}">
+                                    <option th:value="${role.name}"></option>
+                                </select>
+                                <!--/* Main checkbox where we attach checked
+                                       Role to one of the RolesNeeded elements.
+                                       Unchecked roles will be null
+                                */-->
+                                <input th:value="${role}"
+                                       th:field="*{rolesNeeded[__${roleStat.index}__]}"
+                                       type="checkbox">
                                 <!--/* Prints role name near checkbox */-->
                                 <span th:text="${role.name}"
                                       class="primary">

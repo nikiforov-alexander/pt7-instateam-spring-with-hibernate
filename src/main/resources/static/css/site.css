@@ -260,9 +260,10 @@ strong {
 	border-bottom-width: 0px;
 }
 .error.role.project span{
-	color: brown;
+	color: grey;
 }
 .error.role.project span.validation{
+	color: brown;
     position: relative;
 	bottom: 10px;
 }
