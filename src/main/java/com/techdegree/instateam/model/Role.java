@@ -47,6 +47,12 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
     private List<Collaborator> collaborators;
 
+    @ManyToMany
+    @JoinTable(name = "PROJECTS_ROLES",
+        joinColumns = {@JoinColumn(name = "PROJECT_ID")},
+        inverseJoinColumns = {@JoinColumn(name = "ROLESNEEDED_ID")})
+    private List<Project> projects;
+
     public Role() {
         // default constructor for JPA
     }
