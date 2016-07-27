@@ -25,9 +25,9 @@
                             Validation Error Message
                         </span>
                         <!--/* project name input, attr 'required' is for server
-                               side validation
+                               side validation.
                          */-->
-                        <label for="project_name"> Project Name:</label>
+                        <label th:for="${#fields.idFromName('name')}"> Project Name:</label>
                         <input th:field="*{name}"
                                type="text"
                                required
@@ -48,7 +48,7 @@
                         <!--/* project description input, attr 'required'
                                is for server side validation
                          */-->
-                        <label for="project_description">
+                        <label th:for="${#fields.idFromName('description')}">
                             Project Description:
                         </label>
                         <textarea th:field="*{description}"
@@ -62,7 +62,9 @@
                            easily changed later
                     */-->
                     <div>
-                        <label for="project_status">Project Status:</label>
+                        <label th:for="${#fields.idFromName('status')}">
+                            Project Status:
+                        </label>
                         <div class="custom-select">
                          <!--/* arrow on selector */-->
                         <span class="dropdown-arrow"></span>
@@ -94,7 +96,17 @@
                               class="validation">
                             Please select at least one Role
                         </span>
-                        <label for="project_roles">Project Roles:</label>
+                        <!--/* This label does not point to anywhere, so I
+                               because we have many roles with many ids.
+                               It is better be changed to simple span. May be
+                               It is wrong, but it feels better
+                        */-->
+                        <!--/*
+                            <label for="project_roles">Project Roles:</label>
+                        */-->
+                        <span th:if="${#fields.hasErrors('rolesNeeded') == false}">
+                            Project Roles:
+                        </span>
                         <!--/* list with all roles */-->
                         <ul class="checkbox-list">
                             <li th:each="role : ${allRoles}">
