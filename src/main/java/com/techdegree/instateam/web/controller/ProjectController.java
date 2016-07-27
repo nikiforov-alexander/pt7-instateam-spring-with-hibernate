@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,16 @@ public class ProjectController {
             return "redirect:/roles";
         }
         // add statuses values to model
-        model.addAttribute("statuses", ProjectStatus.values());
+        // first of all add default one
+        model.addAttribute("defaultStatus", ProjectStatus.NOT_STARTED);
+        // then add others. Here for simplicity there are no for each loops,
+        // because we have two statuses. Can be improved by necessity
+        List<ProjectStatus> projectStatusListWithoutDefaultOne =
+                new ArrayList<>();
+        projectStatusListWithoutDefaultOne.add(ProjectStatus.ARCHIVED);
+        projectStatusListWithoutDefaultOne.add(ProjectStatus.ACTIVE);
+        model.addAttribute("statusesWithoutDefaultOne",
+                projectStatusListWithoutDefaultOne);
         // we add action attribute because this template
         // will be re-used for both edit and add new project
         model.addAttribute("action", "add-new");
