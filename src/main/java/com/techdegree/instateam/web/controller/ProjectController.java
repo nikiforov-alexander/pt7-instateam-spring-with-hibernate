@@ -82,7 +82,8 @@ public class ProjectController {
             // here we take care of simple errors like description and
             // name field errors
             if(result.hasFieldErrors("name")
-                    || result.hasFieldErrors("description")) {
+                    || result.hasFieldErrors("description")
+                    || result.hasFieldErrors("status")) {
                 // add flash attribute of project, NOTE: checked roles
                 // probably won't be saved. May be later
                 redirectAttributes.addFlashAttribute("project", project);
