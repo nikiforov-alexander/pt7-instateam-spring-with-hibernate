@@ -32,4 +32,12 @@ public class ProjectDaoImpl implements ProjectDao {
         session.getTransaction().commit();
         session.close();
     }
+
+    @Override
+    public Project findById(int projectId) {
+        Session session = sessionFactory.openSession();
+        Project project = session.get(Project.class, projectId);
+        session.close();
+        return project;
+    }
 }
