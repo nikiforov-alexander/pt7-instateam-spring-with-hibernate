@@ -60,14 +60,12 @@ public class Project {
     }
 
 
-    // status column, uses values from enum ProjectStatus. Enum I was not
-    // able to incorporate
-    @Column(name = "STATUS", columnDefinition = "VARCHAR")
-    private String status;
-    public String getStatus() {
+    @Enumerated
+    private ProjectStatus status;
+    public ProjectStatus getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(ProjectStatus status) {
         this.status = status;
     }
 
