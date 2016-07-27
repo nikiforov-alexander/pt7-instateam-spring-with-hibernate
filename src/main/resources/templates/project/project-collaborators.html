@@ -11,46 +11,27 @@
             <!--/* sucessful flash message */-->
             <div th:replace="layout :: flash"></div>
             <div class="container wrapper">
-                <form>
-                    <label>Edit Collaborators: Website Project</label>
+                <form th:action="@{/projects/save-collaborators}"
+                      th:object="${project}">
+                    <label th:text="'Edit Collaborators : ' + ${name}">
+                        Edit Collaborators: Project Name
+                    </label>
                     <ul class="checkbox-list">
-                        <li><span class="primary">Developer</span>
-                            <div class="custom-select">
-                                <span class="dropdown-arrow"></span>
-                                <select>
-                                    <option value="#">Michael Pemulis</option>
-                                    <option value="#">Name</option>
-                                </select>
-                            </div>
+                        <li th:each="role : *{rolesNeeded}">
+                            <span th:text="${role.name}" class="primary">
+                                Role Name
+                            </span>
+                            <!--<div class="custom-select">-->
+                                <!--<span class="dropdown-arrow"></span>-->
+                                <!--<select th:each="collaborator : *{role.collaborators}">-->
+                                    <!--<option th:value="${collaborator}"-->
+                                            <!--th:text="${collaborator.name}"-->
+                                            <!--th:field="*{collaborators[__${collaboratorStat.index}__]}">-->
+                                        <!--Collaborator Name-->
+                                    <!--</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
                         </li>
-                        <li><span class="primary">Designer</span>
-                            <div class="custom-select">
-                                <span class="dropdown-arrow"></span>
-                                <select>
-                                    <option value="#">Don Gately</option>
-                                    <option value="#">Name</option>
-                                </select>
-                            </div>
-                        </li>
-                        <li><span class="primary">QA</span>
-                            <div class="custom-select">
-                                <span class="dropdown-arrow"></span>
-                                <select>
-                                    <option value="#">Joelle Van Dyne</option>
-                                    <option value="#">Name</option>
-                                </select>
-                            </div>
-                        </li>
-                        <li><span class="primary">DevOps</span>
-                            <div class="custom-select">
-                                <span class="dropdown-arrow"></span>
-                                <select>
-                                    <option value="#">Choose...</option>
-                                    <option value="#">Name</option>
-                                </select>
-                            </div>
-                        </li>
-                    </ul>
                     <div class="actions">
                         <input type="submit" value="Save" class="button">
                         <a href="#" class="button button-secondary">Cancel</a>
