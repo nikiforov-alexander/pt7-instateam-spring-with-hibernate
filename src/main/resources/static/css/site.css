@@ -623,3 +623,6 @@ select.not-started {
     color: black;
     font-weight: bold;
 }
+span.tag.not-started {
+    background: black;
+}
