@@ -50,10 +50,7 @@
                         <div class="custom-select">
                          <!--/* arrow on selector */-->
                         <span class="dropdown-arrow"></span>
-                             <!--/* Select project status field, for now just a
-                                    simple string is passed, will try to
-                                    incorporate enum later
-                             */-->
+                             <!--/* Select project status field */-->
                             <select th:field="*{status}"
                                     name="project_status">
                                 <!--/* For now active is selected, this is one
@@ -62,7 +59,7 @@
                                        itself is not, also to do.
                                  */-->
                                 <option th:each="availableStatus : ${statuses}"
-                                        th:value="${availableStatus.description}"
+                                        th:value="${availableStatus}"
                                         th:text="${availableStatus.description}"
                                         th:style="|background:${availableStatus.color}|">
                                     Status description

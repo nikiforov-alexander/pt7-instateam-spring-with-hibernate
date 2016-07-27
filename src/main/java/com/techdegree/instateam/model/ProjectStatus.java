@@ -1,8 +1,8 @@
 package com.techdegree.instateam.model;
 
 public enum ProjectStatus {
-    ACTIVE("Active","lightgreen"),
-    ARCHIVED("Archived", "black"),
+    ACTIVE("Active","#72c38d"),
+    ARCHIVED("Archived", "#bbbab9"),
     NOT_STARTED("Not Started", "white");
 
     public String getDescription() {
@@ -18,13 +18,5 @@ public enum ProjectStatus {
     ProjectStatus(String description, String color) {
         this.description = description;
         this.color = color;
-    }
-
-    @Override
-    public String toString() {
-        return "Status{" +
-                "description='" + description + '\'' +
-                ", color='" + color + '\'' +
-                '}';
     }
 }

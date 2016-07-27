@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController {
@@ -41,15 +38,26 @@ public class ProjectController {
 
     // add new project page
     @RequestMapping("/projects/add-new")
-    public String addNewProject(Model model) {
-        // add statuses values
+    public String addNewProject(Model model,
+                                RedirectAttributes redirectAttributes) {
+        // add roles available to model
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("allRoles", roles);
+        // if there are no roles we redirect to role page
+        if (roles.size() == 0) {
+            // set flash message to roles
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "No roles available for project to be created, " +
+                            "please add some.",
+                    FlashMessage.Status.SUCCESS
+            ));
+            return "redirect:/roles";
+        }
+        // add statuses values to model
         model.addAttribute("statuses", ProjectStatus.values());
         // we add action attribute because this template
         // will be re-used for both edit and add new project
         model.addAttribute("action", "add-new");
-        // add roles available
-        List<Role> roles = roleService.findAll();
-        model.addAttribute("allRoles", roles);
         // if model contains project, e.g. when we
         // user made a mistake, model will be filled with
         // with previously entered data
@@ -74,7 +82,8 @@ public class ProjectController {
             // here we take care of simple errors like description and
             // name field errors
             if(result.hasFieldErrors("name")
-                    || result.hasFieldErrors("description")) {
+                    || result.hasFieldErrors("description")
+                    || result.hasFieldErrors("status")) {
                 // add flash attribute of project, NOTE: checked roles
                 // probably won't be saved. May be later
                 redirectAttributes.addFlashAttribute("project", project);

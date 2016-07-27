@@ -26,7 +26,7 @@ public class Collaborator {
     @Column(name = "NAME", columnDefinition = "VARCHAR")
     @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
         message = "Name must consist of alphanumeric characters: a-Z, 0-9")
-    String name;
+    private String name;
     public String getName() {
         return name;
     }
@@ -39,7 +39,7 @@ public class Collaborator {
     @ManyToOne
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
-    Role role;
+    private Role role;
     public Role getRole() {
         return role;
     }

@@ -47,3 +47,86 @@ org.h2.message.DbException: Wrong user name or password [28000-192]
 Caused by: org.h2.jdbc.JdbcSQLException: Wrong user name or password [28000-192]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
 	... 9 more
+2016-07-26 16:55:49 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]" [50000-192]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:295)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:94)
+	at org.h2.mvstore.MVStore.writeInBackground(MVStore.java:2508)
+	at org.h2.mvstore.MVStore$BackgroundWriterThread.run(MVStore.java:2694)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]" [50000-192]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 5 more
+Caused by: java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:773)
+	at org.h2.mvstore.MVStore.getChunkIfFound(MVStore.java:951)
+	at org.h2.mvstore.MVStore.getChunk(MVStore.java:933)
+	at org.h2.mvstore.MVStore.readPage(MVStore.java:1935)
+	at org.h2.mvstore.MVMap.readPage(MVMap.java:736)
+	at org.h2.mvstore.MVMap.setRootPos(MVMap.java:746)
+	at org.h2.mvstore.MVStore.getMetaMap(MVStore.java:525)
+	at org.h2.mvstore.MVStore.openMapVersion(MVStore.java:406)
+	at org.h2.mvstore.MVMap.openVersion(MVMap.java:1128)
+	at org.h2.mvstore.MVMap.rewrite(MVMap.java:775)
+	at org.h2.mvstore.MVStore.compactRewrite(MVStore.java:1910)
+	at org.h2.mvstore.MVStore.compact(MVStore.java:1802)
+	at org.h2.mvstore.MVStore.writeInBackground(MVStore.java:2504)
+	... 1 more
+2016-07-26 16:56:13 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]" [50000-192]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:295)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:94)
+	at org.h2.mvstore.MVStore.writeInBackground(MVStore.java:2508)
+	at org.h2.mvstore.MVStore$BackgroundWriterThread.run(MVStore.java:2694)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]" [50000-192]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 5 more
+Caused by: java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:773)
+	at org.h2.mvstore.MVStore.getChunkIfFound(MVStore.java:951)
+	at org.h2.mvstore.MVStore.getChunk(MVStore.java:933)
+	at org.h2.mvstore.MVStore.readPage(MVStore.java:1935)
+	at org.h2.mvstore.MVMap.readPage(MVMap.java:736)
+	at org.h2.mvstore.MVMap.setRootPos(MVMap.java:746)
+	at org.h2.mvstore.MVStore.getMetaMap(MVStore.java:525)
+	at org.h2.mvstore.MVStore.openMapVersion(MVStore.java:406)
+	at org.h2.mvstore.MVMap.openVersion(MVMap.java:1128)
+	at org.h2.mvstore.MVMap.rewrite(MVMap.java:775)
+	at org.h2.mvstore.MVStore.compactRewrite(MVStore.java:1910)
+	at org.h2.mvstore.MVStore.compact(MVStore.java:1802)
+	at org.h2.mvstore.MVStore.writeInBackground(MVStore.java:2504)
+	... 1 more
+2016-07-26 16:56:16 database: could not close the database
+org.h2.message.DbException: General error: "General error: ""java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]"" [50000-192]" [50000-192]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.engine.Database.throwLastBackgroundException(Database.java:2027)
+	at org.h2.engine.Database.close(Database.java:1217)
+	at org.h2.engine.DatabaseCloser.run(DatabaseCloser.java:63)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "General error: ""java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]"" [50000-192]" [50000-192]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 4 more
+Caused by: org.h2.message.DbException: General error: "java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]" [50000-192]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:295)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:94)
+	at org.h2.mvstore.MVStore.writeInBackground(MVStore.java:2508)
+	at org.h2.mvstore.MVStore$BackgroundWriterThread.run(MVStore.java:2694)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]" [50000-192]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 5 more
+Caused by: java.lang.IllegalStateException: Chunk 32132 no longer exists [1.4.192/9]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:773)
+	at org.h2.mvstore.MVStore.getChunkIfFound(MVStore.java:951)
+	at org.h2.mvstore.MVStore.getChunk(MVStore.java:933)
+	at org.h2.mvstore.MVStore.readPage(MVStore.java:1935)
+	at org.h2.mvstore.MVMap.readPage(MVMap.java:736)
+	at org.h2.mvstore.MVMap.setRootPos(MVMap.java:746)
+	at org.h2.mvstore.MVStore.getMetaMap(MVStore.java:525)
+	at org.h2.mvstore.MVStore.openMapVersion(MVStore.java:406)
+	at org.h2.mvstore.MVMap.openVersion(MVMap.java:1128)
+	at org.h2.mvstore.MVMap.rewrite(MVMap.java:775)
+	at org.h2.mvstore.MVStore.compactRewrite(MVStore.java:1910)
+	at org.h2.mvstore.MVStore.compact(MVStore.java:1802)
+	at org.h2.mvstore.MVStore.writeInBackground(MVStore.java:2504)
+	... 1 more
