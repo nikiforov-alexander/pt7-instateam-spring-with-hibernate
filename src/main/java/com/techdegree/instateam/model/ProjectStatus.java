@@ -19,12 +19,4 @@ public enum ProjectStatus {
         this.description = description;
         this.color = color;
     }
-
-    @Override
-    public String toString() {
-        return "Status{" +
-                "description='" + description + '\'' +
-                ", color='" + color + '\'' +
-                '}';
-    }
 }
