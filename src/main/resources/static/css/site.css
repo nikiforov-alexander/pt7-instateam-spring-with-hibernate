@@ -599,4 +599,30 @@ form .add-new-collaborator .button.add-button {
 }
 
 
-
+option.active {
+    color: #72c38d;
+    font-weight: bold;
+}
+option.archived {
+    color: #bbbab9;
+    font-weight: bold;
+}
+option.not-started {
+    color: black;
+    font-weight: bold;
+}
+select.active {
+    color: #72c38d;
+    font-weight: bold;
+}
+select.archived {
+    color: #bbbab9;
+    font-weight: bold;
+}
+select.not-started {
+    color: black;
+    font-weight: bold;
+}
+span.tag.not-started {
+    background: black;
+}

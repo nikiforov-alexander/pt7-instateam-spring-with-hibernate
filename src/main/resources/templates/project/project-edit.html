@@ -70,16 +70,25 @@
                         <span class="dropdown-arrow"></span>
                              <!--/* Select project status field */-->
                             <select th:field="*{status}"
+                                    th:class="${defaultStatus.styleClass}"
                                     name="project_status">
-                                <!--/* For now active is selected, this is one
-                                       of additional things to do. Coloring is
-                                       added to each option, however select
-                                       itself is not, also to do.
+                                <!--/* I separated statuses in model to default
+                                       one and others. It seemed natural to me
+                                       that 'Not started' should be default
+                                       status. Also note: each option has its
+                                       own style, that is then transformed to
+                                       select attribute using javascript, see
+                                       'app.js' file.
                                  */-->
-                                <option th:each="availableStatus : ${statuses}"
+                                <option th:value="${defaultStatus}"
+                                        th:text="${defaultStatus.description}"
+                                        th:class="${defaultStatus.styleClass}">
+                                    Default Status Description
+                                </option>
+                                <option th:class="${availableStatus.styleClass}"
+                                        th:each="availableStatus : ${statusesWithoutDefaultOne}"
                                         th:value="${availableStatus}"
-                                        th:text="${availableStatus.description}"
-                                        th:style="|background:${availableStatus.color}|">
+                                        th:text="${availableStatus.description}">
                                     Status description
                                 </option>
                             </select>
@@ -156,5 +165,6 @@
                 </form>
             </div>
         </section>
+        <div th:replace="layout :: scripts"></div>
     </body>
 </html>
