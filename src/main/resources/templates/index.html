@@ -41,7 +41,7 @@
                                status
                         */-->
                         <span th:text="${project.status}"
-                              class="tag active">
+                              th:class="'tag ' + ${project.status.styleClass}">
                             Project Status
                         </span>
                     </div>
