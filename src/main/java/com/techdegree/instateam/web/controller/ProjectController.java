@@ -1,5 +1,6 @@
 package com.techdegree.instateam.web.controller;
 
+import com.techdegree.instateam.exception.NotFoundException;
 import com.techdegree.instateam.model.Project;
 import com.techdegree.instateam.model.ProjectStatus;
 import com.techdegree.instateam.model.Role;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -135,5 +138,91 @@ public class ProjectController {
         ));
         // redirect back to main page
         return "redirect:/";
+    }
+    // edit project page
+    @RequestMapping("/projects/{projectId}/edit")
+    public String editProject(
+            @PathVariable int projectId,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        // find project by id
+        Project project = projectService.findById(projectId);
+        System.out.println("here comes the exception");
+        System.out.println("roles are: " + project.getRolesNeeded());
+        // if not found return 404
+        if (project == null) {
+            throw new NotFoundException("Project not found");
+        }
+        // add roles available to model
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("allRoles", roles);
+        // if there are no roles we redirect to role page
+        if (roles.size() == 0) {
+            // set flash message to roles
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "No roles available for project to be created, " +
+                            "please add some.",
+                    FlashMessage.Status.SUCCESS
+            ));
+            return "redirect:/roles";
+        }
+        // add statuses values to model
+        // first of all add default one
+        model.addAttribute("defaultStatus", ProjectStatus.NOT_STARTED);
+        // then add others. Here for simplicity there are no for each loops,
+        // because we have two statuses. Can be improved by necessity
+        List<ProjectStatus> projectStatusListWithoutDefaultOne =
+                new ArrayList<>();
+        projectStatusListWithoutDefaultOne.add(ProjectStatus.ARCHIVED);
+        projectStatusListWithoutDefaultOne.add(ProjectStatus.ACTIVE);
+        model.addAttribute("statusesWithoutDefaultOne",
+                projectStatusListWithoutDefaultOne);
+        // we add action attribute because this template
+        // will be re-used for both edit and add new project
+        model.addAttribute("action", "add-new");
+        // if model contains project, e.g. when we
+        // user made a mistake, model will be filled with
+        // with previously entered data
+        if (!model.containsAttribute("project")) {
+            // fill roles with nulls
+            List<Role> validRolesNeeded = new ArrayList<>();
+            for (Role role: roles) {
+                System.out.println("role id: " + role.getId());
+                if (project.getRolesNeeded().contains(role)) {
+                   validRolesNeeded.add(role);
+                } else {
+                   validRolesNeeded.add(null);
+                }
+            }
+            System.out.println("valid roles are: " + validRolesNeeded);
+            // if not we add edited Project
+            model.addAttribute("project", project);
+        }
+        return "/project/project-edit";
+    }
+
+    // edit collaborators page
+    @RequestMapping("/project/{projectId}/collaborators")
+    public String editProjectCollaborators(
+            @PathVariable int projectId,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        // find project by id
+        Project project = projectService.findById(projectId);
+        // if not found throw error
+        if (project == null) {
+            throw new NotFoundException("Project not found");
+        }
+        // add project to model
+        model.addAttribute("project", project);
+        return "project/project-collaborators";
+    }
+    // If anywhere NotFoundException is thrown we return error page,
+    // i set custom status here, because for some reason otherwise
+    // status is 200 :(
+    @ExceptionHandler(NotFoundException.class)
+    public String projectNotFound(Model model) {
+        model.addAttribute("custom_status", 404);
+        return "error";
     }
 }
