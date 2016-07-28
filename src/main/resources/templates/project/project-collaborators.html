@@ -15,13 +15,14 @@
                 <form method="post"
                       th:action="@{/projects/save-collaborators}"
                       th:object="${project}">
-                    <!--/* Hidden id, name and description elements, because we
-                         update here the existing project, we have to put these.
-                         Otherwise we'll have validation errors
+                    <!--/* Hidden id is needed, so that later we can get
+                           other project data from project in database, see
+                           controller for more. The rest fields are not needed
+                           because they are changed on the other page, so
+                           all we need from used is collaborators here, which
+                           is logical too.
                     */-->
                     <input hidden th:field="*{id}" type="text">
-                    <input hidden th:field="*{name}" type="text">
-                    <input hidden th:field="*{description}" type="text">
                     <!--/* Label for Edit collaborators, basically span
                            should be better here, because there is no "for"
                            with "id" to point to.
