@@ -47,10 +47,8 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
     private List<Collaborator> collaborators;
 
-    @ManyToMany
-    @JoinTable(name = "PROJECTS_ROLES",
-        joinColumns = {@JoinColumn(name = "PROJECT_ID")},
-        inverseJoinColumns = {@JoinColumn(name = "ROLESNEEDED_ID")})
+    @ManyToMany(mappedBy = "rolesNeeded",
+    fetch = FetchType.EAGER)
     private List<Project> projects;
 
     public Role() {
