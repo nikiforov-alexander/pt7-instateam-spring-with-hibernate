@@ -37,15 +37,26 @@
                                   th:text="${role.name}">
                                 Role Name
                             </span>
-                            <!--/* list collaborators assigned */-->
-                            <!--<div th:if="${project.collaborators.size() > 0}">-->
-                                <!--<span th:if="${project.collaborators.role.id == role.id}" class="secondary">Michael Pemulis</span>-->
-                                <!--<span th:text="${project.collaborators.role.id == role.id}" class="secondary">Michael Pemulis</span>-->
-                            <!--</div>-->
-                        </div>
-                        <div class="list-item">
-                            <span class="primary">DevOps</span>
-                            <span class="secondary">[Unassigned]</span>
+                            <!--/* list unassigned collaborators if there are
+                                   no collaborators
+                            */-->
+                            <span th:if="${project.collaborators.size() == 0}"
+                                    class="secondary">
+                                [Unassigned]
+                            </span>
+                            <!--/* If there are some collaborators */-->
+                            <div th:each="collaborator : ${project.collaborators}">
+                                <!--/* we check if collaborator.role.id is
+                                       equal to role of this project, then
+                                       we print collaborator's name, others are
+                                       ignored
+                                */-->
+                                <span th:if="${collaborator.role.id == role.id}"
+                                      th:text="${project.collaborator.name}"
+                                      class="secondary">
+                                    Collaborator Name
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="actions">
