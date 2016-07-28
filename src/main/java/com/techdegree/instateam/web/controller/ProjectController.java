@@ -269,22 +269,22 @@ public class ProjectController {
         return "project/project-details";
     }
 
-    // edit collaborators page
-//    @RequestMapping("/project/{projectId}/collaborators")
-//    public String editProjectCollaborators(
-//            @PathVariable int projectId,
-//            Model model,
-//            RedirectAttributes redirectAttributes) {
-//        // find project by id
-//        Project project = projectService.findById(projectId);
-//        // if not found throw error
-//        if (project == null) {
-//            throw new NotFoundException("Project not found");
-//        }
-//        // add project to model
-//        model.addAttribute("project", project);
-//        return "project/project-collaborators";
-//    }
+//     edit collaborators page
+    @RequestMapping("/projects/{projectId}/collaborators")
+    public String editProjectCollaborators(
+            @PathVariable int projectId,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        // find project by id
+        Project project = projectService.findById(projectId);
+        // if not found throw error
+        if (project == null) {
+            throw new NotFoundException("Project not found");
+        }
+        // add project to model
+        model.addAttribute("project", project);
+        return "project/project-collaborators";
+    }
     // If anywhere NotFoundException is thrown we return error page,
     // i set custom status here, because for some reason otherwise
     // status is 200 :(
