@@ -12,7 +12,8 @@
             <div th:replace="layout :: flash"></div>
             <div class="container wrapper">
                 <!--/* save collaborators form */-->
-                <form th:action="@{/projects/save-collaborators}"
+                <form method="post"
+                      th:action="@{/projects/save-collaborators}"
                       th:object="${project}">
                     <!--/* Hidden id element, because we update here
                     */-->
@@ -26,15 +27,36 @@
                     </label>
                     <!--/* checkbox input with collaborators for roles */-->
                     <ul class="checkbox-list">
+                        <!--/* in every list item we use one role from
+                               roles needed
+                        */-->
                         <li th:each="role : *{rolesNeeded}">
+                            <!--/* print each role name */-->
                             <span th:text="${role.name}" class="primary">
                                 Role Name
                             </span>
+                            <!--/*Here we play the same trick as before with
+                                  multiple collaborators' roles selects: We
+                                  obtain valid ids from collaborators, by them
+                                  we get needed collaborators in controller
+                            */-->
                             <div class="custom-select">
+                                <!--/* dropdown arrow */-->
                                 <span class="dropdown-arrow"></span>
-                                <select th:field="*{collaborators[__${roleStat.index}__]}">
+                                <!--/* collaborators[index].id is field to be
+                                       filled. the rest will be null
+                                */-->
+                                <select th:field="*{collaborators[__${roleStat.index}__].id}">
+                                    <!--/* We choose from possible collaborators
+                                           that have this role. Then
+                                           We add collaborator with right
+                                           collaborator.id of picked
+                                           collaborator
+                                           to our projects collaborator[i].id
+                                           the rest of the fields will be null
+                                    */-->
                                     <option th:each="collaborator : ${role.collaborators}"
-                                            th:value="${collaborator}"
+                                            th:value="${collaborator.id}"
                                             th:text="${collaborator.name}">
                                         Collaborator Name
                                     </option>
@@ -43,7 +65,9 @@
                         </li>
                     <div class="actions">
                         <!--/* Submit button */-->
-                        <input type="submit" value="Save" class="button">
+                        <button type="submit" class="button">
+                            Save
+                        </button>
                         <!--/* Cancel button */-->
                         <a th:href="@{|/projects/*{id}/edit|}"
                            class="button button-secondary">
