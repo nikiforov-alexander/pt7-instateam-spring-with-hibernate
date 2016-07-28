@@ -29,7 +29,7 @@
                     <div th:each="project : ${projects}" class="project">
                         <!--/* Project name : link to project detail page */-->
                         <h2><a th:text="${project.name}"
-                               th:href="@{'project/' + ${project.id} + '/details'}">
+                               th:href="@{'projects/' + ${project.id} + '/details'}">
                                 Project Name
                             </a>
                         </h2>
