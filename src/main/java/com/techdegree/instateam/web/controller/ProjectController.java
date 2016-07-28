@@ -70,7 +70,7 @@ public class ProjectController {
                 projectStatusListWithoutDefaultOne);
         // we add action attribute because this template
         // will be re-used for both edit and add new project
-        model.addAttribute("action", "add-new");
+        model.addAttribute("action", "/projects/add-new");
         // if model contains project, e.g. when we
         // user made a mistake, model will be filled with
         // with previously entered data
@@ -147,8 +147,6 @@ public class ProjectController {
             RedirectAttributes redirectAttributes) {
         // find project by id
         Project project = projectService.findById(projectId);
-        System.out.println("here comes the exception");
-        System.out.println("roles are: " + project.getRolesNeeded());
         // if not found return 404
         if (project == null) {
             throw new NotFoundException("Project not found");
@@ -178,23 +176,13 @@ public class ProjectController {
         model.addAttribute("statusesWithoutDefaultOne",
                 projectStatusListWithoutDefaultOne);
         // we add action attribute because this template
-        // will be re-used for both edit and add new project
-        model.addAttribute("action", "add-new");
+        // will be re-used for both "projects/${projectId}/save" and
+        // "projects/add-new" project
+        model.addAttribute("action", "/projects/" + projectId + "/save");
         // if model contains project, e.g. when we
         // user made a mistake, model will be filled with
         // with previously entered data
         if (!model.containsAttribute("project")) {
-            // fill roles with nulls
-            List<Role> validRolesNeeded = new ArrayList<>();
-            for (Role role: roles) {
-                System.out.println("role id: " + role.getId());
-                if (project.getRolesNeeded().contains(role)) {
-                   validRolesNeeded.add(role);
-                } else {
-                   validRolesNeeded.add(null);
-                }
-            }
-            System.out.println("valid roles are: " + validRolesNeeded);
             // if not we add edited Project
             model.addAttribute("project", project);
         }
@@ -202,21 +190,21 @@ public class ProjectController {
     }
 
     // edit collaborators page
-    @RequestMapping("/project/{projectId}/collaborators")
-    public String editProjectCollaborators(
-            @PathVariable int projectId,
-            Model model,
-            RedirectAttributes redirectAttributes) {
-        // find project by id
-        Project project = projectService.findById(projectId);
-        // if not found throw error
-        if (project == null) {
-            throw new NotFoundException("Project not found");
-        }
-        // add project to model
-        model.addAttribute("project", project);
-        return "project/project-collaborators";
-    }
+//    @RequestMapping("/project/{projectId}/collaborators")
+//    public String editProjectCollaborators(
+//            @PathVariable int projectId,
+//            Model model,
+//            RedirectAttributes redirectAttributes) {
+//        // find project by id
+//        Project project = projectService.findById(projectId);
+//        // if not found throw error
+//        if (project == null) {
+//            throw new NotFoundException("Project not found");
+//        }
+//        // add project to model
+//        model.addAttribute("project", project);
+//        return "project/project-collaborators";
+//    }
     // If anywhere NotFoundException is thrown we return error page,
     // i set custom status here, because for some reason otherwise
     // status is 200 :(
