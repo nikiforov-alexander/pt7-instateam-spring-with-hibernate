@@ -11,11 +11,17 @@
             <!--/* sucessful flash message */-->
             <div th:replace="layout :: flash"></div>
             <div class="container wrapper">
+                <!--/* save collaborators form */-->
                 <form th:action="@{/projects/save-collaborators}"
                       th:object="${project}">
-                    <label th:text="'Edit Collaborators : ' + ${name}">
+                    <!--/* Label for Edit collaborators, basically span
+                           should be better here, because there is no "for"
+                           with "id" to point to.
+                    */-->
+                    <label th:text="'Edit Collaborators : ' + *{name}">
                         Edit Collaborators: Project Name
                     </label>
+                    <!--/* checkbox input with collaborators for roles */-->
                     <ul class="checkbox-list">
                         <li th:each="role : *{rolesNeeded}">
                             <span th:text="${role.name}" class="primary">
@@ -33,8 +39,13 @@
                             <!--</div>-->
                         </li>
                     <div class="actions">
+                        <!--/* Submit button */-->
                         <input type="submit" value="Save" class="button">
-                        <a href="#" class="button button-secondary">Cancel</a>
+                        <!--/* Cancel button */-->
+                        <a th:href="@{|/projects/*{id}/edit|}"
+                           class="button button-secondary">
+                            Cancel
+                        </a>
                     </div>
                 </form>
             </div>
