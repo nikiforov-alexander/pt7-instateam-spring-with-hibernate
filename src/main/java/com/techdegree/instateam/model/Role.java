@@ -36,8 +36,14 @@ public class Role {
 
     // collaborators column, mapped by role, many collaborators has one role
     // on removal of role, right now collaborators are removed. Later will be
-    // changed
-    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
+    // changed.
+    // This list of collaborators is fetched eagerly, not lazily, I will
+    // investigate in this later.
+    @OneToMany(
+            mappedBy = "role",
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.EAGER
+    )
     private List<Collaborator> collaborators;
 
     // projects, are used to created relationship between Project class,
