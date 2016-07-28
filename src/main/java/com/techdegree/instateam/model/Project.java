@@ -50,7 +50,7 @@ public class Project {
         return rolesNeeded;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Collaborator> collaborators;
     public List<Collaborator> getCollaborators() {
         return collaborators;
