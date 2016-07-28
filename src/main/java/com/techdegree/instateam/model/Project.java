@@ -69,15 +69,4 @@ public class Project {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", rolesNeeded=" + rolesNeeded +
-                ", collaborators=" + collaborators +
-                ", status=" + status +
-                '}';
-    }
 }
