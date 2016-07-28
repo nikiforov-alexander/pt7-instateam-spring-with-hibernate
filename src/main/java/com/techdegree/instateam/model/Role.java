@@ -1,5 +1,8 @@
 package com.techdegree.instateam.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -44,6 +47,7 @@ public class Role {
             cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER
     )
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Collaborator> collaborators;
 
     // projects, are used to created relationship between Project class,
