@@ -30,18 +30,19 @@
                     </div>
                     <div class="roles-collaborators">
                         <h3>Roles &amp; Collaborators</h3>
-                        <div class="list-item">
-                            <span class="primary">Developer</span>
-                            <span class="secondary">Michael Pemulis</span>
+                        <!--/* For each role in roles needed of project */-->
+                        <div th:each="role : ${project.rolesNeeded}" class="list-item">
+                            <!--/* list role name */-->
+                            <span class="primary"
+                                  th:text="${role.name}">
+                                Role Name
+                            </span>
+                            <!--/* list collaborators assigned */-->
+                            <!--<div th:if="${project.collaborators.size() > 0}">-->
+                                <!--<span th:if="${project.collaborators.role.id == role.id}" class="secondary">Michael Pemulis</span>-->
+                                <!--<span th:text="${project.collaborators.role.id == role.id}" class="secondary">Michael Pemulis</span>-->
+                            <!--</div>-->
                         </div>
-                        <div class="list-item">
-                            <span class="primary">Designer</span>
-                            <span class="secondary">Don Gately</span>
-                        </div>
-                        <div class="list-item">
-                            <span class="primary">QA</span>
-                                <span class="secondary">Joelle Van Dyne</span>
-                            </div>
                         <div class="list-item">
                             <span class="primary">DevOps</span>
                             <span class="secondary">[Unassigned]</span>
