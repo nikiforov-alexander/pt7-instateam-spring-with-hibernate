@@ -1,5 +1,8 @@
 package com.techdegree.instateam.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -42,6 +45,7 @@ public class Project {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Role> rolesNeeded;
     public void setRolesNeeded(List<Role> rolesNeeded) {
         this.rolesNeeded = rolesNeeded;
@@ -50,7 +54,8 @@ public class Project {
         return rolesNeeded;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Collaborator> collaborators;
     public List<Collaborator> getCollaborators() {
         return collaborators;

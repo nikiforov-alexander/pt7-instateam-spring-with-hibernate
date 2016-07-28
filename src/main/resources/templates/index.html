@@ -7,7 +7,7 @@
         <header th:replace="layout :: header('Projects')"> </header>
         <!--/* Navigation: should highlight "Projects" tab */-->
         <nav th:replace="layout :: nav('projects')"></nav>
-        <!--/* sucessful flash message: on update or add or delete */-->
+        <!--/* sucessful flash message div*/-->
         <div th:replace="layout :: flash"></div>
         <section>
             <div class="container wrapper">
@@ -29,7 +29,7 @@
                     <div th:each="project : ${projects}" class="project">
                         <!--/* Project name : link to project detail page */-->
                         <h2><a th:text="${project.name}"
-                               th:href="@{project/project-details}">
+                               th:href="@{'projects/' + ${project.id} + '/details'}">
                                 Project Name
                             </a>
                         </h2>

@@ -1,6 +1,7 @@
 package com.techdegree.instateam.web.controller;
 
 import com.techdegree.instateam.exception.NotFoundException;
+import com.techdegree.instateam.model.Collaborator;
 import com.techdegree.instateam.model.Project;
 import com.techdegree.instateam.model.ProjectStatus;
 import com.techdegree.instateam.model.Role;
@@ -251,22 +252,92 @@ public class ProjectController {
         return "redirect:/";
     }
 
-    // edit collaborators page
-//    @RequestMapping("/project/{projectId}/collaborators")
-//    public String editProjectCollaborators(
-//            @PathVariable int projectId,
-//            Model model,
-//            RedirectAttributes redirectAttributes) {
-//        // find project by id
-//        Project project = projectService.findById(projectId);
-//        // if not found throw error
-//        if (project == null) {
-//            throw new NotFoundException("Project not found");
-//        }
-//        // add project to model
-//        model.addAttribute("project", project);
-//        return "project/project-collaborators";
-//    }
+    // project detail page
+    @RequestMapping("/projects/{projectId}/details")
+    public String projectDetails(
+            @PathVariable int projectId,
+            Model model,
+            RedirectAttributes redirectAttrbutes
+    ) {
+        // find project by id
+        Project project = projectService.findById(projectId);
+        // if not found show error page
+        if (project == null) {
+            throw new NotFoundException("Project not found");
+        }
+        // add project to the model
+        model.addAttribute("project", project);
+        return "project/project-details";
+    }
+
+//     edit collaborators page
+    @RequestMapping("/projects/{projectId}/collaborators")
+    public String editProjectCollaborators(
+            @PathVariable int projectId,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        // find project by id
+        Project project = projectService.findById(projectId);
+        // if not found throw error
+        if (project == null) {
+            throw new NotFoundException("Project not found");
+        }
+        // add project to model
+        model.addAttribute("project", project);
+        return "project/project-collaborators";
+    }
+
+    // save collaborators to project POST method
+    @RequestMapping(value = "/projects/save-collaborators",
+        method = RequestMethod.POST
+    )
+    public String saveColaboratorsForProject(
+            @Valid Project projectOnlyWithCollaboratorsAndId,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+        // first we obtain collaborators needed array from project object
+        // filled in form. This collaborators list will have null values for
+        // everything except ids. We then using this ids find collaborators
+        // from collaborator service, and pass them to project
+        List<Collaborator> collaborators = projectOnlyWithCollaboratorsAndId
+                .getCollaborators()
+                .stream()
+                .filter(collaborator -> collaborator.getId() != 0)
+                .collect(Collectors.toList());
+
+        // so for now here cannot be validation error, because projects
+        // can exist with unassigned collaborators, and id, name, description
+        // fields are simply hidden. So no check for errors
+
+        // here we get the actual project from database, that is
+        // needed because rolesNeeded are not saved|cannot be easily pushed
+        // with some hidden input, so we take rolesNeeded from actual project
+        // of db, and set these roles to project to be updated
+        Project actualProjectToBeFilledWithCollaborators =
+                projectService.findById(
+                projectOnlyWithCollaboratorsAndId.getId()
+        );
+
+        // we set collaborators of project from thymeleaf with selected
+        // collaborators
+        actualProjectToBeFilledWithCollaborators
+                .setCollaborators(collaborators);
+
+        // update project to database
+        projectService.save(actualProjectToBeFilledWithCollaborators);
+
+        // add flash of successful save on top of the redirected page
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Collaborators '" + actualProjectToBeFilledWithCollaborators.getName() +
+                        "' were successfully added!",
+                FlashMessage.Status.SUCCESS
+        ));
+
+       // redirect back to detail project page
+       return "redirect:/projects/"
+               + actualProjectToBeFilledWithCollaborators.getId() +
+               "/details";
+    }
     // If anywhere NotFoundException is thrown we return error page,
     // i set custom status here, because for some reason otherwise
     // status is 200 :(
