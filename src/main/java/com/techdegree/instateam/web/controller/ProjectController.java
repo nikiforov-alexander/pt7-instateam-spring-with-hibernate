@@ -83,7 +83,7 @@ public class ProjectController {
 
     // add new project POST request
     @RequestMapping(value = "/projects/add-new", method = RequestMethod.POST)
-    public String saveProject(
+    public String saveNewProject(
             @Valid Project project,
             BindingResult result,
             Model model,
