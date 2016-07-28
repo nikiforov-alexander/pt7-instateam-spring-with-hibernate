@@ -25,9 +25,7 @@ public class Collaborator {
 
     // relation to role class, Many Collaborators can have one Role
     // role removal deletes collaborators. Later is subject to change
-    // fetch type is eager, because I don't know for know how to make
-    // it lazily
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Role role;
