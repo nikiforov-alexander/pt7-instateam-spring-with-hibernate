@@ -251,6 +251,24 @@ public class ProjectController {
         return "redirect:/";
     }
 
+    // project detail page
+    @RequestMapping("/project/{projectId}/details")
+    public String projectDetails(
+            @PathVariable int projectId,
+            Model model,
+            RedirectAttributes redirectAttrbutes
+    ) {
+        // find project by id
+        Project project = projectService.findById(projectId);
+        // if not found show error page
+        if (project == null) {
+            throw new NotFoundException("Project not found");
+        }
+        // add project to the model
+        model.addAttribute("project", project);
+        return "project/project-details.html";
+    }
+
     // edit collaborators page
 //    @RequestMapping("/project/{projectId}/collaborators")
 //    public String editProjectCollaborators(
