@@ -47,8 +47,7 @@ public class Role {
     @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
     private List<Collaborator> collaborators;
 
-    @ManyToMany(mappedBy = "rolesNeeded",
-    fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "rolesNeeded")
     private List<Project> projects;
 
     public Role() {
