@@ -15,9 +15,13 @@
                 <form method="post"
                       th:action="@{/projects/save-collaborators}"
                       th:object="${project}">
-                    <!--/* Hidden id element, because we update here
+                    <!--/* Hidden id, name and description elements, because we
+                         update here the existing project, we have to put these.
+                         Otherwise we'll have validation errors
                     */-->
                     <input hidden th:value="*{id}" type="text">
+                    <input hidden th:value="*{name}" type="text">
+                    <input hidden th:value="*{description}" type="text">
                     <!--/* Label for Edit collaborators, basically span
                            should be better here, because there is no "for"
                            with "id" to point to.
