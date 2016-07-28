@@ -266,7 +266,7 @@ public class ProjectController {
         }
         // add project to the model
         model.addAttribute("project", project);
-        return "project/project-details.html";
+        return "project/project-details";
     }
 
     // edit collaborators page
