@@ -24,7 +24,8 @@
                         <!--/* Project Status, is styled(colored) according
                                to status
                          */-->
-                        <span th:class="'tag ' + ${project.status.styleClass}">
+                        <span th:text="${project.status.description}"
+                              th:class="'tag ' + ${project.status.styleClass}">
                             Project Status
                         </span>
                     </div>
@@ -45,18 +46,18 @@
                                 [Unassigned]
                             </span>
                             <!--/* If there are some collaborators */-->
-                            <div th:each="collaborator : ${project.collaborators}">
-                                <!--/* we check if collaborator.role.id is
-                                       equal to role of this project, then
-                                       we print collaborator's name, others are
-                                       ignored
-                                */-->
-                                <span th:if="${collaborator.role.id == role.id}"
-                                      th:text="${project.collaborator.name}"
-                                      class="secondary">
-                                    Collaborator Name
-                                </span>
-                            </div>
+                            <!--<div th:each="collaborator : ${project.collaborators}">-->
+                                <!--&lt;!&ndash;/* we check if collaborator.role.id is-->
+                                       <!--equal to role of this project, then-->
+                                       <!--we print collaborator's name, others are-->
+                                       <!--ignored-->
+                                <!--*/&ndash;&gt;-->
+                                <!--<span th:if="${collaborator.role.id == role.id}"-->
+                                      <!--th:text="${project.collaborator.name}"-->
+                                      <!--class="secondary">-->
+                                    <!--Collaborator Name-->
+                                <!--</span>-->
+                            <!--</div>-->
                         </div>
                     </div>
                     <div class="actions">
