@@ -41,7 +41,7 @@ public class Project {
         this.description = description;
     }
 
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> rolesNeeded;
     public void setRolesNeeded(List<Role> rolesNeeded) {
         this.rolesNeeded = rolesNeeded;
