@@ -60,8 +60,17 @@
                         </div>
                     </div>
                     <div class="actions">
-                        <a class="button" href="project-edit.html">Edit Project</a>
-                        <a class="button" href="project-collaborators.html">Edit Collaborators</a>
+                        <!--/* Button linking to project edit page */-->
+                        <a class="button"
+                           th:href="@{|/projects/${project.id}/edit|}">
+                            Edit Project
+                        </a>
+                        <!--/* Button linking to project edit collaborators page
+                        */-->
+                        <a class="button"
+                           th:href="@{|/projects/${project.id}/collaborators|}">
+                            Edit Collaborators
+                        </a>
                     </div>
                 </div>
             </div>
