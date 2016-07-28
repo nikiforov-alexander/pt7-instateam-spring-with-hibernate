@@ -81,9 +81,9 @@ public class ProjectController {
         return "/project/project-edit";
     }
 
-    // add new project
+    // add new project POST request
     @RequestMapping(value = "/projects/add-new", method = RequestMethod.POST)
-    public String saveProject(
+    public String saveNewProject(
             @Valid Project project,
             BindingResult result,
             Model model,
@@ -176,9 +176,9 @@ public class ProjectController {
         model.addAttribute("statusesWithoutDefaultOne",
                 projectStatusListWithoutDefaultOne);
         // we add action attribute because this template
-        // will be re-used for both "projects/${projectId}/save" and
+        // will be re-used for both "projects/save" and
         // "projects/add-new" project
-        model.addAttribute("action", "/projects/" + projectId + "/save");
+        model.addAttribute("action", "/projects/save");
         // if model contains project, e.g. when we
         // user made a mistake, model will be filled with
         // with previously entered data
@@ -187,6 +187,68 @@ public class ProjectController {
             model.addAttribute("project", project);
         }
         return "/project/project-edit";
+    }
+    
+    // save existing project POST request
+    // this method is exactly like saveNewProject. But I don't know
+    // yet how to re use the method here. It is definitely something
+    // to do
+    @RequestMapping(value = "/projects/save",
+            method = RequestMethod.POST)
+    public String saveExistingProject(
+            @Valid Project project,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+        // first we obtain roles needed array from project object filled in
+        // form. This roles list will have null values for roles, that were
+        // not selected, hence we simply filter these roles, to get valid
+        // array of roles selected by user
+        List<Role> rolesNeeded = project.getRolesNeeded().stream()
+                .filter(role -> role != null)
+                .collect(Collectors.toList());
+        // here unfortunately, I cannot directly use validation, because I
+        // have this error:
+        // Field error in object 'project' on field 'rolesNeeded[0]': rejected value
+        // which is different from error on field 'rolesNeeded'
+        // In order to avoid this error, because I know that my roles are
+        // selected properly, all I care about is that user selected some roles.
+        // So if size of this filtered array will be zero
+        if (rolesNeeded.size() == 0) {
+            // I manually reject whole 'rolesNeeded' field, so that later it
+            // can be processed just like any other error fields
+            // found solution here:
+            // http://stackoverflow.com/questions/12107503/adding-error-message-to-spring-3-databinder-for-custom-object-fields
+            result.rejectValue("rolesNeeded",
+                    "error.project",
+                    "Please select at least one role");
+        }
+        // here I check for error for every field manually including them in
+        // unfortunately, because of reject error see above.
+        if (result.hasFieldErrors("name")
+                || result.hasFieldErrors("description")
+                || result.hasFieldErrors("status")
+                || result.hasFieldErrors("rolesNeeded")) {
+            // add flash attribute of project
+            redirectAttributes.addFlashAttribute("project", project);
+            // add flash attribute with errors for every field
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.project",
+                    result);
+            // redirect back to form
+            return "redirect:/projects/" + project.getId() + "/edit";
+        }
+        // add right neededRoles to project
+        project.setRolesNeeded(rolesNeeded);
+        // save project to database
+        projectService.save(project);
+        // add flash of successful save on top of the redirected page
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Project '" + project.getName() +
+                        "' was successfully saved!",
+                FlashMessage.Status.SUCCESS
+        ));
+        // redirect back to main page
+        return "redirect:/";
     }
 
     // edit collaborators page

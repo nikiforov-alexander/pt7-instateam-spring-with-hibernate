@@ -15,6 +15,10 @@
                 <form th:action="@{${action}}"
                       th:object="${project}"
                       method="post">
+                    <!--/* hidden project.id field: is set to 0, when project
+                           is new, is set to actual project id, when we edit
+                     */-->
+                    <input hidden th:field="*{id}">
                     <!--/* In case of error class of this div will change to
                         error class
                     */-->
