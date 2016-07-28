@@ -1,8 +1,12 @@
 package com.techdegree.instateam.dao;
 
 import com.techdegree.instateam.model.Project;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,9 +21,15 @@ public class ProjectDaoImpl implements ProjectDao {
     @SuppressWarnings("unchecked")
     public List<Project> findAll() {
         Session session = sessionFactory.openSession();
-        List<Project> projects = session
-                .createCriteria(Project.class)
-                .list();
+        // create criteria based on Project class
+        Criteria criteria = session.createCriteria(Project.class);
+        // make criteria return only distinct projects, because in @JoinTable
+        // PROJECTS_ID, ROLESNEEDEDED_ID, if project has two roles, there will
+        // be two projects returned, so we switch this option on.
+        // Proudly taken from stack:
+        // http://stackoverflow.com/questions/300491/how-to-get-distinct-results-in-hibernate-with-joins-and-row-based-limiting-pagi
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Project> projects = criteria.list();
         session.close();
         return projects;
     }
