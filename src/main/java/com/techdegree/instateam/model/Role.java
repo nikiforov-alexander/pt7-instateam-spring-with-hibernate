@@ -8,17 +8,11 @@ import java.util.List;
 @Entity
 @Table(name = "roles")
 public class Role {
+    // id column, member, auto generated
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     // pattern can be read like this:
     // \s* - leading spaces, zero or more
     // [a-zA-Z0-9]+ - alphanumeric characters, one or more
@@ -32,11 +26,34 @@ public class Role {
     // name with just spaces is not allowed
     // inspired from
     // http://stackoverflow.com/questions/15472764/regular-expression-to-allow-spaces-between-words
+    //
+    // name column, VARCHAR, notnull, has pattern and message for validation
     @Column(name = "NAME", columnDefinition = "VARCHAR")
     @NotNull
     @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
             message = "Name must consist of alphanumeric characters: a-Z, 0-9")
     private String name;
+
+    // collaborators column, mapped by role, many collaborators has one role
+    // on removal of role, right now collaborators are removed. Later will be
+    // changed
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
+    private List<Collaborator> collaborators;
+
+    // projects, are used to created relationship between Project class,
+    // mapped by "rolesNeeded"
+    @ManyToMany(mappedBy = "rolesNeeded")
+    private List<Project> projects;
+
+    //  Getters and setters
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -44,11 +61,20 @@ public class Role {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
-    private List<Collaborator> collaborators;
+    public List<Collaborator> getCollaborators() {
+        return collaborators;
+    }
+    public void setCollaborators(List<Collaborator> collaborators) {
+        this.collaborators = collaborators;
+    }
 
-    @ManyToMany(mappedBy = "rolesNeeded")
-    private List<Project> projects;
+    public List<Project> getProjects() {
+        return projects;
+    }
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
 
     public Role() {
         // default constructor for JPA
