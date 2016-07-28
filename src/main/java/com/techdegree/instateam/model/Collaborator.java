@@ -1,5 +1,7 @@
 package com.techdegree.instateam.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -25,7 +27,7 @@ public class Collaborator {
 
     // relation to role class, Many Collaborators can have one Role
     // role removal deletes collaborators. Later is subject to change
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Role role;
