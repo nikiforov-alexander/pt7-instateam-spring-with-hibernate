@@ -60,6 +60,9 @@
                                            to our projects collaborator[i].id
                                            the rest of the fields will be null
                                     */-->
+                                    <option selected value="0">
+                                        [Unassigned]
+                                    </option>
                                     <option th:each="collaborator : ${role.collaborators}"
                                             th:value="${collaborator.id}"
                                             th:text="${collaborator.name}">
@@ -74,7 +77,7 @@
                             Save
                         </button>
                         <!--/* Cancel button */-->
-                        <a th:href="@{|/projects/*{id}/edit|}"
+                        <a th:href="@{|/projects/*{id}/details|}"
                            class="button button-secondary">
                             Cancel
                         </a>
