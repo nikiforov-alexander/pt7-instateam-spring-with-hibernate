@@ -14,6 +14,9 @@
                 <!--/* save collaborators form */-->
                 <form th:action="@{/projects/save-collaborators}"
                       th:object="${project}">
+                    <!--/* Hidden id element, because we update here
+                    */-->
+                    <input hidden th:value="*{id}" type="text">
                     <!--/* Label for Edit collaborators, basically span
                            should be better here, because there is no "for"
                            with "id" to point to.
@@ -27,16 +30,16 @@
                             <span th:text="${role.name}" class="primary">
                                 Role Name
                             </span>
-                            <!--<div class="custom-select">-->
-                                <!--<span class="dropdown-arrow"></span>-->
-                                <!--<select th:each="collaborator : *{role.collaborators}">-->
-                                    <!--<option th:value="${collaborator}"-->
-                                            <!--th:text="${collaborator.name}"-->
-                                            <!--th:field="*{collaborators[__${collaboratorStat.index}__]}">-->
-                                        <!--Collaborator Name-->
-                                    <!--</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
+                            <div class="custom-select">
+                                <span class="dropdown-arrow"></span>
+                                <select th:field="*{collaborators[__${roleStat.index}__]}">
+                                    <option th:each="collaborator : ${role.collaborators}"
+                                            th:value="${collaborator}"
+                                            th:text="${collaborator.name}">
+                                        Collaborator Name
+                                    </option>
+                                </select>
+                            </div>
                         </li>
                     <div class="actions">
                         <!--/* Submit button */-->
