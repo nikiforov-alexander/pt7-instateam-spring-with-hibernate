@@ -307,7 +307,19 @@ public class ProjectController {
 
         // so for now here cannot be validation error, because projects
         // can exist with unassigned collaborators, and id, name, description
-        // fields are simply hidden. So no check for errors
+        // fields are simply hidden. So no check for errors, except the case
+        // where no roles assigned, this way I'll redirect back to detail
+        // page
+        if (collaborators.size() == 0) {
+            // set flash attribute
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "No one assigned. We'll wait for better collaborators.",
+                    FlashMessage.Status.SUCCESS
+            ));
+            return "redirect:/projects/"
+                    + projectOnlyWithCollaboratorsAndId.getId() +
+                    "/details";
+        }
 
         // here we get the actual project from database, that is
         // needed because rolesNeeded are not saved|cannot be easily pushed
