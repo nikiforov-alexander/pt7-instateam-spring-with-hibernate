@@ -188,7 +188,11 @@ public class ProjectController {
         }
         return "/project/project-edit";
     }
+    
     // save existing project POST request
+    // this method is exactly like saveNewProject. But I don't know
+    // yet how to re use the method here. It is definitely something
+    // to do
     @RequestMapping(value = "/projects/save",
             method = RequestMethod.POST)
     public String saveExistingProject(
