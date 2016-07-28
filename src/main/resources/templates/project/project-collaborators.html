@@ -19,9 +19,9 @@
                          update here the existing project, we have to put these.
                          Otherwise we'll have validation errors
                     */-->
-                    <input hidden th:value="*{id}" type="text">
-                    <input hidden th:value="*{name}" type="text">
-                    <input hidden th:value="*{description}" type="text">
+                    <input hidden th:field="*{id}" type="text">
+                    <input hidden th:field="*{name}" type="text">
+                    <input hidden th:field="*{description}" type="text">
                     <!--/* Label for Edit collaborators, basically span
                            should be better here, because there is no "for"
                            with "id" to point to.
