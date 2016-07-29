@@ -43,11 +43,8 @@ public class Role {
     // This list of collaborators is fetched eagerly, not lazily, I will
     // investigate in this later.
     @OneToMany(
-            mappedBy = "role",
-            cascade = CascadeType.REMOVE,
-            fetch = FetchType.EAGER
+            mappedBy = "role"
     )
-    @Fetch(value = FetchMode.SUBSELECT)
     private List<Collaborator> collaborators;
 
     // projects, are used to created relationship between Project class,
