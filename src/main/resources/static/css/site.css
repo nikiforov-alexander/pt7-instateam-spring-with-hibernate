@@ -353,6 +353,10 @@ strong {
 	float: right;
 	color: #747372;
 }
+.secondary.in-empty-div {
+    position: relative;
+	bottom: 17px;
+}
 
 .container.wrapper h2.outside-form {
 	padding: 35px 35px 0 35px;
