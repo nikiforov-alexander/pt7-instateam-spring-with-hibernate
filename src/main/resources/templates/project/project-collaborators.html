@@ -51,7 +51,8 @@
                                 <!--/* collaborators[index].id is field to be
                                        filled. the rest will be null
                                 */-->
-                                <select th:field="*{collaborators[__${roleStat.index}__].id}">
+                                <select class="not-assigned"
+                                        th:field="*{collaborators[__${roleStat.index}__].id}">
                                     <!--/* We choose from possible collaborators
                                            that have this role. Then
                                            We add collaborator with right
@@ -60,10 +61,11 @@
                                            to our projects collaborator[i].id
                                            the rest of the fields will be null
                                     */-->
-                                    <option selected value="0">
+                                    <option class="not-assigned" selected value="0">
                                         [Unassigned]
                                     </option>
-                                    <option th:each="collaborator : ${role.collaborators}"
+                                    <option class="active"
+                                            th:each="collaborator : ${role.collaborators}"
                                             th:value="${collaborator.id}"
                                             th:text="${collaborator.name}">
                                         Collaborator Name
@@ -71,6 +73,7 @@
                                 </select>
                             </div>
                         </li>
+                    </ul>
                     <div class="actions">
                         <!--/* Submit button */-->
                         <button type="submit" class="button">
@@ -85,5 +88,9 @@
                 </form>
             </div>
         </section>
+        <!--/* div with javascript allowing to change color of select
+               element according to style of option selected, see 'app.js'
+        */-->
+        <div th:replace="layout :: scripts"></div>
     </body>
 </html>
