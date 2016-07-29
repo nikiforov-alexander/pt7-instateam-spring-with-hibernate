@@ -270,7 +270,7 @@ public class ProjectController {
         return "project/project-details";
     }
 
-//     edit collaborators page
+    // edit collaborators page
     @RequestMapping("/projects/{projectId}/collaborators")
     public String editProjectCollaborators(
             @PathVariable int projectId,
@@ -299,7 +299,8 @@ public class ProjectController {
         // filled in form. This collaborators list will have null values for
         // everything except ids. We then using this ids find collaborators
         // from collaborator service, and pass them to project
-        List<Collaborator> collaborators = projectOnlyWithCollaboratorsAndId
+        List<Collaborator> collaborators =
+                projectOnlyWithCollaboratorsAndId
                 .getCollaborators()
                 .stream()
                 .filter(collaborator -> collaborator.getId() != 0)
@@ -307,19 +308,7 @@ public class ProjectController {
 
         // so for now here cannot be validation error, because projects
         // can exist with unassigned collaborators, and id, name, description
-        // fields are simply hidden. So no check for errors, except the case
-        // where no roles assigned, this way I'll redirect back to detail
-        // page
-        if (collaborators.size() == 0) {
-            // set flash attribute
-            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
-                    "No one assigned. We'll wait for better collaborators.",
-                    FlashMessage.Status.SUCCESS
-            ));
-            return "redirect:/projects/"
-                    + projectOnlyWithCollaboratorsAndId.getId() +
-                    "/details";
-        }
+        // fields are simply hidden. So no check for errors, for now
 
         // here we get the actual project from database, that is
         // needed because rolesNeeded are not saved|cannot be easily pushed
@@ -331,7 +320,11 @@ public class ProjectController {
         );
 
         // we set collaborators of project from thymeleaf with selected
-        // collaborators
+        // collaborators. Here is magic: somehow knowing only ids of these
+        // collaborators is enough to be updated in database. Also if all
+        // user picks all collaborators unassigned, then null collaborators
+        // array is updated just fine in database as well. Truly magic, although
+        // the only thing to prove that is testing: that is a thing to do later
         actualProjectToBeFilledWithCollaborators
                 .setCollaborators(collaborators);
 
