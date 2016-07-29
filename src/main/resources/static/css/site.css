@@ -613,6 +613,10 @@ option.not-started {
     color: black;
     font-weight: bold;
 }
+option.not-assigned {
+	color: black;
+	font-weight: bold;
+}
 select.active {
     color: #72c38d;
     font-weight: bold;
@@ -624,6 +628,10 @@ select.archived {
 select.not-started {
     color: black;
     font-weight: bold;
+}
+select.not-assigned {
+	color: black;
+	font-weight: bold;
 }
 span.tag.not-started {
     background: black;
