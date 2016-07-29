@@ -141,6 +141,7 @@ nav ul li.selected a {
 }
 .button:focus {
 	outline: 0;
+    border-color: darkgreen;
 }
 
 
