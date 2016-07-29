@@ -417,6 +417,7 @@ form select {
 }
 form select:focus {
 	outline: 0;
+	border-color: darkgreen;
 }
 form .checkbox-list {
 	list-style: none;
