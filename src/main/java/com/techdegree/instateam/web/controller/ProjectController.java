@@ -252,6 +252,53 @@ public class ProjectController {
         return "redirect:/";
     }
 
+    private List<Collaborator>
+        generateSynchronizedWithRolesNeededCollaboratorsList(Project project) {
+        // list of collaborators synchronized with roles needed list by
+        // index and size: so that
+        // Role(1) -> null
+        // Role(2) --> Collaborator(withRole(2))
+        // for case where rolesNeeded are: [Role(1), Role(2)]
+        // and project.collaborators are: [Collaborator(withRole(2))]
+        // This list in opposite to project.collaborators will look like
+        // [null, Collaborator(withRole(2))]
+        List<Collaborator> projectCollaboratorsWithNullsForUnAssigned =
+                new ArrayList<>();
+
+        // cycle through roles needed
+        for (Role roleNeeded : project.getRolesNeeded()) {
+            boolean collaboratorIsAssigned = false;
+
+            // cycle through projectCollaborators
+            for (Collaborator projectCollaborator : project.getCollaborators()) {
+
+                // if collaborator is assigned to this role: we check by
+                // unique ids
+                if (projectCollaborator.getRole().getId() ==
+                        roleNeeded.getId()) {
+
+                    // we assign collaborator
+                    collaboratorIsAssigned = true;
+
+                    // add this collaborated synchronized with role
+                    projectCollaboratorsWithNullsForUnAssigned
+                            .add(projectCollaborator);
+
+                    // break the cycle
+                    break;
+                }
+            }
+
+            // if after cycling through all collaborators we found that
+            // no collaborator was assigned for this roles, we add
+            // null at this index in our new array
+            if (!collaboratorIsAssigned) {
+                projectCollaboratorsWithNullsForUnAssigned.add(null);
+            }
+        }
+        return projectCollaboratorsWithNullsForUnAssigned;
+    }
+
     // project detail page
     @RequestMapping("/projects/{projectId}/details")
     public String projectDetails(
@@ -261,16 +308,37 @@ public class ProjectController {
     ) {
         // find project by id
         Project project = projectService.findById(projectId);
+
         // if not found show error page
         if (project == null) {
             throw new NotFoundException("Project not found");
         }
+
         // add project to the model
         model.addAttribute("project", project);
+
+        if (project.getCollaborators().size() > 0) {
+            // here is tricky part, we add nulls for unassigned collaborators,
+            // to print unassigned collaborators in thymeleaf. Here is an
+            // explaination try: If I put in thymeleaf list with 3 Roles, and 1
+            // collaborator, it is hard to print it easily, because thymeleaf is
+            // limited in capabilities. However if I put 3 Roles and 3
+            // Collaborators list, where missing collaborators will be nulls,
+            // then printing will be done easily by thymeleaf,
+            // because we iterate both arrays
+            // synchronously and can easily check which collaborator is
+            // unassigned
+            // So here is method generating such list (see above)
+            // is added this synchronized list to model
+            model.addAttribute("projectCollaboratorsWithNullsForUnAssigned",
+                    generateSynchronizedWithRolesNeededCollaboratorsList(
+                            project)
+            );
+        }
         return "project/project-details";
     }
 
-//     edit collaborators page
+    // edit collaborators page
     @RequestMapping("/projects/{projectId}/collaborators")
     public String editProjectCollaborators(
             @PathVariable int projectId,
@@ -299,7 +367,8 @@ public class ProjectController {
         // filled in form. This collaborators list will have null values for
         // everything except ids. We then using this ids find collaborators
         // from collaborator service, and pass them to project
-        List<Collaborator> collaborators = projectOnlyWithCollaboratorsAndId
+        List<Collaborator> collaborators =
+                projectOnlyWithCollaboratorsAndId
                 .getCollaborators()
                 .stream()
                 .filter(collaborator -> collaborator.getId() != 0)
@@ -307,7 +376,7 @@ public class ProjectController {
 
         // so for now here cannot be validation error, because projects
         // can exist with unassigned collaborators, and id, name, description
-        // fields are simply hidden. So no check for errors
+        // fields are simply hidden. So no check for errors, for now
 
         // here we get the actual project from database, that is
         // needed because rolesNeeded are not saved|cannot be easily pushed
@@ -319,7 +388,11 @@ public class ProjectController {
         );
 
         // we set collaborators of project from thymeleaf with selected
-        // collaborators
+        // collaborators. Here is magic: somehow knowing only ids of these
+        // collaborators is enough to be updated in database. Also if all
+        // user picks all collaborators unassigned, then null collaborators
+        // array is updated just fine in database as well. Truly magic, although
+        // the only thing to prove that is testing: that is a thing to do later
         actualProjectToBeFilledWithCollaborators
                 .setCollaborators(collaborators);
 

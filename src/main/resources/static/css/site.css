@@ -141,6 +141,7 @@ nav ul li.selected a {
 }
 .button:focus {
 	outline: 0;
+    border-color: darkgreen;
 }
 
 
@@ -352,6 +353,10 @@ strong {
 	float: right;
 	color: #747372;
 }
+.secondary.in-empty-div {
+    position: relative;
+	bottom: 17px;
+}
 
 .container.wrapper h2.outside-form {
 	padding: 35px 35px 0 35px;
@@ -416,6 +421,7 @@ form select {
 }
 form select:focus {
 	outline: 0;
+	border-color: darkgreen;
 }
 form .checkbox-list {
 	list-style: none;
@@ -611,6 +617,10 @@ option.not-started {
     color: black;
     font-weight: bold;
 }
+option.not-assigned {
+	color: black;
+	font-weight: bold;
+}
 select.active {
     color: #72c38d;
     font-weight: bold;
@@ -622,6 +632,10 @@ select.archived {
 select.not-started {
     color: black;
     font-weight: bold;
+}
+select.not-assigned {
+	color: black;
+	font-weight: bold;
 }
 span.tag.not-started {
     background: black;

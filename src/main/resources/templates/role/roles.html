@@ -40,7 +40,8 @@
                             <span
                                     th:if="${#fields.hasErrors('name')}"
                                     th:errors="*{name}"></span>
-                            <input type="text"
+                            <input autofocus
+                                   type="text"
                                    placeholder="New Role..."
                                    th:field="*{name}"
                                    required>

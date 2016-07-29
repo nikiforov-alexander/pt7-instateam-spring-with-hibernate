@@ -39,25 +39,45 @@
                                 Role Name
                             </span>
                             <!--/* list unassigned collaborators if there are
-                                   no collaborators
+                                   no collaborators. to save iterations of
+                                   going through needed roles, to find out
+                                   which collaborator is assigned, and which
+                                   is not. See controller
                             */-->
                             <span th:if="${project.collaborators.size() == 0}"
                                     class="secondary">
                                 [Unassigned]
                             </span>
-                            <!--/* If there are some collaborators */-->
-                            <!--<div th:each="collaborator : ${project.collaborators}">-->
-                                <!--&lt;!&ndash;/* we check if collaborator.role.id is-->
-                                       <!--equal to role of this project, then-->
-                                       <!--we print collaborator's name, others are-->
-                                       <!--ignored-->
-                                <!--*/&ndash;&gt;-->
-                                <!--<span th:if="${collaborator.role.id == role.id}"-->
-                                      <!--th:text="${project.collaborator.name}"-->
-                                      <!--class="secondary">-->
-                                    <!--Collaborator Name-->
-                                <!--</span>-->
-                            <!--</div>-->
+                            <!--/* If however at least one role is assgined we
+                                   have to make this
+                                   `projectCollaboratorsWithNullForUnAssigned`
+                                   array which is synchronized by size and
+                                   index with
+                                   `rolesNeeded` list by adding null values for
+                                   collaborators that are unassigned. See
+                                   controller for more
+                            */-->
+                            <div th:if="${project.collaborators.size() > 0}">
+                                <!--/*if "synchronized" collaborator at index of
+                                      rolesNeeded array: [__${roleStat.index}__]
+                                      is not null, i.e assigned, we print his
+                                      name
+                                */-->
+                                <span th:if="${projectCollaboratorsWithNullsForUnAssigned[__${roleStat.index}__] != null}"
+                                      th:text="${projectCollaboratorsWithNullsForUnAssigned[__${roleStat.index}__].name}"
+                                      class="secondary in-empty-div">
+                                    Collaborator Name
+                                </span>
+                                <!--/*if "synchronized" collaborator at index of
+                                      rolesNeeded array: [__${roleStat.index}__]
+                                      is null, i.e unassigned, we print
+                                      [Unassigned]
+                                */-->
+                                <span th:if="${projectCollaboratorsWithNullsForUnAssigned[__${roleStat.index}__] == null}"
+                                      class="secondary in-empty-div">
+                                    [Unassigned]
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="actions">
