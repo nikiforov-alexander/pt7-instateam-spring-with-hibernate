@@ -42,9 +42,18 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public void delete(Role role) {
         Session session = sessionFactory.openSession();
+        // update collaborators table by setting foreign key:
+        // role_id in collaborators table to null
+        session.createSQLQuery(
+                "UPDATE PUBLIC.collaborators " +
+                        "SET ROLE_ID = NULL " +
+                        "WHERE ROLE_ID = " + role.getId())
+        .executeUpdate();
+        // delete role: begin transaction, delete, commit
         session.beginTransaction();
         session.delete(role);
         session.getTransaction().commit();
+        // close session
         session.close();
     }
 }
