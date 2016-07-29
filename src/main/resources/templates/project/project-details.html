@@ -65,7 +65,7 @@
                                 */-->
                                 <span th:if="${projectCollaboratorsWithNullsForUnAssigned[__${roleStat.index}__] != null}"
                                       th:text="${projectCollaboratorsWithNullsForUnAssigned[__${roleStat.index}__].name}"
-                                      class="secondary">
+                                      class="secondary in-empty-div">
                                     Collaborator Name
                                 </span>
                                 <!--/*if "synchronized" collaborator at index of
@@ -74,7 +74,7 @@
                                       [Unassigned]
                                 */-->
                                 <span th:if="${projectCollaboratorsWithNullsForUnAssigned[__${roleStat.index}__] == null}"
-                                      class="secondary">
+                                      class="secondary in-empty-div">
                                     [Unassigned]
                                 </span>
                             </div>
