@@ -122,16 +122,33 @@ public class CollaboratorController {
         for (int i = 0; i < collaboratorsInDatabase.size(); i++) {
             // get old role from database
             Role oldRole = collaboratorsInDatabase.get(i).getRole();
-            // get id from old role
-            int oldRoleId = oldRole.getId();
+            // get id from old role. If old role is null, we set its id to null
+            // and create new Role()
+            int oldRoleId = 0;
+            if (oldRole != null) {
+                oldRoleId = oldRole.getId();
+            } else {
+                oldRole = new Role();
+            }
             // get new role id, from user's input
-            int newRoleId = project.getCollaborators().get(i).getRole().getId();
+            Role newRole = project.getCollaborators().get(i).getRole();
+            int newRoleId = 0;
+            if (newRole != null) {
+               newRoleId = newRole.getId();
+            }
             // if id is changed, we proceed
             if (oldRoleId != newRoleId) {
                 // get collaborator with changed role from database
                 Collaborator newCollaborator = collaboratorsInDatabase.get(i);
-                // set new id for collaborator's role
-                oldRole.setId(newRoleId);
+                if (newRoleId != 0) {
+                    // set new id for collaborator's role
+                    oldRole.setId(newRoleId);
+                    // here we set oldRole to include the case when collaborator
+                    // had no role before
+                    newCollaborator.setRole(oldRole);
+                } else {
+                    newCollaborator.setRole(null);
+                }
                 // update database
                 collaboratorService.save(newCollaborator);
                 // show flash message with success on top
