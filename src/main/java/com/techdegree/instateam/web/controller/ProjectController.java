@@ -87,7 +87,6 @@ public class ProjectController {
     public String saveNewProject(
             @Valid Project project,
             BindingResult result,
-            Model model,
             RedirectAttributes redirectAttributes) {
         // first we obtain roles needed array from project object filled in
         // form. This roles list will have null values for roles, that were
@@ -303,9 +302,8 @@ public class ProjectController {
     @RequestMapping("/projects/{projectId}/details")
     public String projectDetails(
             @PathVariable int projectId,
-            Model model,
-            RedirectAttributes redirectAttrbutes
-    ) {
+            Model model
+        ) {
         // find project by id
         Project project = projectService.findById(projectId);
 
@@ -349,6 +347,16 @@ public class ProjectController {
         // if not found throw error
         if (project == null) {
             throw new NotFoundException("Project not found");
+        }
+        // if there are no roles in project we redirect back to edit
+        // project page to add some
+        if (project.getRolesNeeded().size() == 0) {
+            // set according flash attrbitute
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "No roles are picked for this project, please pick some",
+                    FlashMessage.Status.SUCCESS
+            ));
+            return "redirect:/projects/" + projectId + "/edit";
         }
         // add project to model
         model.addAttribute("project", project);
