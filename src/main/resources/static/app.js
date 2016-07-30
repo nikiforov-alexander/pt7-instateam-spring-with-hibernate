@@ -11,3 +11,6 @@ $("select").change(function(){
 
     $("#output").html("original bg color = "+origBGColor+"<br/>Selected BG Color = "+$(":selected",this).attr('class')+"<br/>Current Select BG color = " + $(this).attr('class'));
 });
+
+// if there is an anchor with id="focused-link" we'll focus on it
+$("#focused-link").focus();
