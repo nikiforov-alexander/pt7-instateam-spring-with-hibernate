@@ -646,3 +646,8 @@ span.tag.not-started {
 	left: 5%;
     width: 80%;
 }
+.no-roles-for-project a.button{
+	position: relative;
+	bottom: 56px;
+	float: right;
+}
