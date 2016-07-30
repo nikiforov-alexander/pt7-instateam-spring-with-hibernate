@@ -43,13 +43,6 @@
                             <p>
                                 Consider adding new ones.
                             </p>
-                            <!--/* this link is focused using javascript,
-                                   see app.js, and div with scripts below */-->
-                            <a id="focused-link"
-                               class="button"
-                               th:href="@{/roles}">
-                                Add Roles
-                            </a>
                         </div>
                         <!--/* For each role in roles needed of project */-->
                         <div th:each="role : ${project.rolesNeeded}" class="list-item">
@@ -101,8 +94,12 @@
                         </div>
                     </div>
                     <div class="actions">
-                        <!--/* Button linking to project edit page */-->
+                        <!--/* Button linking to project edit page
+                               this link is focused using javascript,
+                               see app.js, and div with scripts below
+                        */-->
                         <a class="button"
+                           id="focused-link"
                            th:href="@{|/projects/${project.id}/edit|}">
                             Edit Project
                         </a>
