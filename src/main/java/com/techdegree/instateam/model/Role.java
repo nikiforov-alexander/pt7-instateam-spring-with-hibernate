@@ -47,7 +47,7 @@ public class Role {
             mappedBy = "role",
             fetch = FetchType.EAGER
     )
-    private List<Collaborator> collaborators = new ArrayList<>();
+    private List<Collaborator> collaborators;
 
     // projects, are used to created relationship between Project class,
     // mapped by "rolesNeeded"
