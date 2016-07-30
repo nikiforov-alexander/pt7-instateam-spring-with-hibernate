@@ -118,6 +118,8 @@ public class CollaboratorController {
         List<Collaborator> collaboratorsInDatabase =
                 collaboratorService.findAll();
 
+        // number of collaborators updated: used in flash later on
+        int numberOfCollaboratorsUpdated = 0;
         // cycle through list of collaborators to check which roles were
         // changed and update them
         for (int i = 0; i < collaboratorsInDatabase.size(); i++) {
@@ -172,12 +174,19 @@ public class CollaboratorController {
                 // update database
                 collaboratorService.save(newCollaborator);
 
-                // show flash message with success on top
-                redirectAttributes.addFlashAttribute("flash", new FlashMessage(
-                        "Collaborators were successfully updated!",
-                        FlashMessage.Status.SUCCESS
-                ));
+                // set number of collaborators updated for successful flash
+                numberOfCollaboratorsUpdated++;
+
             }
+        }
+        // show flash message with success on top if at least one collaborator
+        // was updated
+        if (numberOfCollaboratorsUpdated > 0) {
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    numberOfCollaboratorsUpdated +
+                            " Collaborator(-s) were successfully updated!",
+                    FlashMessage.Status.SUCCESS
+            ));
         }
         // redirect back to collaborators page
         return "redirect:/collaborators";
