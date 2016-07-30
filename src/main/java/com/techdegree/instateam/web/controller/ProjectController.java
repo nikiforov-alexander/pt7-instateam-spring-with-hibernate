@@ -409,8 +409,7 @@ public class ProjectController {
 
         // add flash of successful save on top of the redirected page
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
-                "Collaborators '" + actualProjectToBeFilledWithCollaborators.getName() +
-                        "' were successfully added!",
+                "Collaborators were successfully added/changed !",
                 FlashMessage.Status.SUCCESS
         ));
 
