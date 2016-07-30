@@ -48,7 +48,13 @@ public class RoleDaoImpl implements RoleDao {
                 "UPDATE PUBLIC.collaborators " +
                         "SET ROLE_ID = NULL " +
                         "WHERE ROLE_ID = " + role.getId())
-        .executeUpdate();
+                .executeUpdate();
+        // update projects table by removing links to
+        // deleted roles
+        session.createSQLQuery(
+                "DELETE FROM PUBLIC.projects_roles " +
+                        "WHERE ROLESNEEDED_ID = " + role.getId())
+                .executeUpdate();
         // delete role: begin transaction, delete, commit
         session.beginTransaction();
         session.delete(role);
