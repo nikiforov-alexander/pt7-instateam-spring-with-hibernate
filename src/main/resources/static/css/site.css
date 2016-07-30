@@ -640,3 +640,14 @@ select.not-assigned {
 span.tag.not-started {
     background: black;
 }
+
+.no-roles-for-project {
+	position: relative;
+	left: 5%;
+    width: 80%;
+}
+.no-roles-for-project a.button{
+	position: relative;
+	bottom: 56px;
+	float: right;
+}

@@ -27,9 +27,7 @@ public class Collaborator {
 
     // relation to role class, Many Collaborators can have one Role
     // role removal deletes collaborators. Later is subject to change
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Role role;
 
     // getters and setters

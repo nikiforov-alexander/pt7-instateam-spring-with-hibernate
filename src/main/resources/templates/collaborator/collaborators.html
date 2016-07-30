@@ -17,8 +17,11 @@
                 <h2 th:if="${roles.size() == 0}" class="outside-form">
                     No Roles Available
                 </h2>
+                <!--/* This link is focused, how, see app.js */-->
                 <div th:if="${roles.size() == 0}" class="actions">
-                    <a th:href="@{/roles}" class="button add-roles-button">
+                    <a th:href="@{/roles}"
+                       id="focused-link"
+                       class="button add-roles-button">
                         Add Roles
                     </a>
                 </div>
@@ -55,6 +58,13 @@
                                 <span class="dropdown-arrow change-role"></span>
                                 <!--/* role changer selector */-->
                                 <select th:field="*{collaborators[__${collaboratorStat.index}__].role.id}">
+                                    <!--/*
+                                        Option for collaborator without a role
+                                    */-->
+                                    <option value="0">[Unassigned]</option>
+                                    <!--/* Options for collaborators with
+                                           roles
+                                    */-->
                                     <option th:each="role : ${roles}"
                                             th:value="${role.id}"
                                             th:text="${role.name}"
@@ -141,5 +151,9 @@
                 </form>
             </div>
         </section>
+        <!--/* on this page javascript is used to highlight add roles button
+               when no roles available
+        */-->
+        <div th:replace="layout :: scripts"></div>
     </body>
 </html>

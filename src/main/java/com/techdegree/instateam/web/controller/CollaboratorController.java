@@ -117,29 +117,76 @@ public class CollaboratorController {
         // find all collaborators in database
         List<Collaborator> collaboratorsInDatabase =
                 collaboratorService.findAll();
+
+        // number of collaborators updated: used in flash later on
+        int numberOfCollaboratorsUpdated = 0;
         // cycle through list of collaborators to check which roles were
         // changed and update them
         for (int i = 0; i < collaboratorsInDatabase.size(); i++) {
+
             // get old role from database
             Role oldRole = collaboratorsInDatabase.get(i).getRole();
-            // get id from old role
-            int oldRoleId = oldRole.getId();
-            // get new role id, from user's input
-            int newRoleId = project.getCollaborators().get(i).getRole().getId();
+
+            // id from old role.
+            int oldRoleId;
+
+            // if old Role is not null we safely get id
+            if (oldRole != null) {
+                oldRoleId = oldRole.getId();
+            } else {
+                // If old role is null, we set its id to 0
+                oldRoleId = 0;
+                // and create new Role()
+                oldRole = new Role();
+            }
+
+            // get new role from user's input
+            Role newRole = project.getCollaborators().get(i).getRole();
+
+            // here we know that id will be set: to 0 if unassigned,
+            // to actual new role id, when new role is picked
+            int newRoleId = newRole.getId();
+
             // if id is changed, we proceed
             if (oldRoleId != newRoleId) {
+
                 // get collaborator with changed role from database
                 Collaborator newCollaborator = collaboratorsInDatabase.get(i);
-                // set new id for collaborator's role
-                oldRole.setId(newRoleId);
+
+                // if new role id is not equal to 0
+                if (newRoleId != 0) {
+                    // because new role exists, in this if we update id of
+                    // the old role only.
+
+                    // 1. set new id for collaborator's role
+                    oldRole.setId(newRoleId);
+
+                    // 2. here we set oldRole to include the case when
+                    // collaborator had no role before. If old role was not
+                    // null, this line is not needed
+                    newCollaborator.setRole(oldRole);
+                } else {
+                    // in this else we set collaborator role to null, because
+                    // user did not select any role
+                    newCollaborator.setRole(null);
+                }
+
                 // update database
                 collaboratorService.save(newCollaborator);
-                // show flash message with success on top
-                redirectAttributes.addFlashAttribute("flash", new FlashMessage(
-                        "Collaborators were successfully updated!",
-                        FlashMessage.Status.SUCCESS
-                ));
+
+                // set number of collaborators updated for successful flash
+                numberOfCollaboratorsUpdated++;
+
             }
+        }
+        // show flash message with success on top if at least one collaborator
+        // was updated
+        if (numberOfCollaboratorsUpdated > 0) {
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    numberOfCollaboratorsUpdated +
+                            " Collaborator(-s) were successfully updated!",
+                    FlashMessage.Status.SUCCESS
+            ));
         }
         // redirect back to collaborators page
         return "redirect:/collaborators";

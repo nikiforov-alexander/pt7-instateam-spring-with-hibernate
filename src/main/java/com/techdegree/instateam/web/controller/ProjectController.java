@@ -87,7 +87,6 @@ public class ProjectController {
     public String saveNewProject(
             @Valid Project project,
             BindingResult result,
-            Model model,
             RedirectAttributes redirectAttributes) {
         // first we obtain roles needed array from project object filled in
         // form. This roles list will have null values for roles, that were
@@ -252,6 +251,11 @@ public class ProjectController {
         return "redirect:/";
     }
 
+    // this method is used in both project details and project collaborators
+    // page: `projectDetails` and `editProjectCollaborators`. It is needed
+    // to create synchronized with rolesNeeded list of collaborators, ultimately
+    // leading to proper list of roles and collaborators together visible to
+    // user
     private List<Collaborator>
         generateSynchronizedWithRolesNeededCollaboratorsList(Project project) {
         // list of collaborators synchronized with roles needed list by
@@ -303,9 +307,8 @@ public class ProjectController {
     @RequestMapping("/projects/{projectId}/details")
     public String projectDetails(
             @PathVariable int projectId,
-            Model model,
-            RedirectAttributes redirectAttrbutes
-    ) {
+            Model model
+        ) {
         // find project by id
         Project project = projectService.findById(projectId);
 
@@ -350,6 +353,21 @@ public class ProjectController {
         if (project == null) {
             throw new NotFoundException("Project not found");
         }
+        // if there are no roles in project we redirect back to edit
+        // project page to add some
+        if (project.getRolesNeeded().size() == 0) {
+            // set according flash attrbitute
+            redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                    "No roles are picked for this project, please pick some",
+                    FlashMessage.Status.SUCCESS
+            ));
+            return "redirect:/projects/" + projectId + "/edit";
+        }
+        // here we synchronize collaborators with roles needed, so that user
+        // can see assigned collaborators for his roles.
+        List<Collaborator> collaboratorsSynchronized =
+                generateSynchronizedWithRolesNeededCollaboratorsList(project);
+        project.setCollaborators(collaboratorsSynchronized);
         // add project to model
         model.addAttribute("project", project);
         return "project/project-collaborators";
@@ -401,8 +419,7 @@ public class ProjectController {
 
         // add flash of successful save on top of the redirected page
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
-                "Collaborators '" + actualProjectToBeFilledWithCollaborators.getName() +
-                        "' were successfully added!",
+                "Collaborators were successfully added/changed !",
                 FlashMessage.Status.SUCCESS
         ));
 

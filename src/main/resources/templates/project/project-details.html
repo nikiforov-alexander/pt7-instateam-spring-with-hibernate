@@ -31,6 +31,19 @@
                     </div>
                     <div class="roles-collaborators">
                         <h3>Roles &amp; Collaborators</h3>
+                        <!--/* If there are no roles available, e.g. they
+                               were removed, then we show here link to add
+                               new roles
+                        */-->
+                        <div th:if="${project.rolesNeeded.size() == 0}"
+                            class="no-roles-for-project">
+                            <p>
+                                All Roles associated with this projects were deleted.
+                            </p>
+                            <p>
+                                Consider adding new ones.
+                            </p>
+                        </div>
                         <!--/* For each role in roles needed of project */-->
                         <div th:each="role : ${project.rolesNeeded}" class="list-item">
                             <!--/* list role name */-->
@@ -81,14 +94,20 @@
                         </div>
                     </div>
                     <div class="actions">
-                        <!--/* Button linking to project edit page */-->
+                        <!--/* Button linking to project edit page
+                               this link is focused using javascript,
+                               see app.js, and div with scripts below
+                        */-->
                         <a class="button"
+                           id="focused-link"
                            th:href="@{|/projects/${project.id}/edit|}">
                             Edit Project
                         </a>
                         <!--/* Button linking to project edit collaborators page
+                               is inaccessible when project has no roles
                         */-->
                         <a class="button"
+                           th:if="${project.rolesNeeded.size() > 0}"
                            th:href="@{|/projects/${project.id}/collaborators|}">
                             Edit Collaborators
                         </a>
@@ -96,5 +115,6 @@
                 </div>
             </div>
         </section>
+        <div th:replace="layout::scripts"></div>
     </body>
 </html>

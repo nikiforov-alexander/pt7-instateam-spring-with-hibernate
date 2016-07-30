@@ -6,6 +6,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -44,10 +45,8 @@ public class Role {
     // investigate in this later.
     @OneToMany(
             mappedBy = "role",
-            cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER
     )
-    @Fetch(value = FetchMode.SUBSELECT)
     private List<Collaborator> collaborators;
 
     // projects, are used to created relationship between Project class,

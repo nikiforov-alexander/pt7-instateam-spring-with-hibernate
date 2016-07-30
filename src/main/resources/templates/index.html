@@ -20,7 +20,9 @@
                     No Projects Available
                 </h2>
                 <div th:if="${projects.size() == 0}" class="actions">
-                    <a th:href="@{/projects/add-new}" class="button add-roles-button">
+                    <a th:href="@{/projects/add-new}"
+                       id="focused-link"
+                       class="button add-roles-button">
                         Add Project
                     </a>
                 </div>
@@ -45,7 +47,12 @@
                             Project Status
                         </span>
                     </div>
-            </div>
+                </div>
+           </div>
         </section>
+        <!--/* on this page javascript is used to highlight add roles button
+               when no roles available
+        */-->
+        <div th:replace="layout :: scripts"></div>
     </body>
 </html>
