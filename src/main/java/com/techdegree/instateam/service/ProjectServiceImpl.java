@@ -26,4 +26,9 @@ public class ProjectServiceImpl implements ProjectService {
     public Project findById(int projectId) {
         return projectDao.findById(projectId);
     }
+
+    @Override
+    public void delete(Project project) {
+        projectDao.remove(project);
+    }
 }

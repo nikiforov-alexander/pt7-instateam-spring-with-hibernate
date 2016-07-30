@@ -8,4 +8,5 @@ public interface ProjectDao {
     List<Project> findAll();
     void save(Project project);
     Project findById(int projectId);
+    void remove(Project project);
 }

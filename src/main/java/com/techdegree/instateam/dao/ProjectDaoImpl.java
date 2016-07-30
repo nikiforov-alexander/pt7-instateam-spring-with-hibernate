@@ -50,4 +50,16 @@ public class ProjectDaoImpl implements ProjectDao {
         session.close();
         return project;
     }
+
+    @Override
+    public void remove(Project project) {
+        Session session = sessionFactory.openSession();
+        // detach project from project_roles link table,
+        // detach project from project_collaborators link table
+        // delete project from his table: begin transaction, delete, commit
+        session.beginTransaction();
+        session.delete(project);
+        session.getTransaction().commit();
+        session.close();
+    }
 }
