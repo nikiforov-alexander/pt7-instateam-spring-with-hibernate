@@ -251,6 +251,11 @@ public class ProjectController {
         return "redirect:/";
     }
 
+    // this method is used in both project details and project collaborators
+    // page: `projectDetails` and `editProjectCollaborators`. It is needed
+    // to create synchronized with rolesNeeded list of collaborators, ultimately
+    // leading to proper list of roles and collaborators together visible to
+    // user
     private List<Collaborator>
         generateSynchronizedWithRolesNeededCollaboratorsList(Project project) {
         // list of collaborators synchronized with roles needed list by
@@ -358,6 +363,11 @@ public class ProjectController {
             ));
             return "redirect:/projects/" + projectId + "/edit";
         }
+        // here we synchronize collaborators with roles needed, so that user
+        // can see assigned collaborators for his roles.
+        List<Collaborator> collaboratorsSynchronized =
+                generateSynchronizedWithRolesNeededCollaboratorsList(project);
+        project.setCollaborators(collaboratorsSynchronized);
         // add project to model
         model.addAttribute("project", project);
         return "project/project-collaborators";
