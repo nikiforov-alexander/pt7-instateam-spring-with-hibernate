@@ -6,6 +6,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,9 +44,10 @@ public class Role {
     // This list of collaborators is fetched eagerly, not lazily, I will
     // investigate in this later.
     @OneToMany(
-            mappedBy = "role"
+            mappedBy = "role",
+            fetch = FetchType.EAGER
     )
-    private List<Collaborator> collaborators;
+    private List<Collaborator> collaborators = new ArrayList<>();
 
     // projects, are used to created relationship between Project class,
     // mapped by "rolesNeeded"
