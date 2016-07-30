@@ -107,8 +107,10 @@
                             Edit Project
                         </a>
                         <!--/* Button linking to project edit collaborators page
+                               is inaccessible when project has no roles
                         */-->
                         <a class="button"
+                           th:if="${project.rolesNeeded.size() > 0}"
                            th:href="@{|/projects/${project.id}/collaborators|}">
                             Edit Collaborators
                         </a>
