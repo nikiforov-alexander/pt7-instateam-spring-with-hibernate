@@ -31,6 +31,26 @@
                     </div>
                     <div class="roles-collaborators">
                         <h3>Roles &amp; Collaborators</h3>
+                        <!--/* If there are no roles available, e.g. they
+                               were removed, then we show here link to add
+                               new roles
+                        */-->
+                        <div th:if="${project.rolesNeeded.size() == 0}"
+                            class="no-roles-for-project">
+                            <p>
+                                All Roles associated with this projects were deleted.
+                            </p>
+                            <p>
+                                Consider adding new ones.
+                            </p>
+                            <!--/* this link is focused using javascript,
+                                   see app.js, and div with scripts below */-->
+                            <a id="focused-link"
+                               class="button"
+                               th:href="@{/roles}">
+                                Add Roles
+                            </a>
+                        </div>
                         <!--/* For each role in roles needed of project */-->
                         <div th:each="role : ${project.rolesNeeded}" class="list-item">
                             <!--/* list role name */-->
@@ -96,5 +116,6 @@
                 </div>
             </div>
         </section>
+        <div th:replace="layout::scripts"></div>
     </body>
 </html>
