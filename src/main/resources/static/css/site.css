@@ -125,6 +125,10 @@ nav ul li.selected a {
     bottom: 13px;
     left: 5px;
 }
+.button.delete.project {
+	bottom: 0px;
+    padding-top: 15px;
+}
 .button.button-secondary {
 	background: transparent;
 	border-color: #e1e0e0;
