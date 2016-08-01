@@ -13,7 +13,13 @@ import java.util.List;
 // It is changed a bit: namely I haven't used Serializable id, but this may be
 // done later when I make this app testable, so that I'm not afraid to make
 // changes and check manually whether this page or this works
-public class GenericDaoImpl<T> implements GenericDao<T>{
+/** Comments from codesenior.com
+ * By defining this class as abstract, we prevent Spring from creating
+ * instance of this class If not defined as abstract,
+ * getClass().getGenericSuperClass() would return Object. There would be
+ * exception because Object class does not hava constructor with parameters.
+ */
+public abstract class GenericDaoImpl<T> implements GenericDao<T>{
     // session factory: will be used in all concrete Dao implementations
     @Autowired
     protected SessionFactory sessionFactory;
