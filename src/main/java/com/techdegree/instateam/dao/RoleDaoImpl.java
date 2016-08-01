@@ -32,6 +32,11 @@ public class RoleDaoImpl
 
         // update projects collaborators table by removing collaborators
         // that become inaccessible, because the role was deleted
+        // DELETE
+        // FROM projects_collaborators
+        // INNER JOIN
+        // ON COLLABORATORS.ID = PROJECTS_COLLABORATORS.COLLABORATOR_ID
+        // WHERE collaborator_id =
         // 1. find all collaborators with this roles
         // SELECT FROM collaborators WHERE role_id = ?
         // 2. from this collaborators find those who are in projects and delete
