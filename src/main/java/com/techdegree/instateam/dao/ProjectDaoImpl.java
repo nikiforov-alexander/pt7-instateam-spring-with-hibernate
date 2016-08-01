@@ -13,9 +13,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ProjectDaoImpl implements ProjectDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+public class ProjectDaoImpl
+        extends GenericDaoImpl<Project>
+        implements ProjectDao {
+    // "save", "findbyId" methods are implemented in GenericDaoImpl
 
     @Override
     @SuppressWarnings("unchecked")
@@ -35,24 +36,7 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public void save(Project project) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.saveOrUpdate(project);
-        session.getTransaction().commit();
-        session.close();
-    }
-
-    @Override
-    public Project findById(int projectId) {
-        Session session = sessionFactory.openSession();
-        Project project = session.get(Project.class, projectId);
-        session.close();
-        return project;
-    }
-
-    @Override
-    public void remove(Project project) {
+    public void delete(Project project) {
         Session session = sessionFactory.openSession();
         // detach project from project_roles link table,
         session.createSQLQuery(

@@ -1,34 +1,27 @@
 package com.techdegree.instateam.service;
 
+import com.techdegree.instateam.dao.GenericDao;
 import com.techdegree.instateam.dao.RoleDao;
 import com.techdegree.instateam.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class RoleServiceImpl implements RoleService {
-    @Autowired
+public class RoleServiceImpl
+        extends GenericServiceImpl<Role>
+        implements RoleService {
+
     private RoleDao roleDao;
 
-    @Override
-    public List<Role> findAll() {
-       return roleDao.findAll();
-    }
+    public RoleServiceImpl() {
 
-    @Override
-    public void save(Role role) {
-        roleDao.save(role);
     }
-
-    @Override
-    public Role findById(int roleId) {
-        return roleDao.findById(roleId);
-    }
-
-    @Override
-    public void delete(Role role) {
-        roleDao.delete(role);
+    @Autowired
+    public RoleServiceImpl(
+            @Qualifier("roleDaoImpl")
+                    GenericDao<Role> genericDao) {
+        super(genericDao);
+        this.roleDao = (RoleDao) genericDao;
     }
 }
