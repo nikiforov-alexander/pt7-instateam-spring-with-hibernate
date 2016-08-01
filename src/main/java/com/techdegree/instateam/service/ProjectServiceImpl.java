@@ -29,6 +29,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void delete(Project project) {
-        projectDao.remove(project);
+        projectDao.delete(project);
     }
 }
