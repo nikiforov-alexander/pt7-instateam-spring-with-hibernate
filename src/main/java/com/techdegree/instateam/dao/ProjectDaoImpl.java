@@ -52,7 +52,7 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public void remove(Project project) {
+    public void delete(Project project) {
         Session session = sessionFactory.openSession();
         // detach project from project_roles link table,
         session.createSQLQuery(
