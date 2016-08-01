@@ -428,6 +428,32 @@ public class ProjectController {
                + actualProjectToBeFilledWithCollaborators.getId() +
                "/details";
     }
+    // delete project request
+    @RequestMapping(value = "/projects/{projectId}/delete")
+    public String deleteProject(
+            @PathVariable int projectId,
+            RedirectAttributes redirectAttributes
+    ) {
+        // find project by id
+        Project project = projectService.findById(projectId);
+
+        // if project is not found throw not found error page
+        if (project == null) {
+            throw new NotFoundException("Project not found");
+        }
+
+        // delete Project from database
+        projectService.delete(project);
+
+        // set flash message on top in redirected page
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
+                "Project '" + project.getName() +
+                        "' was successfully deleted!",
+                FlashMessage.Status.SUCCESS
+        ));
+        // redirect back to home page
+        return "redirect:/";
+    }
     // If anywhere NotFoundException is thrown we return error page,
     // i set custom status here, because for some reason otherwise
     // status is 200 :(
