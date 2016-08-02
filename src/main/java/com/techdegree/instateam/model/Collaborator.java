@@ -1,10 +1,5 @@
 package com.techdegree.instateam.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
@@ -26,7 +21,8 @@ public class Collaborator {
     private String name;
 
     // relation to role class, Many Collaborators can have one Role
-    // role removal deletes collaborators. Later is subject to change
+    // role removal detaches collaborators. Collaborators will get NULL
+    // in their role_id primary key, see `RoleDaoImpl.delete` method for more
     @ManyToOne(cascade = CascadeType.DETACH)
     private Role role;
 
