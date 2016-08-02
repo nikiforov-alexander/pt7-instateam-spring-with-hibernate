@@ -39,6 +39,7 @@ public class ProjectDaoImpl
     public void delete(Project project) {
         Session session = sessionFactory.openSession();
         // detach project from project_roles link table,
+        // ad comment
         session.createSQLQuery(
                 "DELETE PUBLIC.projects_roles " +
                         "WHERE PROJECTS_ID = " + project.getId())
