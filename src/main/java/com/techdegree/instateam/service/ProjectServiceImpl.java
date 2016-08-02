@@ -44,7 +44,7 @@ public class ProjectServiceImpl
         // and set new creation date
         project.setDateCreated(creationDate);
         // save new project
-        projectDao.save(project);
+        projectDao.update(project);
     }
 
 
