@@ -31,8 +31,6 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private CollaboratorService collaboratorService;
 
     // main page with all projects
     @SuppressWarnings("unchecked")
