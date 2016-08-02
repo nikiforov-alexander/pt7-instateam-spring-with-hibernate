@@ -15,12 +15,27 @@ public class ProjectDaoImpl
         implements ProjectDao {
     // "save", method are implemented in GenericDaoImpl
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Project findById(int projectId) {
+        System.out.println("HERE");
+        Session session = sessionFactory.openSession();
+        Project project = session.get(Project.class, projectId);
+        // initialize projects' roles needed
+        Hibernate.initialize(project.getRolesNeeded());
+        // initialize projects' collaborators
+        Hibernate.initialize(project.getCollaborators());
+        session.close();
+        return project;
+    }
 
     @SuppressWarnings("unchecked")
     @Override
     public Project findByIdWithRoleCollaboratorsInitialization(int projectId) {
         Session session = sessionFactory.openSession();
         Project project = session.get(Project.class, projectId);
+        // initialize projects' collaborators
+        Hibernate.initialize(project.getCollaborators());
         // lazy instantiate role.collaborators onlly for roles that are needed
         // for project, because it is needed to
         // assign rollaborators. When we use eager, we initialize and fetch
