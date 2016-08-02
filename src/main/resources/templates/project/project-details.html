@@ -21,6 +21,13 @@
                         <p th:text="${project.description}">
                             Design and build a custom website
                         </p>
+                        <!--/*
+                             Project creation date
+                        */-->
+                        <time th:datetime="${#dates.format(project.dateCreated,'yyyy-MM-dd')}"
+                              th:text="'Created at: ' + ${#dates.format(project.dateCreated,'dd MMMM yyyy')}">
+                            Created at: 01 January 1970
+                        </time>
                         <!--/* Project Status, is styled(colored) according
                                to status
                          */-->
