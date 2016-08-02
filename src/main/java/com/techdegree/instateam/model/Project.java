@@ -1,8 +1,5 @@
 package com.techdegree.instateam.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -31,10 +28,13 @@ public class Project {
     @NotNull(message = "Description cannot be empty")
     private String description;
 
-    // project roles
+    // project roles, are fetched lazily when `findById` method is called
+    // and `findByIdWithRoleCollaboratorsInitialization`
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Role> rolesNeeded;
 
+    // project collaborators, are fetched lazily when both `findById` methods
+    // are called, see ProjectDaoImpl.
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Collaborator> collaborators;
 
@@ -90,4 +90,8 @@ public class Project {
         this.status = status;
     }
 
+    // Default constructor for JPA
+    public Project() {
+
+    }
 }
