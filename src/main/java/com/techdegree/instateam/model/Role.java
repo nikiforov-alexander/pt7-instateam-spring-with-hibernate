@@ -1,12 +1,8 @@
 package com.techdegree.instateam.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,14 +34,14 @@ public class Role {
             message = "Name must consist of alphanumeric characters: a-Z, 0-9")
     private String name;
 
-    // collaborators column, mapped by role, many collaborators has one role
-    // on removal of role, right now collaborators are removed. Later will be
-    // changed.
-    // This list of collaborators is fetched eagerly, not lazily, I will
-    // investigate in this later.
+    // This column is mapped by role: which means, we have join column in
+    // "collaborators" table with foreign key "role_id". Fetch type is lazy:
+    // right now this is only used on "project collaborators" page, where
+    // only collaborators for needed for project roles are initialized and
+    // not all the roles
     @OneToMany(
             mappedBy = "role",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private List<Collaborator> collaborators;
 
