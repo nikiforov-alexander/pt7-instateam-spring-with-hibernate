@@ -326,6 +326,9 @@ strong {
 .project p {
 	margin-bottom: 0;
 }
+.project time {
+	color: #000;
+}
 .project .tag {
 	position: absolute;
 	top: 40px;
