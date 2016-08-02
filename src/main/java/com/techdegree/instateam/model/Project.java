@@ -1,8 +1,5 @@
 package com.techdegree.instateam.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -11,10 +8,46 @@ import java.util.List;
 @Entity
 @Table(name = "projects")
 public class Project {
+    // primary key - ID, should be changed to Long to implement Serializable
+    // but that's when I get testing for this done
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    // project name: alphanumeric VARCHAR
+    @Column(name = "NAME", columnDefinition = "VARCHAR")
+    @NotNull
+    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
+        message = "Name must consist of alphanumeric characters: a-Z, 0-9")
+    private String name;
+
+    // project description: for now it simply cannot be empty or null
+    // can be changed later
+    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
+    @NotNull(message = "Description cannot be empty")
+    private String description;
+
+    // project roles, are fetched lazily when `findById` method is called
+    // and `findByIdWithRoleCollaboratorsInitialization`
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Role> rolesNeeded;
+
+    // project collaborators, are fetched lazily when both `findById` methods
+    // are called, see ProjectDaoImpl.
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Collaborator> collaborators;
+
+    // Project status is enum class, see definition, can be ACTIVE,
+    // NOT_STARTED, or ARCHIVED. In table it comes as INTEGER, has
+    // also style attributes, that makes project look different depending on
+    // status
+    @Enumerated
+    private ProjectStatus status;
+
+    //
+    // Getters and setters
+    //
     public int getId() {
         return id;
     }
@@ -22,11 +55,6 @@ public class Project {
         this.id = id;
     }
 
-    @Column(name = "NAME", columnDefinition = "VARCHAR")
-    @NotNull
-    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
-        message = "Name must consist of alphanumeric characters: a-Z, 0-9")
-    private String name;
     public String getName() {
         return name;
     }
@@ -34,9 +62,6 @@ public class Project {
         this.name = name;
     }
 
-    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
-    @NotNull(message = "Description cannot be empty")
-    private String description;
     public String getDescription() {
         return description;
     }
@@ -44,9 +69,6 @@ public class Project {
         this.description = description;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Role> rolesNeeded;
     public void setRolesNeeded(List<Role> rolesNeeded) {
         this.rolesNeeded = rolesNeeded;
     }
@@ -54,9 +76,6 @@ public class Project {
         return rolesNeeded;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Collaborator> collaborators;
     public List<Collaborator> getCollaborators() {
         return collaborators;
     }
@@ -64,9 +83,6 @@ public class Project {
         this.collaborators = collaborators;
     }
 
-
-    @Enumerated
-    private ProjectStatus status;
     public ProjectStatus getStatus() {
         return status;
     }
@@ -74,4 +90,8 @@ public class Project {
         this.status = status;
     }
 
+    // Default constructor for JPA
+    public Project() {
+
+    }
 }

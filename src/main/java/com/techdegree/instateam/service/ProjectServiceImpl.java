@@ -23,4 +23,10 @@ public class ProjectServiceImpl
         super(genericDao);
         this.projectDao = (ProjectDao) genericDao;
     }
+
+    @Override
+    public Project findByIdWithRoleCollaboratorsInitialization(int projectId) {
+        return projectDao
+                .findByIdWithRoleCollaboratorsInitialization(projectId);
+    }
 }
