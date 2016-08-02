@@ -142,6 +142,34 @@ public class ProjectController {
         // redirect back to main page
         return "redirect:/";
     }
+
+    // generate roles needed list synchronized with all roles list, by
+    // index and size, because initially we can have:
+    // all roles: [Role(1), Role(2)]
+    // project.rolesNeeded: [Role(2)]
+    // After synchronization will be
+    // [null, Role(2)]
+    // used in method below `editProject`
+    private List<Role> generateSynchronizedWithAllRolesRolesNeededList(
+            List<Role> allRoles, List<Role> rolesNeeded
+    ) {
+        // initialize synchronized array
+        List<Role> synchronizedRolesNeededListWithNulls =
+                new ArrayList<>();
+        // cycle through all roles
+        for (Role role: allRoles) {
+            // if rolesNeeded has role, we put this role in new list
+            // at the right index. Else we put null
+            if (rolesNeeded.contains(role)) {
+                synchronizedRolesNeededListWithNulls.add(role);
+            } else {
+                synchronizedRolesNeededListWithNulls.add(null);
+            }
+        }
+        return synchronizedRolesNeededListWithNulls;
+    }
+
+
     // edit project page
     @RequestMapping("/projects/{projectId}/edit")
     public String editProject(
@@ -182,6 +210,22 @@ public class ProjectController {
         // will be re-used for both "projects/save" and
         // "projects/add-new" project
         model.addAttribute("action", "/projects/save");
+
+        // Problem: project roles that were selected by user will not be
+        //   shown properly if rolesNeeded of project and allRoles from database
+        //   are not synchronized: that because of the way we interact with
+        //   thymeleaf: cycle in cycle.
+        // Solution:
+        //   We have to make projects rolesNeeded same size with all roles,
+        //   putting on the missing position nulls. This way our arrays being
+        //   synchronized by size and index will be correctly displayed in
+        //   thymeleaf template
+        project.setRolesNeeded(
+                generateSynchronizedWithAllRolesRolesNeededList(
+                        roles, project.getRolesNeeded()
+                )
+        );
+
         // if model contains project, e.g. when we
         // user made a mistake, model will be filled with
         // with previously entered data
