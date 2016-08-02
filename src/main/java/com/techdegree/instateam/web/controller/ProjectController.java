@@ -9,6 +9,7 @@ import com.techdegree.instateam.service.CollaboratorService;
 import com.techdegree.instateam.service.ProjectService;
 import com.techdegree.instateam.service.RoleService;
 import com.techdegree.instateam.web.FlashMessage;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -467,8 +468,17 @@ public class ProjectController {
             @PathVariable int projectId,
             Model model,
             RedirectAttributes redirectAttributes) {
-        // find project by id
-        Project project = projectService.findById(projectId);
+        // find project by id with role collaborators initialization
+        // now I'm not sure, whether this is important. But I trieed my best
+        // here we initialize collaborators for only project roles, so that
+        // when we use in template role.collaborators, we don't initialize
+        // whole database of roles. Now I don't know how to check how better
+        // this approach is: it seems logic, But i don't know how to test
+        // this
+        Project project =
+                projectService.findByIdWithRoleCollaboratorsInitialization(
+                        projectId
+                );
         // if not found throw error
         if (project == null) {
             throw new NotFoundException("Project not found");
