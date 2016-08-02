@@ -3,6 +3,7 @@ package com.techdegree.instateam.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -44,6 +45,10 @@ public class Project {
     // status
     @Enumerated
     private ProjectStatus status;
+
+    // date created, java.util.Date, is TIMESTAMP type in database
+    @Column
+    private Date dateCreated;
 
     //
     // Getters and setters
@@ -90,6 +95,13 @@ public class Project {
         this.status = status;
     }
 
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
     // Default constructor for JPA
     public Project() {
 

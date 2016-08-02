@@ -93,8 +93,8 @@ public class CollaboratorController {
             // return back to collaborators page
             return "redirect:/collaborators";
         }
-        // save collaborator in database
-        collaboratorService.save(collaborator);
+        // saveOrUpdate collaborator in database
+        collaboratorService.saveOrUpdate(collaborator);
         // find selected Role to print in flash message
         Role selectedRole =
                 roleService.findById(collaborator.getRole().getId());
@@ -172,7 +172,7 @@ public class CollaboratorController {
                 }
 
                 // update database
-                collaboratorService.save(newCollaborator);
+                collaboratorService.saveOrUpdate(newCollaborator);
 
                 // set number of collaborators updated for successful flash
                 numberOfCollaboratorsUpdated++;
@@ -226,7 +226,7 @@ public class CollaboratorController {
         return "error";
     }
 
-    // save or update collaborator on detail page
+    // saveOrUpdate or update collaborator on detail page
     @RequestMapping(value = "/collaborators/{collaboratorId}/edit",
             method = RequestMethod.POST)
     public String saveOrUpdateCollaborator(
@@ -252,8 +252,8 @@ public class CollaboratorController {
            // return back to edit page
            return "redirect:/collaborators/" + collaboratorId;
        }
-       // save collaborator to database
-       collaboratorService.save(collaborator);
+       // saveOrUpdate collaborator to database
+       collaboratorService.saveOrUpdate(collaborator);
        // set success flash message on top
        redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                 "Collaborator '" + collaborator.getName() +

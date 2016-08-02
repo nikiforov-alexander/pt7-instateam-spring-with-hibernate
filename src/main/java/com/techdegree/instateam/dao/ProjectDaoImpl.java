@@ -13,12 +13,12 @@ import java.util.List;
 public class ProjectDaoImpl
         extends GenericDaoImpl<Project>
         implements ProjectDao {
-    // "save", method are implemented in GenericDaoImpl
+    // "saveOrUpdate", "save" and "update" methods are implemented in
+    // GenericDaoImpl
 
     @SuppressWarnings("unchecked")
     @Override
     public Project findById(int projectId) {
-        System.out.println("HERE");
         Session session = sessionFactory.openSession();
         Project project = session.get(Project.class, projectId);
         // initialize projects' roles needed

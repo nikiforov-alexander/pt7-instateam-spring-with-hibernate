@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 public class RoleDaoImpl
         extends GenericDaoImpl<Role>
         implements RoleDao {
-    // save, update and findAll() methods are implemented just like
-    // in GenericDaoImpl. Delete method however is different
+    // saveOrUpdate, update, save and findAll() methods are implemented
+    // just like in GenericDaoImpl. Delete method however is different
 
     @Override
     public void delete(Role role) {

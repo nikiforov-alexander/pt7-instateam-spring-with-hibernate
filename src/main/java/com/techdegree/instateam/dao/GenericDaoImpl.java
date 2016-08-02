@@ -48,7 +48,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T>{
     // - open session
     // - do something
     // - close session
-    // in case of save/update and delete, theses methods include
+    // in case of saveOrUpdate/update and delete, theses methods include
     // protocol:
     // - begin transaction
     // - do something
@@ -67,10 +67,30 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T>{
     // this method works double way: when new object is added, it is "saved"
     // in database, when object exists, it is updated
     @Override
-    public void save(T object) {
+    public void saveOrUpdate(T object) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.saveOrUpdate(object);
+        session.getTransaction().commit();
+        session.close();
+    }
+    // this method works saves new object
+    // in database
+    @Override
+    public void save(T object) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(object);
+        session.getTransaction().commit();
+        session.close();
+    }
+    // this method works updates existing object
+    // in database
+    @Override
+    public void update(T object) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(object);
         session.getTransaction().commit();
         session.close();
     }

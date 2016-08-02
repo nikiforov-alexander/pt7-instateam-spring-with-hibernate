@@ -46,8 +46,20 @@ public abstract class GenericServiceImpl<T>
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    public void saveOrUpdate(T object) {
+        genericDao.saveOrUpdate(object);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void save(T object) {
         genericDao.save(object);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void update(T object) {
+        genericDao.update(object);
     }
 
     @Override

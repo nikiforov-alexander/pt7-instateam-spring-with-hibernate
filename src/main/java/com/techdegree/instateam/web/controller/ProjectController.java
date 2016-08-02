@@ -31,8 +31,6 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private CollaboratorService collaboratorService;
 
     // main page with all projects
     @SuppressWarnings("unchecked")
@@ -132,7 +130,7 @@ public class ProjectController {
         }
         // add right neededRoles to project
         project.setRolesNeeded(rolesNeeded);
-        // save project to database
+        // VERY important here we "save" new project to database
         projectService.save(project);
         // add flash of successful save on top of the redirected page
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
@@ -249,7 +247,7 @@ public class ProjectController {
                 .collect(Collectors.toList());
     }
 
-    // save existing project POST request
+    // saveOrUpdate existing project POST request
     // this method is exactly like saveNewProject. But I don't know
     // yet how to re use the method here. It is definitely something
     // to do
@@ -353,10 +351,10 @@ public class ProjectController {
         // 6. set new collaborators for project
         project.setCollaborators(collaboratorsWithoutThoseWhoseRolesDisappear);
 
-        // save (actually update) project to database
-        projectService.save(project);
+        // Important: here we UPDATE project to database
+        projectService.update(project);
 
-        // add flash of successful save on top of the redirected page
+        // add flash of successful update on top of the redirected page
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                 "Project '" + project.getName() +
                         "' was successfully saved!",
@@ -391,12 +389,6 @@ public class ProjectController {
             // cycle through projectCollaborators
             for (Collaborator projectCollaborator : project.getCollaborators()) {
 
-                // if role was removed from database, but collaborator left
-                // attached to project, we add null
-//                if (projectCollaborator.getRole() == null) {
-//                    projectCollaboratorsWithNullsForUnAssigned.add(null);
-//                    break;
-//                }
                 // if collaborator is assigned to this role: we check by
                 // unique ids
                 if (projectCollaborator.getRole().getId() ==
@@ -544,10 +536,10 @@ public class ProjectController {
         actualProjectToBeFilledWithCollaborators
                 .setCollaborators(collaborators);
 
-        // update project to database
-        projectService.save(actualProjectToBeFilledWithCollaborators);
+        // UPDATE project to database: dateCreated is not changed
+        projectService.update(actualProjectToBeFilledWithCollaborators);
 
-        // add flash of successful save on top of the redirected page
+        // add flash of successful update on top of the redirected page
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                 "Collaborators were successfully added/changed !",
                 FlashMessage.Status.SUCCESS
