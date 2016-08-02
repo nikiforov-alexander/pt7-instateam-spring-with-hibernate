@@ -206,6 +206,7 @@ public class ProjectController {
         List<Role> rolesNeeded = project.getRolesNeeded().stream()
                 .filter(role -> role != null)
                 .collect(Collectors.toList());
+
         // here unfortunately, I cannot directly use validation, because I
         // have this error:
         // Field error in object 'project' on field 'rolesNeeded[0]': rejected value
@@ -222,6 +223,7 @@ public class ProjectController {
                     "error.project",
                     "Please select at least one role");
         }
+
         // here I check for error for every field manually including them in
         // unfortunately, because of reject error see above.
         if (result.hasFieldErrors("name")
@@ -237,10 +239,22 @@ public class ProjectController {
             // redirect back to form
             return "redirect:/projects/" + project.getId() + "/edit";
         }
+
         // add right neededRoles to project
         project.setRolesNeeded(rolesNeeded);
-        // save project to database
+
+        // before we update project in database we add collaborators if
+        // they exist. So that we don't lost collaborators when we
+        // edit existing project:
+        // 1. we get project from database : we know it exists
+        Project projectFromDatabase =
+                projectService.findById(project.getId());
+        // 2. we update edited project with collaborators
+        project.setCollaborators(projectFromDatabase.getCollaborators());
+
+        // save (actually update) project to database
         projectService.save(project);
+
         // add flash of successful save on top of the redirected page
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(
                 "Project '" + project.getName() +
