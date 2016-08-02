@@ -5,6 +5,7 @@ import com.techdegree.instateam.model.Collaborator;
 import com.techdegree.instateam.model.Project;
 import com.techdegree.instateam.model.ProjectStatus;
 import com.techdegree.instateam.model.Role;
+import com.techdegree.instateam.service.CollaboratorService;
 import com.techdegree.instateam.service.ProjectService;
 import com.techdegree.instateam.service.RoleService;
 import com.techdegree.instateam.web.FlashMessage;
@@ -29,6 +30,8 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private CollaboratorService collaboratorService;
 
     // main page with all projects
     @SuppressWarnings("unchecked")
@@ -188,7 +191,19 @@ public class ProjectController {
         }
         return "/project/project-edit";
     }
-    
+
+    // method used in saveExistingProject method below
+    // it generates disappeared roles needed from two Lists:
+    // old roles needed and new roles needed: simple lambda with
+    // `does not contains` condition, collected to list
+    private List<Role> generateDisappearedRolesNeededArray(
+            List<Role> oldRolesNeeded,
+            List<Role> newRolesNeeded) {
+        return oldRolesNeeded.stream()
+                .filter( role -> !newRolesNeeded.contains(role) )
+                .collect(Collectors.toList());
+    }
+
     // save existing project POST request
     // this method is exactly like saveNewProject. But I don't know
     // yet how to re use the method here. It is definitely something
@@ -243,14 +258,55 @@ public class ProjectController {
         // add right neededRoles to project
         project.setRolesNeeded(rolesNeeded);
 
-        // before we update project in database we add collaborators if
-        // they exist. So that we don't lost collaborators when we
-        // edit existing project:
-        // 1. we get project from database : we know it exists
+        // Goal: before we update project in database we add collaborators if
+        //   they exist. So that we don't lost collaborators when we
+        //   edit existing project:
+        // Solution:
+        //   1. we get project from database : we know it exists
         Project projectFromDatabase =
                 projectService.findById(project.getId());
-        // 2. we update edited project with collaborators
+        //   2. we update edited project with collaborators
         project.setCollaborators(projectFromDatabase.getCollaborators());
+
+        // Problem: when there old roles needed generated for project
+        //   are disappeared upon edit of the project then we have
+        //   to remove collaborators that had these old needed roles
+        // Solution:
+        //   1. Generate array of disappeared roles
+        //   2. Cycle through each disappered role
+        //     * For each disappeared role, check project collaborator
+        //       - if collaborator had disappered role, generate new
+        //         collaborators list for project
+        //   3. set new collaborators to project
+
+        // Step-by-step solution
+        // 0. set new collaborators list
+        List<Collaborator> collaboratorsWithoutThoseWhoseRolesDisappear =
+                new ArrayList<>();
+        // 1. get old roles needed from database project
+        List<Role> oldRolesNeeded = projectFromDatabase.getRolesNeeded();
+        // 2. cycle through generated disappered roles
+        for (Role disappearedRole :
+                generateDisappearedRolesNeededArray(
+                        oldRolesNeeded,
+                        rolesNeeded)
+                ) {
+            // 3. cycle through project collaborators
+            // 4. if collaborator's role has disappeared
+            // 5. generate new updated list of collaborators
+            collaboratorsWithoutThoseWhoseRolesDisappear
+                .addAll(
+                    project.getCollaborators().stream()
+                            .filter(
+                            collaborator ->
+                                    collaborator.getRole().getId()
+                                    != disappearedRole.getId()
+                            )
+                            .collect(Collectors.toList())
+                );
+        }
+        // 6. set new collaborators for project
+        project.setCollaborators(collaboratorsWithoutThoseWhoseRolesDisappear);
 
         // save (actually update) project to database
         projectService.save(project);
