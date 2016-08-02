@@ -52,8 +52,8 @@ public class RoleController {
             redirectAttributes.addFlashAttribute("newRole", role);
             return "redirect:/roles";
         }
-        // save role to database
-        roleService.save(role);
+        // saveOrUpdate role to database
+        roleService.saveOrUpdate(role);
         // success flash message
         redirectAttributes.addFlashAttribute("flash",
                 new FlashMessage("New Role: '" + role.getName() +
@@ -97,8 +97,8 @@ public class RoleController {
         }
         // get old role from database
         String oldRoleName = roleService.findById(roleId).getName();
-        // save role to database
-        roleService.save(role);
+        // saveOrUpdate role to database
+        roleService.saveOrUpdate(role);
         redirectAttributes.addFlashAttribute("flash",
                 new FlashMessage(
                         "Role: '" + oldRoleName +
