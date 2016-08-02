@@ -391,12 +391,6 @@ public class ProjectController {
             // cycle through projectCollaborators
             for (Collaborator projectCollaborator : project.getCollaborators()) {
 
-                // if role was removed from database, but collaborator left
-                // attached to project, we add null
-//                if (projectCollaborator.getRole() == null) {
-//                    projectCollaboratorsWithNullsForUnAssigned.add(null);
-//                    break;
-//                }
                 // if collaborator is assigned to this role: we check by
                 // unique ids
                 if (projectCollaborator.getRole().getId() ==
