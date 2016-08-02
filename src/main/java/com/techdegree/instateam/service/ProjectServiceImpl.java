@@ -33,6 +33,19 @@ public class ProjectServiceImpl
         // save new project
         projectDao.save(project);
     }
+    // this method is used only when project is updated, so we don't bother
+    // ourself what happen when suddenly here gets project without id.
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void update(Project project) {
+        // get project creation date from database of the project
+        Date creationDate =
+                projectDao.findById(project.getId()).getDateCreated();
+        // and set new creation date
+        project.setDateCreated(creationDate);
+        // save new project
+        projectDao.save(project);
+    }
 
 
     @Autowired
