@@ -146,3 +146,40 @@
     Include a start date on projects, and sort chronologically by start date on 
     the project index view.
     <hr>
+
+<!--Links-->
+<!--External URLs-->
+[spark_blog_readme]: 
+    https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse "https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse"
+[codesenior_generic_dao_service_impl]:
+    http://www.codesenior.com/en/tutorial/Spring-Generic-DAO-and-Generic-Service-Implementation
+<!--Directories-->
+[data]: data "data directory with H2 Database"
+[resources]:
+    src/main/resources "directory with static resources, application properties file and hibernate configuration file: src/main/resources"
+[templates]:
+    src/main/resources/templates "Thymeleaf templates directory: src/main/resources/templates"
+[css]:
+    src/main/resources/static/css "Directory with CSS files: src/main/resources/static/css"
+[initial_project_files]:
+    initial-project-files "directory with initial project files from Treeshouse"
+<!--Files-->
+[instateam_mv_db]: 
+    data/instateam.mv.db "H2 databased used in project: instateam.mv.db"
+<!--Configuration files-->
+[hibernate_cfg_xml]: 
+    src/main/resources/hibernate.cfg.xml "Hibernate configuration file: src/main/resources/hibernate.cfg.xml"
+[application_properties]:
+    src/main/resources/application.properties "Spring application properties file: application.properties"
+<!--JavaScript files-->
+[app_js]:
+    src/main/resources/static/app.js "JavaScript file with all JavaScript functions used: src/main/resources/static/app.js"
+[favicon_ico]:
+    src/main/resources/static/favicon.ico "Icon used in tabs of the website: src/main/resources/static/favicon.ico"
+<!--CSS files-->
+[normalize_css]:
+    src/main/resources/static/css/normalize.css "Normalize CSS, unchanged: src/main/resources/static/css/normalize.css"
+[site_css]:
+    src/main/resources/static/css/site.css "Main CSS file with custom styles added by me: src/main/resources/static/css/site.css"
+<!--Classes-->
+
