@@ -181,5 +181,26 @@
     src/main/resources/static/css/normalize.css "Normalize CSS, unchanged: src/main/resources/static/css/normalize.css"
 [site_css]:
     src/main/resources/static/css/site.css "Main CSS file with custom styles added by me: src/main/resources/static/css/site.css"
+<!--Thymeleaf template files-->
+[layout_html]:
+    ./src/main/resources/templates/layout.html "./src/main/resources/templates/layout.html"
+[error_html]:
+    ./src/main/resources/templates/error.html "./src/main/resources/templates/error.html"
+[index_html]:
+    ./src/main/resources/templates/index.html "./src/main/resources/templates/index.html"
+[project_details_html]:
+    ./src/main/resources/templates/project/project-details.html "./src/main/resources/templates/project/project-details.html"
+[project_edit_html]:
+    ./src/main/resources/templates/project/project-edit.html "./src/main/resources/templates/project/project-edit.html"
+[project_collaborators_html]:
+    ./src/main/resources/templates/project/project-collaborators.html "./src/main/resources/templates/project/project-collaborators.html"
+[collaborator_details_html]:
+    ./src/main/resources/templates/collaborator/collaborator-details.html "./src/main/resources/templates/collaborator/collaborator-details.html"
+[collaborators_html]:
+    ./src/main/resources/templates/collaborator/collaborators.html "./src/main/resources/templates/collaborator/collaborators.html"
+[role_details_html]:
+    ./src/main/resources/templates/role/role-details.html "./src/main/resources/templates/role/role-details.html"
+[roles_html]:
+    ./src/main/resources/templates/role/roles.html "./src/main/resources/templates/role/roles.html"
 <!--Classes-->
 
