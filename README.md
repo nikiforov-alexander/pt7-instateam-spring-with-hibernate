@@ -349,3 +349,18 @@ This is done in the following way:
     and Hibernate's [hibernate.cfg.xml] can be found.
 <hr>
 2. <a id="task-2"></a>
+    Create the configuration files for Hibernate and an H2 database connection.
+    <hr>
+    Configuration file for Hibernate is called [hibernate.cfg.xml] 
+    and situated in
+    [resources] directory. 
+    <br>
+    H2 properties for database(Driver, URL, username and password) are
+    specified in Spring's [application.properties] file, 
+    and then configured using
+    `@Configuration` annotated [DataConfig] class. 
+    <br>
+    This [DataConfig] file is used as primary database configuration
+    class. It defines `sessionFactory` and connects [hibernate.cfg.xml]
+    with [application.properties] file.
+<hr>
