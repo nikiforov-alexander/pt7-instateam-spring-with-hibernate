@@ -153,8 +153,9 @@
 [spark_blog_readme]: 
     https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse "https://github.com/nikiforov-alexander/pt4-spark-blog#eclipse"
 [codesenior_generic_dao_service_impl]:
-    http://www.codesenior.com/en/tutorial/Spring-Generic-DAO-and-Generic-Service-Implementation
-
+    http://www.codesenior.com/en/tutorial/Spring-Generic-DAO-and-Generic-Service-Implementation "http://www.codesenior.com/en/tutorial/Spring-Generic-DAO-and-Generic-Service-Implementation"
+[dzone_automatic_restart]:
+    https://dzone.com/articles/continuous-auto-restart-with-spring-boot-devtools "https://dzone.com/articles/continuous-auto-restart-with-spring-boot-devtools"
 <!--Directories-->
 [data]: data "data directory with H2 Database"
 [resources]:
@@ -177,7 +178,8 @@
     src/main/resources/hibernate.cfg.xml "Hibernate configuration file: src/main/resources/hibernate.cfg.xml"
 [application.properties]:
     src/main/resources/application.properties "Spring application properties file: application.properties"
-
+[build.gradle]:
+    build.gradle "Gradle configuration file: build.gradle"
 <!--JavaScript files-->
 [app.js]:
     src/main/resources/static/app.js "JavaScript file with all JavaScript functions used: src/main/resources/static/app.js"
@@ -282,7 +284,8 @@ pt7-instateam-spring-with-hibernate.userlibraries "Eclipse .userlibraries file, 
 ### Eclipse Installation instructions
 <hr> <a id="eclipse"></a>
 I generated necessary [.project] and 
-[.userlibraries]. This time without `.classpath`(Decided to experiment).
+[.userlibraries] and added `apply plugin : 'eclipse'` line to
+[build.gradle]. This time without `.classpath`(Decided to experiment).
 I tested it once again: it worked. As always there is a problem with 
 `BuildPath` in `Eclipse`.
 So it is better to set `src/main/java` as a source in `BuildPath`
@@ -300,10 +303,46 @@ This is done in the following way:
     `java -cp h2-1.4.192.jar org.h2.tools.Server`
 - Then should be opened Firefox window, where one can look at how
     my database [instateam.mv.db] looks like, keeping in mind
-    setting of [hibernate.cfg.xml]
+    settings of [hibernate.cfg.xml]
     
     After that `bootRun` Gradle task can be executed to run the 
     application.
 <hr>
 ### Tasks
 1. <a id="task-1"></a>
+    In the IDE of your choice, create a Gradle project. Add 
+    dependencies for 
+    Spring Boot with Thymeleaf, Spring ORM, Hibernate, Apache DBCP, and H2. 
+    Create the directory and package structure of the application. Save all 
+    static assets into the proper project directory.
+    <hr>
+    Gradle project is successfully created. Properties can be found in
+    [build.gradle] file. Following dependenices were added(
+    for simplicity only packages names are mentioned):
+    - `spring-boot-started-thymeleaf` : Spring Boot With Thymeleaf. 
+    - `spring-boot-devtools`: for automatic restart try. For more on how it is
+        done, see this [Article][dzone_automatic_restart].
+    - `spring-orm`: Spring ORM
+    - `hibernate-core`: Hibernate
+    - `tomcat-dbcp` : Apache DBCP
+    - `h2`: H2
+    - `nekohtml` : library used in [application.properties], so that
+        to make Thymeleaf templates HTML5 compliant 
+    - `junit` : unit testing library
+
+    <hr>
+    Main package called `com.techdegree.instateam`. Empty directories were
+    created automatically by IntellijIdea. Static assets are saved in
+    [resources/static][static] directory. 
+    Following files can be found there:
+        - There is CSS directory [css],  with [normalize.css]
+            and [site.css]
+        - JavaScript file for application is called [app.js]
+        - Website icon file : [favicon.png]
+
+    <hr>
+    Thymeleaf templates are in [resoures/templates][templates] directory.
+    In resources directory Spring's [application.properties] file 
+    and Hibernate's [hibernate.cfg.xml] can be found.
+<hr>
+2. <a id="task-2"></a>
