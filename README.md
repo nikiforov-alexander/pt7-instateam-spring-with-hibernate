@@ -102,3 +102,31 @@
     - Default constructor
 
     <hr>
+* [8.] (#task-8) 
+    Add JPA annotations to all model classes.
+    <hr>
+* [9.] (#task-9) 
+    Create a DAO interface and implementation for each model class.
+    <hr>
+* [10.] (#task-10) 
+    Create a service interface and implementation for each model class. 
+    <hr>
+* [11.] (#task-11) 
+    Create the `RoleController` and Thymeleaf views necessary for viewing, 
+    adding, and editing roles.
+    <hr>
+* [12.] (#task-12) 
+    Create the `CollaboratorController` and Thymeleaf views 
+    necessary for viewing, 
+    adding, and editing collaborators.
+    <hr>
+* [13.] (#task-13) 
+    Create the `ProjectController` and Thymeleaf views necessary for viewing, 
+    adding, and editing projects, without including the ability to 
+    assign each role to a specific collaborator.
+    <hr>
+* [14.] (#task-14) 
+    Add the methods to `ProjectController`, and the Thymeleaf views 
+    necessary for assigning and unassigning collaborators to and from a 
+    project’s needed roles.
+    <hr>
