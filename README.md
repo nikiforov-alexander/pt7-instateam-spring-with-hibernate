@@ -130,3 +130,19 @@
     necessary for assigning and unassigning collaborators to and from a 
     project’s needed roles.
     <hr>
+
+### Extra Credit
+* [15.] (#task-15) 
+    Extract the common code of each DAO implementation to an abstract class 
+    that the DAO implementations extend.
+    <hr>
+* [16.] (#task-16) 
+    Add the ability to delete projects, roles, and contractors and 
+    ensure data integrity for all relationships. 
+    For example, when a collaborator is deleted, make sure that all 
+    roles previously assigned to this collaborator become unassigned.
+    <hr>
+* [17.] (#task-17) 
+    Include a start date on projects, and sort chronologically by start date on 
+    the project index view.
+    <hr>
