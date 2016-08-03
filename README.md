@@ -360,7 +360,7 @@ This is done in the following way:
     and then configured using
     `@Configuration` annotated [DataConfig] class. 
 <hr>
-3.  <a id="task-2"></a>
+3.  <a id="task-3"></a>
     Create a Java class for starting the application as a `SpringApplication` 
     and a Spring configuration class with two `@Bean` methods:
     - Method for initializing a `LocalSessionFactoryBean`
@@ -376,4 +376,46 @@ This is done in the following way:
     - Method for initializing a `DataSource` exists and is called
         `dataSource`
 <hr>
-4.  <a id="task-2"></a>
+4.  <a id="task-4"></a>
+    Create the `Role` model class, which represents the roles each project could 
+    contain, and that need to be filled. Each role will have the following 
+    pieces of information associated with it:
+    - `id`: auto-generated numeric identifier to serve as the table’s primary 
+        key
+    - `name`: alphanumeric, reader-friendly name to be displayed. Example 
+        role names might be “developer”, “designer”, or “QA engineer”. 
+        This is a required field for data validation.
+    - Getters and setters for all fields
+    - Default constructor
+
+    <hr>
+    [Role] model class exists. Following fields are there
+    - `int id`: is auto-generated using `GenerationType.IDENTITY` and 
+        annotated as `@Id` to be primary key for table "roles"
+        associated. *NOTE*: It has type `int`, not surrounded by 
+        wrapper. I know that, later it will be
+        changed, when the application will be testable enough to
+        accept changes easily.
+    - `String name`: is annotated as `@NotNull` and has alphanumeric
+        `@Pattern` annotation, with `message` displayed upon
+        validation in [RoleController], whenever user is typing
+        wrong name.
+    - `List<Collaborator> collaborators`. This column is mapped
+        by "role", and fetched lazily, when we need to get 
+        all collaborators associated with specific roles. This
+        is used in `ProjectController.editProjectCollaborators`
+        method, where user is picking collaborators for 
+        projects' roles.
+    - `List<Project> projects`. This column is mapped by role
+        creating a `@ManyToMany` relationship with `Project`
+        class. The link table would be "projects_roles". This
+        never used in a form `role.getProjects` for now
+        because there is no such page. This collection is
+        fetched lazily. But nowhere I wrote a code to 
+        initialize it.
+    - Getters and Setters for all fields are added.
+    - Default constructor for JPA is there
+    - I also added `equals` and `hashCode` here,
+        including `id` and `name` for checking.
+<hr>
+5.  <a id="task-5"></a>
