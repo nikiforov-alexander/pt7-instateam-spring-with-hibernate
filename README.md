@@ -44,20 +44,6 @@
 
     <hr>
 * [5.] (#task-5) 
-    Create the `Role` model class, which represents the roles each project could 
-    contain, and that need to be filled. Each role will have the following 
-    pieces of information associated with it:
-    - `id`: auto-generated numeric identifier to serve as the table’s primary 
-        key
-    - `name`: alphanumeric, reader-friendly name to be displayed. Example 
-        role names might be “developer”, “designer”, or “QA engineer”. 
-        This is a required field for data validation.
-    - Getters and setters for all fields
-    - Default constructor
-
-    <hr>
-
-* [6.] (#task-6) 
     Create the `Collaborator` model class, which represents a person who 
     is a candidate for working on any given project. Each collaborator 
     should contain the following:
@@ -73,7 +59,7 @@
     - Default constructor
 
     <hr>
-* [7.] (#task-7) 
+* [6.] (#task-6) 
     Create the `Project` model class, which represents a project for which a 
     project manager is seeking collaborators. 
     Each project should contain the following:
@@ -102,47 +88,47 @@
     - Default constructor
 
     <hr>
-* [8.] (#task-8) 
+* [7.] (#task-7) 
     Add JPA annotations to all model classes.
     <hr>
-* [9.] (#task-9) 
+* [8.] (#task-8) 
     Create a DAO interface and implementation for each model class.
     <hr>
-* [10.] (#task-10) 
+* [9.] (#task-9) 
     Create a service interface and implementation for each model class. 
     <hr>
-* [11.] (#task-11) 
+* [10.] (#task-10) 
     Create the `RoleController` and Thymeleaf views necessary for viewing, 
     adding, and editing roles.
     <hr>
-* [12.] (#task-12) 
+* [11.] (#task-11) 
     Create the `CollaboratorController` and Thymeleaf views 
     necessary for viewing, 
     adding, and editing collaborators.
     <hr>
-* [13.] (#task-13) 
+* [12.] (#task-12) 
     Create the `ProjectController` and Thymeleaf views necessary for viewing, 
     adding, and editing projects, without including the ability to 
     assign each role to a specific collaborator.
     <hr>
-* [14.] (#task-14) 
+* [13.] (#task-13) 
     Add the methods to `ProjectController`, and the Thymeleaf views 
     necessary for assigning and unassigning collaborators to and from a 
     project’s needed roles.
     <hr>
 
 ### Extra Credit
-* [15.] (#task-15) 
+* [14.] (#task-14) 
     Extract the common code of each DAO implementation to an abstract class 
     that the DAO implementations extend.
     <hr>
-* [16.] (#task-16) 
+* [15.] (#task-15) 
     Add the ability to delete projects, roles, and contractors and 
     ensure data integrity for all relationships. 
     For example, when a collaborator is deleted, make sure that all 
     roles previously assigned to this collaborator become unassigned.
     <hr>
-* [17.] (#task-17) 
+* [16.] (#task-16) 
     Include a start date on projects, and sort chronologically by start date on 
     the project index view.
     <hr>
@@ -423,3 +409,43 @@ This is done in the following way:
         including `id` and `name` for checking.
 <hr>
 5.  <a id="task-5"></a>
+    Create the `Collaborator` model class, which represents a person who 
+    is a candidate for working on any given project. Each collaborator 
+    should contain the following:
+    - `id`: auto-generated numeric identifier to serve as the table’s primary 
+        key
+    - `name`: first and last name of the collaborator. This is a required field 
+        for data validation.
+    - `role`: the single `Role` object that represents this collaborator’s skill. 
+        For proper data association, it’s important to keep in mind that 
+        there could be `many` collaborators associated with any `one` role. 
+        This is a required field for data validation.
+    - Getters and setters for all fields
+    - Default constructor
+
+    <hr>
+    [Collaborator] class is created. It contains:
+    - `int id`: is auto-generated using `GenerationType.IDENTITY` and 
+        annotated as `@Id` to be primary key for table "collaborators"
+        associated. *NOTE*: It has type `int`, not surrounded by 
+        wrapper. I know that, later it will be
+        changed, when the application will be testable enough to
+        accept changes easily.
+    - `String name`: is annotated as `@NotNull` and has alphanumeric
+        `@Pattern` annotation, with `message` displayed upon
+        validation in [CollaboratorController], whenever user is typing
+        wrong name.
+    - `Role role`: is annotated with `@ManyToOne`, according to task.
+        There is no annotations for `@Pattern` or something like
+        that. Role is select using `option` tag. Collaborator can
+        be unassigned, in this case his "role_id" column will be
+        set to `null`.
+    - There are getters and setter for all fields
+    - There is a default constructor
+    - *NOTE*: there is no member `projects`, defining bi-directional
+        `@ManyToMany` relationship, simply because it is not needed.
+    <hr>
+<hr>
+6.  <a id="task-6"></a>
+    <hr>
+<hr>
