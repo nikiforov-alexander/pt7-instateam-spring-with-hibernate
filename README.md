@@ -310,6 +310,7 @@ This is done in the following way:
     After that `bootRun` Gradle task can be executed to run the 
     application.
 <hr>
+
 ### Tasks
 1. <a id="task-1"></a>
     In the IDE of your choice, create a Gradle project. Add 
