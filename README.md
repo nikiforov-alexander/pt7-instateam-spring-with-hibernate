@@ -182,25 +182,82 @@
 [site_css]:
     src/main/resources/static/css/site.css "Main CSS file with custom styles added by me: src/main/resources/static/css/site.css"
 <!--Thymeleaf template files-->
-[layout_html]:
+[layout.html]:
     ./src/main/resources/templates/layout.html "./src/main/resources/templates/layout.html"
-[error_html]:
+[error.html]:
     ./src/main/resources/templates/error.html "./src/main/resources/templates/error.html"
-[index_html]:
+[index.html]:
     ./src/main/resources/templates/index.html "./src/main/resources/templates/index.html"
-[project_details_html]:
+[project-details.html]:
     ./src/main/resources/templates/project/project-details.html "./src/main/resources/templates/project/project-details.html"
-[project_edit_html]:
+[project-edit.html]:
     ./src/main/resources/templates/project/project-edit.html "./src/main/resources/templates/project/project-edit.html"
-[project_collaborators_html]:
+[project-collaborators.html]:
     ./src/main/resources/templates/project/project-collaborators.html "./src/main/resources/templates/project/project-collaborators.html"
-[collaborator_details_html]:
+[collaborator-details.html]:
     ./src/main/resources/templates/collaborator/collaborator-details.html "./src/main/resources/templates/collaborator/collaborator-details.html"
-[collaborators_html]:
+[collaborators.html]:
     ./src/main/resources/templates/collaborator/collaborators.html "./src/main/resources/templates/collaborator/collaborators.html"
-[role_details_html]:
+[role-details.html]:
     ./src/main/resources/templates/role/role-details.html "./src/main/resources/templates/role/role-details.html"
-[roles_html]:
+[roles.html]:
     ./src/main/resources/templates/role/roles.html "./src/main/resources/templates/role/roles.html"
 <!--Classes-->
-
+[RoleTest]:
+    ./src/test/java/com/techdegree/instateam/model/RoleTest.java "./src/test/java/com/techdegree/instateam/model/RoleTest.java"
+[RoleService]:
+    ./src/main/java/com/techdegree/instateam/service/RoleService.java "./src/main/java/com/techdegree/instateam/service/RoleService.java"
+[CollaboratorServiceImpl]:
+    ./src/main/java/com/techdegree/instateam/service/CollaboratorServiceImpl.java "./src/main/java/com/techdegree/instateam/service/CollaboratorServiceImpl.java"
+[CollaboratorService]:
+    ./src/main/java/com/techdegree/instateam/service/CollaboratorService.java "./src/main/java/com/techdegree/instateam/service/CollaboratorService.java"
+[GenericService]:
+    ./src/main/java/com/techdegree/instateam/service/GenericService.java "./src/main/java/com/techdegree/instateam/service/GenericService.java"
+[RoleServiceImpl]:
+    ./src/main/java/com/techdegree/instateam/service/RoleServiceImpl.java "./src/main/java/com/techdegree/instateam/service/RoleServiceImpl.java"
+[ProjectServiceImpl]:
+    ./src/main/java/com/techdegree/instateam/service/ProjectServiceImpl.java "./src/main/java/com/techdegree/instateam/service/ProjectServiceImpl.java"
+[GenericServiceImpl]:
+    ./src/main/java/com/techdegree/instateam/service/GenericServiceImpl.java "./src/main/java/com/techdegree/instateam/service/GenericServiceImpl.java"
+[ProjectService]:
+    ./src/main/java/com/techdegree/instateam/service/ProjectService.java "./src/main/java/com/techdegree/instateam/service/ProjectService.java"
+[Application]:
+    ./src/main/java/com/techdegree/instateam/Application.java "./src/main/java/com/techdegree/instateam/Application.java"
+[FlashMessage]:
+    ./src/main/java/com/techdegree/instateam/web/FlashMessage.java "./src/main/java/com/techdegree/instateam/web/FlashMessage.java"
+[CollaboratorController]:
+    ./src/main/java/com/techdegree/instateam/web/controller/CollaboratorController.java "./src/main/java/com/techdegree/instateam/web/controller/CollaboratorController.java"
+[ProjectController]:
+    ./src/main/java/com/techdegree/instateam/web/controller/ProjectController.java "./src/main/java/com/techdegree/instateam/web/controller/ProjectController.java"
+[RoleController]:
+    ./src/main/java/com/techdegree/instateam/web/controller/RoleController.java "./src/main/java/com/techdegree/instateam/web/controller/RoleController.java"
+[Role]:
+    ./src/main/java/com/techdegree/instateam/model/Role.java "./src/main/java/com/techdegree/instateam/model/Role.java"
+[ProjectStatus]:
+    ./src/main/java/com/techdegree/instateam/model/ProjectStatus.java "./src/main/java/com/techdegree/instateam/model/ProjectStatus.java"
+[Project]:
+    ./src/main/java/com/techdegree/instateam/model/Project.java "./src/main/java/com/techdegree/instateam/model/Project.java"
+[Collaborator]:
+    ./src/main/java/com/techdegree/instateam/model/Collaborator.java "./src/main/java/com/techdegree/instateam/model/Collaborator.java"
+[NotFoundException]:
+    ./src/main/java/com/techdegree/instateam/exception/NotFoundException.java "./src/main/java/com/techdegree/instateam/exception/NotFoundException.java"
+[ProjectDaoImpl]:
+    ./src/main/java/com/techdegree/instateam/dao/ProjectDaoImpl.java "./src/main/java/com/techdegree/instateam/dao/ProjectDaoImpl.java"
+[RoleDaoImpl]:
+    ./src/main/java/com/techdegree/instateam/dao/RoleDaoImpl.java "./src/main/java/com/techdegree/instateam/dao/RoleDaoImpl.java"
+[RoleDao]:
+    ./src/main/java/com/techdegree/instateam/dao/RoleDao.java "./src/main/java/com/techdegree/instateam/dao/RoleDao.java"
+[CollaboratorDao]:
+    ./src/main/java/com/techdegree/instateam/dao/CollaboratorDao.java "./src/main/java/com/techdegree/instateam/dao/CollaboratorDao.java"
+[GenericDaoImpl]:
+    ./src/main/java/com/techdegree/instateam/dao/GenericDaoImpl.java "./src/main/java/com/techdegree/instateam/dao/GenericDaoImpl.java"
+[GenericDao]:
+    ./src/main/java/com/techdegree/instateam/dao/GenericDao.java "./src/main/java/com/techdegree/instateam/dao/GenericDao.java"
+[CollaboratorDaoImpl]:
+    ./src/main/java/com/techdegree/instateam/dao/CollaboratorDaoImpl.java "./src/main/java/com/techdegree/instateam/dao/CollaboratorDaoImpl.java"
+[ProjectDao]:
+    ./src/main/java/com/techdegree/instateam/dao/ProjectDao.java "./src/main/java/com/techdegree/instateam/dao/ProjectDao.java"
+[AppConfig]:
+    ./src/main/java/com/techdegree/instateam/config/AppConfig.java "./src/main/java/com/techdegree/instateam/config/AppConfig.java"
+[DataConfig]:
+    ./src/main/java/com/techdegree/instateam/config/DataConfig.java "./src/main/java/com/techdegree/instateam/config/DataConfig.java"
