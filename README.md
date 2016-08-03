@@ -401,7 +401,11 @@ This is done in the following way:
         validation in [RoleController], whenever user is typing
         wrong name.
     - `List<Collaborator> collaborators`. This column is mapped
-        by "role", and fetched lazily, when we need to get 
+        by "role", creating `@OneToMany` relationship with 
+        `Collaborator` class, which means that foreign key
+        `role_id` is added as column in `collaborators` 
+        table.
+        It is fetched lazily, when we need to get 
         all collaborators associated with specific roles. This
         is used in `ProjectController.editProjectCollaborators`
         method, where user is picking collaborators for 
