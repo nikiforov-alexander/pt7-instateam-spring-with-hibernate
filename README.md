@@ -359,8 +359,21 @@ This is done in the following way:
     specified in Spring's [application.properties] file, 
     and then configured using
     `@Configuration` annotated [DataConfig] class. 
-    <br>
-    This [DataConfig] file is used as primary database configuration
-    class. It defines `sessionFactory` and connects [hibernate.cfg.xml]
-    with [application.properties] file.
 <hr>
+3.  <a id="task-2"></a>
+    Create a Java class for starting the application as a `SpringApplication` 
+    and a Spring configuration class with two `@Bean` methods:
+    - Method for initializing a `LocalSessionFactoryBean`
+    - Method for initializing a `DataSource`
+
+    <hr>
+    Java class starting Spring application is created and 
+    called [Application].
+    Configuration file with two `@Bean` methods is created and
+    called [DataConfig]: 
+    - Method for initializing a `LocalSessionFactoryBean`exists and
+      is called `sessionFactory`
+    - Method for initializing a `DataSource` exists and is called
+        `dataSource`
+<hr>
+4.  <a id="task-2"></a>
