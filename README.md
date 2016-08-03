@@ -162,6 +162,8 @@
     src/main/resources "directory with static resources, application properties file and hibernate configuration file: src/main/resources"
 [templates]:
     src/main/resources/templates "Thymeleaf templates directory: src/main/resources/templates"
+[static]:
+    src/main/resources/static "Static assets directory: src/main/resources/static"
 [css]:
     src/main/resources/static/css "Directory with CSS files: src/main/resources/static/css"
 [initial_project_files]:
@@ -326,19 +328,19 @@ This is done in the following way:
     - `hibernate-core`: Hibernate
     - `tomcat-dbcp` : Apache DBCP
     - `h2`: H2
-    - `nekohtml` : library used in [application.properties], so that
+    - `nekohtml` : library used in [application.properties],
         to make Thymeleaf templates HTML5 compliant 
     - `junit` : unit testing library
 
     <hr>
-    Main package called `com.techdegree.instateam`. Empty directories were
+    Main package is called `com.techdegree.instateam`. Empty directories were
     created automatically by IntellijIdea. Static assets are saved in
     [resources/static][static] directory. 
     Following files can be found there:
-        - There is CSS directory [css],  with [normalize.css]
-            and [site.css]
-        - JavaScript file for application is called [app.js]
-        - Website icon file : [favicon.png]
+    - There is CSS directory [css],  with [normalize.css]
+        and [site.css]
+    - JavaScript file for application is called [app.js]
+    - Website icon file : [favicon.png]
 
     <hr>
     Thymeleaf templates are in [resoures/templates][templates] directory.
