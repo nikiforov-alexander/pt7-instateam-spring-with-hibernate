@@ -167,27 +167,27 @@
     initial-project-files "directory with initial project files from Treeshouse"
 
 <!--Files-->
-[instateam_mv_db]: 
+[instateam.mv.db]: 
     data/instateam.mv.db "H2 databased used in project: instateam.mv.db"
 [h2-1.4.192.jar]:
     h2-1.4.192.jar "H2 database jar file, used to launch server h2-1.4.192.jar"
 
 <!--Configuration files-->
-[hibernate_cfg_xml]: 
+[hibernate.cfg.xml]: 
     src/main/resources/hibernate.cfg.xml "Hibernate configuration file: src/main/resources/hibernate.cfg.xml"
-[application_properties]:
+[application.properties]:
     src/main/resources/application.properties "Spring application properties file: application.properties"
 
 <!--JavaScript files-->
-[app_js]:
+[app.js]:
     src/main/resources/static/app.js "JavaScript file with all JavaScript functions used: src/main/resources/static/app.js"
-[favicon_ico]:
+[favicon.ico]:
     src/main/resources/static/favicon.ico "Icon used in tabs of the website: src/main/resources/static/favicon.ico"
 
 <!--CSS files-->
-[normalize_css]:
+[normalize.css]:
     src/main/resources/static/css/normalize.css "Normalize CSS, unchanged: src/main/resources/static/css/normalize.css"
-[site_css]:
+[site.css]:
     src/main/resources/static/css/site.css "Main CSS file with custom styles added by me: src/main/resources/static/css/site.css"
 
 <!--Eclipse files-->
@@ -281,27 +281,26 @@ pt7-instateam-spring-with-hibernate.userlibraries "Eclipse .userlibraries file, 
 
 ### Eclipse Installation instructions
 <hr> <a id="eclipse"></a>
-    I generated necessary [.project] and 
-    [.userlibraries]. This time without `.classpath`. Decided to experiment
-    I tested it once again. As always there is a problem with `BuildPath` in 
-    `Eclipse`.
-    So it is better to set `src/main/java` as a source in `BuildPath`
-    options, if `Eclipse` does not understand it. Here is a link to old
-    [Spark Blog README.md][spark-blog-readme] just in case. 
-    <br>
-    *Important*: Before run the app itself, we have to launch the Server:
-    This is done in the following way:
-    - On the classpath there is "H2" database jar file: [h2-1.4.192.jar]
-    - In order to launch server, one has to go to project directory:
-        This is important, because pathway to database in [data] 
-        directory is relative: `./data/instateam`, see 
-        [hibernate.cfg.xml]. (Although I didn't try to run server from
-        other directory - May be it will work too).
-    - And there run in terminal the following 
-        `java -cp h2-1.4.192.jar org.h2.tools.Server`
-    - Then should be opened Firefox window, where one can look at how
-        my database [instateam.mv.db] looks like, keeping in mind
-        setting of [hibernate.cfg.xml]
+I generated necessary [.project] and 
+[.userlibraries]. This time without `.classpath`(Decided to experiment).
+I tested it once again: it worked. As always there is a problem with 
+`BuildPath` in `Eclipse`.
+So it is better to set `src/main/java` as a source in `BuildPath`
+options, if `Eclipse` does not understand it. Here is a link to old
+[Spark Blog README.md][spark_blog_readme] just in case. 
+*Important*: Before run the app itself, we have to launch the Server.
+This is done in the following way:
+- On the classpath there is "H2" database jar file: [h2-1.4.192.jar]
+- In order to launch server, one has to go to project directory:
+    This is important, because pathway to database in [data] 
+    directory is relative: `./data/instateam`, see 
+    [hibernate.cfg.xml]. (Although I didn't try to run server from
+    other directory - May be it will work too).
+- And there run in terminal the following 
+    `java -cp h2-1.4.192.jar org.h2.tools.Server`
+- Then should be opened Firefox window, where one can look at how
+    my database [instateam.mv.db] looks like, keeping in mind
+    setting of [hibernate.cfg.xml]
     
     After that `bootRun` Gradle task can be executed to run the 
     application.
