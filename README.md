@@ -142,6 +142,8 @@
     http://www.codesenior.com/en/tutorial/Spring-Generic-DAO-and-Generic-Service-Implementation "http://www.codesenior.com/en/tutorial/Spring-Generic-DAO-and-Generic-Service-Implementation"
 [dzone_automatic_restart]:
     https://dzone.com/articles/continuous-auto-restart-with-spring-boot-devtools "https://dzone.com/articles/continuous-auto-restart-with-spring-boot-devtools"
+[timestamp_h2]:
+    http://www.h2database.com/html/datatypes.html#timestamp_type "http://www.h2database.com/html/datatypes.html#timestamp_type"
 <!--Directories-->
 [data]: data "data directory with H2 Database"
 [resources]:
@@ -444,8 +446,97 @@ This is done in the following way:
     - There is a default constructor
     - *NOTE*: there is no member `projects`, defining bi-directional
         `@ManyToMany` relationship, simply because it is not needed.
-    <hr>
 <hr>
 6.  <a id="task-6"></a>
+    Create the `Project` model class, which represents a project for which a 
+    project manager is seeking collaborators. 
+    Each project should contain the following:
+    - `id`: auto-generated numeric identifier to serve as the table’s primary 
+        key
+    - `name`: alphanumeric, reader-friendly name to be displayed. 
+        This is a required field for data validation.
+    - `description`: longer description of the project. 
+        This is a required field for data validation.
+    - `status`: alphanumeric status of the project, 
+        for example “recruiting” or “on hold”
+    - `rolesNeeded`: collection of Role objects representing all 
+        roles needed for this project, regardless of whether or not 
+        they’ve been filled. For proper data association, keep 
+        in mind that there could be `many` projects that contain `many` `Role` 
+        objects. That is, each project can have many roles that 
+        it needs, and each role can be needed by many projects.
+    - `collaborators`: collection of `Collaborator` objects representing any 
+        collaborators that have been assigned to this project. 
+        For data association, use the fact that there could be `many` 
+        projects that contain `many` Collaborator objects. 
+        That is, each project can have many 
+        collaborators, and each collaborator 
+        can work on many projects.
+    - Getters and setters for all fields
+    - Default constructor
+
     <hr>
+    [Project] class is created. It contains the following:
+7.  <a id="task-7"></a>
+    - `int id`: is auto-generated using `GenerationType.IDENTITY` and 
+        annotated as `@Id` to be primary key for table "projects"
+        associated. *NOTE*: It has type `int`, not surrounded by 
+        wrapper. I know that, later it will be
+        changed, when the application will be testable enough to
+        accept changes easily.
+    - `String name`: is annotated as `@NotNull` and has alphanumeric
+        `@Pattern` annotation, with `message` displayed upon
+        validation in [ProjectController], whenever user is typing
+        wrong name.
+    - `String description`: I didn't put any restrictions here,
+        only `@NotNull` one. I could put `@Min` to define max
+        number of symbols. But I had to test app manually, so
+        I ended up creating new Project over and over again.
+        So I removed everything from now. When I get unit
+        testing in this project, I'll add `@Min`, for example.
+    - `List<Role> rolesNeeded`: This is a collection of roles.
+        It is connected with `projects` member of [Role] in 
+        bi-directional manner. It is
+        fetched lazily, whenever `findById` or 
+        `findByIdWithRoleCollaboratorsInitialization` is
+        called. `Project.rolesNeeded` and `Role.projects`
+        are connected in "projects_roles" table, by
+        primary keys. Upon deletion of project, role
+        link is deleted from the table, and vice versa.
+        For more see [Data Integrity](#task-15)
+    - `List<Collaborator> collaborators`: This is a collection
+        of collaborators. It is connected as `@ManyToMany` 
+        collection 
+        in uni-directional manner, because [Collaborator]
+        does not have `projects`. The relationship is
+        described in `@JoinTable` "projects_collaborators"
+        by primary keys from both tables. It is fetched lazily
+        and just like `rolesNeeded` is instantiated lazily, when
+        project is called using `findById` and 
+        `findByIdWithRoleCollaboratorsInitialization`
+        methods. Upon deletion of project, `project_id` rows
+        from link table "projects_collaborators" are removed,
+        and vice versa, when collaborator is removed,
+        rows with that collaborators `collaborator_id` are
+        removed. For more on that see 
+        [Data Integrity](#task-15).
+        Collaborators are also removed from link table, 
+        when role of these collaborators is removed.
+    - `ProjectStatus status`: This is `@Enumerated` 
+        member, which comes in "projects" table as 
+        a number. [ProjectStatus] is `enum` and for 
+        now has three values:
+        - `ACTIVE`
+        - `ARCHIVED`
+        - `NOT_FOUND`
+        Every one of them represents status of the project,
+        defines CSS style with `style` member to show project 
+        tag beautifully, see
+        index page and detail page, also has `color`
+        and `description` members. JavaScript in [app.js]
+        is used to colorify options and select when 
+        used picks up one or another status.
+    - `Date dateCreated`: This is `java.util.Date` that is
+        converted to [TIMESTAMP][timestamp_h2] type in H2 database 
+        table. 
 <hr>
