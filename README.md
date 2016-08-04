@@ -773,7 +773,7 @@ This is done in the following way:
     in [CollaboratorController] and [RoleController], where
     `saveOrUpdate` method is used.
     <br>
-    Second, when `findAll` method is called on [index.page]
+    Second, when `findAll` method is called on [index.html]
     in [ProjectController] to retrieve all projects from database,
     on Service layer retrieved from database list is sorted
     by `dateCreated`. This way we can see projects on
