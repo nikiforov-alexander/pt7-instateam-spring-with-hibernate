@@ -723,3 +723,39 @@ This is done in the following way:
     Dao/Service relationship:
     ![UML diagram of DAO/service layers](./uml-diagrams/UML-diagram-of-generic-DAO-service-layers.png)
 <hr>
+15. <a id="task-15"></a>
+    Add the ability to delete projects, roles, and contractors and 
+    ensure data integrity for all relationships. 
+    For example, when a collaborator is deleted, make sure that all 
+    roles previously assigned to this collaborator become unassigned.
+    <hr>
+    Most of the problems comes of course when user is trying
+    to delete something. So here what is possible to do in
+    project:
+    - role deletion: When role is deleted, following
+        data integrity actions are done:
+        - collaborator that is involved in project
+            is detached from project: 
+            in "projects_collaborators" link table line with
+            this collaborator is removed;
+        - collaborators becomes "unassigned":
+            in "collaborators" table foreign_key "role_id"
+            is set to `null`
+        - finally, role is deleted from projects roles needed:
+            role is deleted from "projects_roles"
+            link table of `@ManyToMany` relationship
+    - collaborator deletion: When collaborator is deleted:
+        collaborator is deleted from project: "collaborator" is
+        removed from "projects_collaborators" link table
+    - when project is deleted, its links with roles
+        and collaborators in link tables "projects_collaborators"
+        and "projects_roles" are deleted.
+    <hr>
+    *NOTE:* I was not able to solve problems using Hibernate
+    query language, and using simple annotations, to 
+    solve my simple problems. So I went back to origins
+    and use simple SQL commands that doing all the 
+    data inegrity. In the future I will remake this to
+    be working with Hibernate query language, when the
+    unit testing will be done.
+<hr>
