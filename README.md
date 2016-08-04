@@ -759,3 +759,23 @@ This is done in the following way:
     be working with Hibernate query language, when the
     unit testing will be done.
 <hr>
+16. <a id="task-16"></a>
+    Include a start date on projects, and sort chronologically by start date on 
+    the project index view.
+    <hr>
+    First of all, [Project] class has `java.util.Date dateCreated` 
+    member variable. It is a `@Column` and is saved in H2 database
+    [instateam.mv.db] as [TIMESTAMP][timestamp_h2].
+    `dateCreated` is set only once on Service layer
+    when project is created and *saved*, in
+    [ProjectServiceImpl]. That's why in this class `save` and
+    `update` methods are separated and not used as one, just like
+    in [CollaboratorController] and [RoleController], where
+    `saveOrUpdate` method is used.
+    <br>
+    Second, when `findAll` method is called on [index.page]
+    in [ProjectController] to retrieve all projects from database,
+    on Service layer retrieved from database list is sorted
+    by `dateCreated`. This way we can see projects on
+    Home page chronologically.
+<hr>
