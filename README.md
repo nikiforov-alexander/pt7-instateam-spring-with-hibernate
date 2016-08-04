@@ -839,32 +839,46 @@ Experimental part, second UML diagram done by me:
 - [roles.html]
 
 #### Classes
-- [RoleTest]
-- [RoleService]
-- [CollaboratorServiceImpl]
-- [CollaboratorService]
-- [GenericService]
-- [RoleServiceImpl]
-- [ProjectServiceImpl]
-- [GenericServiceImpl]
-- [ProjectService]
-- [Application]
-- [FlashMessage]
-- [CollaboratorController]
-- [ProjectController]
-- [RoleController]
+
+##### Role related
 - [Role]
-- [ProjectStatus]
-- [Project]
-- [Collaborator]
-- [NotFoundException]
-- [ProjectDaoImpl]
-- [RoleDaoImpl]
+- [RoleTest]
 - [RoleDao]
+- [RoleDaoImpl]
+- [RoleService]
+- [RoleServiceImpl]
+- [RoleController]
+
+##### Collaborator related
+- [Collaborator]
 - [CollaboratorDao]
-- [GenericDaoImpl]
-- [GenericDao]
 - [CollaboratorDaoImpl]
+- [CollaboratorService]
+- [CollaboratorServiceImpl]
+- [CollaboratorController]
+
+##### Generics
+- [GenericDao]
+- [GenericDaoImpl]
+- [GenericService]
+- [GenericServiceImpl]
+
+##### Project related
+- [Project]
+- [ProjectStatus]
 - [ProjectDao]
+- [ProjectDaoImpl]
+- [ProjectService]
+- [ProjectServiceImpl]
+- [ProjectController]
+
+##### Spring configuration files
 - [AppConfig]
 - [DataConfig]
+
+##### Spring application class
+- [Application]
+
+##### Misc
+- [FlashMessage]
+- [NotFoundException]
