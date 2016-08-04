@@ -667,17 +667,17 @@ This is done in the following way:
         `editProjectCollaborators`
     <hr>
     - `projectDetails`(GET request, address "/projects/{projectId}/details")
-        method generating [project detail page][project-detail.html].
+        method generating [project detail page][project-details.html].
     <hr>
     - `editProjectCollaborators`(GET request, 
         address "/projects/{projectId}/collaborators")
         method, generating 
         [project collaborators page][project-collaborators.html]
     <hr>
-    - `saveColaboratorsForProject`(POST request,
+    - `saveCollaboratorsForProject`(POST request,
         address "/projects/save-collaborators")
         method, saving project collaborators, redirects
-        upon success to [project detail page][project-detail.html].
+        upon success to [project detail page][project-details.html].
         Address will be changed, 
         because it does not contain {projectId}.
     <hr>
@@ -687,7 +687,39 @@ This is done in the following way:
     <hr>
     - `projectNotFound` (Exception handler). For now is used when
         in any method [NotFoundException] is thrown.
+    <hr>
+    Related Thymeleaf views:
+    - Home page: [index.html].
+    - project detail page: [project-details.html].
+    - project collaborators page: [project-collaborators.html]
+    - Add new project page: [project-edit.html]  
 <hr>
 13. <a id="task-13"></a>
+    Add the methods to `ProjectController`, and the Thymeleaf views 
+    necessary for assigning and unassigning collaborators to and from a 
+    project’s needed roles.
     <hr>
+    Related methods are:
+    - `editProjectCollaborators`
+    - `saveCollaboratorsForProject`
+    <hr>
+    For the description see [Task 12](#task-12)
+<hr>
+### Extra Credit
+14. <a id="task-14"></a>
+    Extract the common code of each DAO implementation to an abstract class 
+    that the DAO implementations extend.
+    <hr>
+    To say the truth my own capabilities were enough only to
+    create [GenericDao] and [GenericService] interfaces that are
+    inherited by all Daos and Service interfaces. The implementation
+    of `abstract` [GenericDaoImpl] and [GenericServiceImpl] I found
+    [here][codesenior_generic_dao_service_impl].
+    I do understand perfectly well how [GenericDaoImpl] works:
+    the main problem here was to initialize class instance
+    in constructor, for more see comments. With the 
+    [GenericServiceImpl] I don't feel so sure, but it works, and
+    task is solved. Here also is the UML diagram picture of
+    Dao/Service relationship:
+    ![UML diagram of DAO/service layers][./uml-diagrams/UML-diagram-of-the-project-collaborator-role-relations.png]
 <hr>
