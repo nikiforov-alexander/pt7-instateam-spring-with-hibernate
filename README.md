@@ -587,9 +587,46 @@ This is done in the following way:
     - `deleteRole`: (GET request)
         method, deleting existing role.
         Redirects to [All roles page][roles.html]
+        *NOTE*: I think I should change this to
+        POST, because GET doesn't change anything whereas
+        POST does, and HTML has GET and POST only, so this
+        is one of the things to do when testing of the site
+        will be up.
     <hr>
     Thymeleaf related views are:
     - All roles page: [roles.html]
     - role details page: [role-details.html]
 <hr>
 11. <a id="task-11"></a>
+    Create the `CollaboratorController` and Thymeleaf views 
+    necessary for viewing, 
+    adding, and editing collaborators.
+    <hr>
+    [CollaboratorController] is created with following methods:
+    - `listCollaborators`: (GET request) method, listing all
+        collaborators in database, generates 
+        [All collaborators page][collaborators.html]
+    - `addNewCollaborator`: (POST request) method, saving new
+        collaborator to database. Redirects to
+        [All collaborators page][collaborators.html]
+    - `saveCollaboratorsRoles`: (POST request) method, saving
+        collaborators' new roles. User can change many roles
+        or only one on [All collaborators page][collaborators.html].
+        To the same page this request is redirected.
+    - `collaboratorDetails`: (GET request) method, generating
+        [collaborator details page][collaborator-details.html]
+    - `collaboratorNotFound`: (Exception handler) method, generating
+        [error.html] page, with 404 status and "not found" message.
+    - `saveOrUpdateCollaborator`: (POST request) method that is
+        saving or updating collaborator. Well it is actually updates
+        the collaborator, so this has to be changed in future.
+        Redirects to [All collaborators page][collaborators.html].
+    - `deleteCollaborator`: (GET request) method, deleting collaborator
+        from database. Will be changed to POST in future.
+        Redirects to [All collaborators page][collaborators.html].
+    <hr>
+    Thymeleaf related views are:
+    - All collaborators page : [collaborators.html]
+    - collaborator details page : [collaborator-details.html]
+<hr>
+12. <a id="task-12"></a>
