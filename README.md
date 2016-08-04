@@ -568,3 +568,28 @@ This is done in the following way:
     - [CollaboratorService], [CollaboratorServiceImpl]
     - [ProjectService], [ProjectServiceImpl]
 <hr>
+10. <a id="task-10"></a>
+    Create the `RoleController` and Thymeleaf views necessary for viewing, 
+    adding, and editing roles.
+    <hr>
+    [RoleController] is created with following methods:
+    - `listRoles`: (GET request) 
+        generating [All roles page][roles.html].
+    - `addNewRole`: (POST request) 
+        method, saving new role to database.
+        Redirects to [All roles page][roles.html]
+    - `roleDetails`: (GET request)
+        method, generating 
+        [role details page][role-details.html].
+    - `editRole`: (POST request)
+        method, updating existing role.
+        Redirects to [All roles page][roles.html]
+    - `deleteRole`: (GET request)
+        method, deleting existing role.
+        Redirects to [All roles page][roles.html]
+    <hr>
+    Thymeleaf related views are:
+    - All roles page: [roles.html]
+    - role details page: [role-details.html]
+<hr>
+11. <a id="task-11"></a>
