@@ -13,6 +13,8 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
+// uncommented and run in Eclipse
+// apply plugin: 'eclipse'
 
 //sourceCompatibility = 1.5
 // note automatic build example was taken from here:
