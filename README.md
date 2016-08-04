@@ -538,5 +538,9 @@ This is done in the following way:
         used picks up one or another status.
     - `Date dateCreated`: This is `java.util.Date` that is
         converted to [TIMESTAMP][timestamp_h2] type in H2 database 
-        table. 
+        table. It is used to sort projects by creation date on index
+        page, see [ProjectServiceImpl] and [Task 16](#task-16)
+        for more. It is displayed
+        both on [index.html] page and [project-details.html] page.
 <hr>
+8.  <a id="task-8"></a>
