@@ -790,11 +790,13 @@ Experimental part, second UML diagram done by me:
 
 <a id="links"></a>
 ### Quick Links
+
 #### External links
 - [spark_blog_readme]
 - [codesenior_generic_dao_service_impl]
 - [dzone_automatic_restart]
 - [timestamp_h2]
+
 #### Directories
 - [data]
 - [resources]
@@ -802,22 +804,28 @@ Experimental part, second UML diagram done by me:
 - [static]
 - [css]
 - [initial_project_files]
+
 #### Files
 - [instateam.mv.db]
 - [h2-1.4.192.jar]
+
 #### Configuration files
 - [hibernate.cfg.xml]
 - [application.properties]
 - [build.gradle]
+
 #### JavaScript files
 - [app.js]
 - [favicon.ico]
+
 #### CSS files
 - [normalize.css]
 - [site.css]
+
 #### Eclipse files
 - [.project]
 - [.userlibraries]
+
 #### Thymeleaf template files
 - [layout.html]
 - [error.html]
@@ -829,6 +837,7 @@ Experimental part, second UML diagram done by me:
 - [collaborators.html]
 - [role-details.html]
 - [roles.html]
+
 #### Classes
 - [RoleTest]
 - [RoleService]
