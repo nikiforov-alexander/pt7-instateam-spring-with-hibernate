@@ -329,7 +329,7 @@ This is done in the following way:
     - There is CSS directory [css],  with [normalize.css]
         and [site.css]
     - JavaScript file for application is called [app.js]
-    - Website icon file : [favicon.png]
+    - Website icon file : [favicon.ico]
 
     <hr>
     Thymeleaf templates are in [resoures/templates][templates] directory.
