@@ -477,7 +477,6 @@ This is done in the following way:
 
     <hr>
     [Project] class is created. It contains the following:
-7.  <a id="task-7"></a>
     - `int id`: is auto-generated using `GenerationType.IDENTITY` and 
         annotated as `@Id` to be primary key for table "projects"
         associated. *NOTE*: It has type `int`, not surrounded by 
@@ -543,4 +542,29 @@ This is done in the following way:
         for more. It is displayed
         both on [index.html] page and [project-details.html] page.
 <hr>
+7.  <a id="task-7"></a>
+    Add JPA annotations to all model classes.
+    <hr>
+    JPA annotations added to all model classes:
+    - [Role]
+    - [Project]
+    - [Collaborator]
+<hr>
 8.  <a id="task-8"></a>
+    Create a DAO interface and implementation for each model class. 
+    <hr>
+    Following DAO interfaces and implementations created for model 
+    classes:
+    - [RoleDao], [RoleDaoImpl]
+    - [CollaboratorDao], [CollaboratorDaoImpl]
+    - [ProjectDao], [ProjectDaoImpl]
+<hr>
+9.  <a id="task-9"></a>
+    Create a service interface and implementation for each model class. 
+    <hr>
+    Following service interfaces and implementations created for model 
+    classes:
+    - [RoleService], [RoleServiceImpl]
+    - [CollaboratorService], [CollaboratorServiceImpl]
+    - [ProjectService], [ProjectServiceImpl]
+<hr>
