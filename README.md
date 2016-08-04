@@ -630,3 +630,48 @@ This is done in the following way:
     - collaborator details page : [collaborator-details.html]
 <hr>
 12. <a id="task-12"></a>
+    Create the `ProjectController` and Thymeleaf views necessary for viewing, 
+    adding, and editing projects, without including the ability to 
+    assign each role to a specific collaborator.
+    <hr>
+    - `listProjects`(GET request) method, listing all projects on
+        [Home page][index.html]. Returns [Home page][index.html]
+    - `addNewProject`(GET request) method, saving new project
+        to database. It redirects to [roles page][roles.html]
+        if no roles are available in database. 
+        Returns [Add new project page][project-edit.html]
+    - `saveNewProject`(POST request, address "/projects/add-new")
+       method  saving new project to database. Redirect
+       upon success to [Home page][index.html] 
+    - `generateSynchronizedWithAllRolesRolesNeededList` -
+        private method used in `editProject`
+    - `editProject`(GET request, address "/projects/{projectId}/edit")
+        method generating project edit page. Returns same 
+        [Add new project page][project-edit.html] but
+        with different `action` in `form`.
+    - `generateDisappearedRolesNeededArray` -
+        private method used in `saveExistingProject` 
+        method.
+    - `saveExistingProject`(POST request, address "/projects/save")
+        method updating existing project. Redirects to
+        [Home page][index.html]
+    - `generateSynchronizedWithRolesNeededCollaboratorsList` -
+        private method used in `projectDetails` and 
+        `editProjectCollaborators`
+    - `projectDetails`(GET request, address "/projects/{projectId}/details")
+        method generating [project detail page][project-detail.html].
+    - `editProjectCollaborators`(GET request, 
+        address "/projects/{projectId}/collaborators")
+        method, generating 
+        [project collaborators page][project-collaborators.html]
+    - `saveColaboratorsForProject`(POST request,
+        address "/projects/save-collaborators")
+        method, saving project collaborators, redirects
+        upon success to [project detail page][project-detail.html].
+        Address will be changed, 
+        because it does not contain {projectId}.
+    - `deleteProject`(GET request, address "/projects/{projectId}/delete")
+        method removing project from database. Later will be changed to
+        POST method. redirects to [Home page][index.html].
+    - `projectNotFound`
+<hr>
