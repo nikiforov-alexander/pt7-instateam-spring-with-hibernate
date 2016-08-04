@@ -779,3 +779,83 @@ This is done in the following way:
     by `dateCreated`. This way we can see projects on
     Home page chronologically.
 <hr>
+
+
+<a id="structure"></a>
+### Structure of the project
+
+Experimental part, second UML diagram done by me:
+![UML diagram of project structure](./uml-diagrams/UML-diagram-of-the-project-collaborator-role-relations.png)
+
+
+<a id="links"></a>
+### Quick Links
+#### External links
+- [spark_blog_readme]
+- [codesenior_generic_dao_service_impl]
+- [dzone_automatic_restart]
+- [timestamp_h2]
+#### Directories
+- [data]
+- [resources]
+- [templates]
+- [static]
+- [css]
+- [initial_project_files]
+#### Files
+- [instateam.mv.db]
+- [h2-1.4.192.jar]
+#### Configuration files
+- [hibernate.cfg.xml]
+- [application.properties]
+- [build.gradle]
+#### JavaScript files
+- [app.js]
+- [favicon.ico]
+#### CSS files
+- [normalize.css]
+- [site.css]
+#### Eclipse files
+- [.project]
+- [.userlibraries]
+#### Thymeleaf template files
+- [layout.html]
+- [error.html]
+- [index.html]
+- [project-details.html]
+- [project-edit.html]
+- [project-collaborators.html]
+- [collaborator-details.html]
+- [collaborators.html]
+- [role-details.html]
+- [roles.html]
+#### Classes
+- [RoleTest]
+- [RoleService]
+- [CollaboratorServiceImpl]
+- [CollaboratorService]
+- [GenericService]
+- [RoleServiceImpl]
+- [ProjectServiceImpl]
+- [GenericServiceImpl]
+- [ProjectService]
+- [Application]
+- [FlashMessage]
+- [CollaboratorController]
+- [ProjectController]
+- [RoleController]
+- [Role]
+- [ProjectStatus]
+- [Project]
+- [Collaborator]
+- [NotFoundException]
+- [ProjectDaoImpl]
+- [RoleDaoImpl]
+- [RoleDao]
+- [CollaboratorDao]
+- [GenericDaoImpl]
+- [GenericDao]
+- [CollaboratorDaoImpl]
+- [ProjectDao]
+- [AppConfig]
+- [DataConfig]
