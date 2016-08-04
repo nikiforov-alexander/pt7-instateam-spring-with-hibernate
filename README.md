@@ -721,5 +721,5 @@ This is done in the following way:
     [GenericServiceImpl] I don't feel so sure, but it works, and
     task is solved. Here also is the UML diagram picture of
     Dao/Service relationship:
-    ![UML diagram of DAO/service layers][./uml-diagrams/UML-diagram-of-the-project-collaborator-role-relations.png]
+    ![UML diagram of DAO/service layers](./uml-diagrams/UML-diagram-of-generic-DAO-service-layers.png)
 <hr>
