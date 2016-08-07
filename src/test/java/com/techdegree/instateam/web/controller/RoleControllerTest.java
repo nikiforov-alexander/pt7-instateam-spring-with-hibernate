@@ -84,13 +84,14 @@ public class RoleControllerTest {
             throws Exception {
         // Arrange Mock objects
 
-        // When roleService will be called, list of roles as
+        // when roleService will be called, list of roles as
         // database will be returned
         when(roleService.findAll()).thenReturn(
                 mListOfRolesAsDatabase
         );
 
-        // Then when get request to "/roles" is made,
+        // When get request to "/roles" is made,
+        // Then:
         // - OK status should be returned
         // - thymeleaf template "role/roles" should be rendered
         // - model should have attribute "roles" with our test database
@@ -117,11 +118,11 @@ public class RoleControllerTest {
         // Arrange variables for mockMvc
         int firstRoleId = mFirstRole.getId();
 
-        // When get request is made to roles details page
-        // and we use service to return first role found by id
+        // We make service to return first role found by id
         when(roleService.findById(firstRoleId))
                 .thenReturn(mFirstRole);
 
+        // When get request is made to roles details page
         // Then:
         // - status should be OK
         // - "role/role-details" template should be rendered
@@ -135,5 +136,31 @@ public class RoleControllerTest {
                 .andExpect(model().attribute("role", mFirstRole)
                 );
         verify(roleService).findById(firstRoleId);
+    }
+
+    // add new role works
+
+    @Test
+    public void addNewRoleMakesSuccessfulPostRequest()
+            throws Exception {
+        // Arrange our save mock with Answer
+        // when save method will be called, argument will be
+        // changed with ones above
+        doAnswer(invocation -> {
+            Role role = (Role) invocation.getArguments()[0];
+            role.setId(1);
+            return null;
+        }).when(roleService).saveOrUpdate(any(Role.class));
+
+        // When post request is made
+        // Then:
+        // - user should be redirected to "roles" page
+        // - service's save method was called
+        mockMvc.perform(
+                    post("/roles")
+                        .param("name", "Role 1") )
+                .andExpect(redirectedUrl("/roles")
+        );
+        verify(roleService).saveOrUpdate(any(Role.class));
     }
 }
