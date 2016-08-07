@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -130,5 +131,14 @@ public class RoleController {
                         FlashMessage.Status.SUCCESS));
         // redirect back to page with roles
         return "redirect:/roles";
+    }
+
+    // If anywhere NotFoundException is thrown we return error page,
+    // i set custom status here, because for some reason otherwise
+    // status is 200 :(
+    @ExceptionHandler(NotFoundException.class)
+    public String roleNotFound(Model model) {
+        model.addAttribute("custom_status", 404);
+        return "error";
     }
 }
