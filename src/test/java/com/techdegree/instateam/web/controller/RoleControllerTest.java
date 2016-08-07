@@ -91,16 +91,49 @@ public class RoleControllerTest {
         );
 
         // Then when get request to "/roles" is made,
-        // - thymeleaf template "role/roles" should be rendered
         // - OK status should be returned
+        // - thymeleaf template "role/roles" should be rendered
         // - model should have attribute "roles" with our test database
+        // - model should have attribute "newRole" with `new Role()`
+        //   object that is used to be filled with empty data, upon
+        //   successfull post request later on.
         // - and findAll() method should be called in service
         mockMvc.perform(get("/roles"))
+                .andExpect(status().isOk())
                 .andExpect(view().name("role/roles"))
                 .andExpect(
                         model().attribute("roles", mListOfRolesAsDatabase))
-                .andExpect(status().isOk()
+                .andExpect(
+                        model().attribute("newRole", new Role())
         );
         verify(roleService).findAll();
+    }
+
+    // detail role page is rendered properly
+
+    @Test
+    public void detailedRolePageIsRenderedProperly()
+            throws Exception {
+        // Arrange variables for mockMvc
+        int firstRoleId = mFirstRole.getId();
+
+        // When get request is made to roles details page
+        // and we use service to return first role found by id
+        when(roleService.findById(firstRoleId))
+                .thenReturn(mFirstRole);
+
+        // Then:
+        // - status should be OK
+        // - "role/role-details" template should be rendered
+        // - model should contain attribute "role" with firstRole
+        // - findById method should be called
+        mockMvc.perform(
+                get("/roles/" + firstRoleId))
+                .andExpect(status().isOk())
+                .andExpect(
+                        view().name("role/role-details"))
+                .andExpect(model().attribute("role", mFirstRole)
+                );
+        verify(roleService).findById(firstRoleId);
     }
 }
