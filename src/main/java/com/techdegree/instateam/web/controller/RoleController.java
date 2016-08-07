@@ -137,7 +137,8 @@ public class RoleController {
     // i set custom status here, because for some reason otherwise
     // status is 200 :(
     @ExceptionHandler(NotFoundException.class)
-    public String roleNotFound(Model model) {
+    public String roleNotFound(Model model, Exception exception) {
+        model.addAttribute("exception", exception);
         model.addAttribute("custom_status", 404);
         return "error";
     }
