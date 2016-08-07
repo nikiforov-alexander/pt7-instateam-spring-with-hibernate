@@ -1,7 +1,9 @@
 package com.techdegree.instateam.web.controller;
 
+import com.techdegree.instateam.exception.NotFoundException;
 import com.techdegree.instateam.model.Role;
 import com.techdegree.instateam.service.RoleService;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,9 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
@@ -162,5 +161,35 @@ public class RoleControllerTest {
                 .andExpect(redirectedUrl("/roles")
         );
         verify(roleService).saveOrUpdate(any(Role.class));
+    }
+
+    // not found exception is thrown when request is made to non-existing role
+    // and exeption handler works well
+    @Test
+    public void notFoundExceptionThrownOnDetailRolePageIsHandledProperly()
+            throws Exception {
+        // Arrange Mock behaviour:
+        // when roleService.findById is called, then
+        // NotFoundException will be thrown
+        when(roleService.findById(1))
+                .thenThrow(NotFoundException.class);
+
+        // When get request to detail role page is done, with
+        // arranged exception behaviour, Then:
+        // - status should be OK
+        // - thymeleaf template named "error" should be rendered
+        // - model has attribute "exception" with NotFoundException
+        // - model has attribute "status" with 404 number
+        mockMvc.perform(get("/roles/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("error"))
+                .andExpect(
+                        model().attribute("exception",
+                            Matchers.instanceOf(
+                                NotFoundException.class)
+                        )
+                )
+                .andExpect(model().attribute("custom_status", 404)
+        );
     }
 }
